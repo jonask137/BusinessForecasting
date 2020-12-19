@@ -1,4 +1,5 @@
 book_filename: "Business Forecasting Notebook"
 delete_merged_file: true
+output_dir: "docs"
 before_chapter_script: ["before_chapter_script.R"]
 after_chapter_script: []
