@@ -1,0 +1,77 @@
+# Qualitative Forecasting Methods
+
+
+– HW: Introduction to forecasting
+
+– HW: Judgmental Forecasting and Forecast Adjustments
+
+– HW: A Review of Basic Statistical Concepts
+
+– Armstrong et al. (2000), “Sales Forecasts for Existing Consumer Products and Services: Do Purchase Intentions Contribute to Accuracy?”, International Journal of Forecasting, 16(3), 383-397.
+
+– Lawrence et al. (2006), “Judgmental forecasting: A review of progress over the last 25 years”, International Journal of Forecasting, 22, 493-518.
+
+– Lynn et al. (1999), “Survey of New Product Forecasting Practices in Industrial High Technology and Low Technology Businesses,” Industrial Marketing Manage- ment, 28, 565-571.
+
+– Bass, Frank M. (1969). “A new product growth model for consumer durables,” Management Science, 15, 215-227.
+
+
+## Judgmental Forecasting and Forecast Adjustments
+
+A forecast on its own does not include the analysts judgements well enough.
+
+To include experts insights, one can apply different methods for this, that is called judgmental forecasting. There er different methods for including experts input on the analysis. See below:
+
+**The Delphi Method:** That is an iterative process where experts makes analysis an predictions independently, then the findings are distributed and then they are able to independently make corrections to their output if they feel to. The results are then distributed and they are possible to correct their output
+
+The feedback loop ends when they have reached redundancy and they make no more corrections.
+	
+Thus, the output is different expert views, that you can select between.
+	
+
+Scenario writing: you have different experts that write scenarios that are likely to happen in the future, you rank those events after likelyhood.
+
+The scenario writing is followed by discussion. Thus they are able to defend and modify predictions.
+	
+**Combining forecasts:** This is where you make different predicte analysis perhaps not including the same predictors, then you use the outputs to compute a forecast, that is done either by finding the mean of the forecasts or assigning weights to the different forecasts that now act as predictors.
+
+**Forecasting and Neural Networks:** NN is used to find its own variables, it is particularly good to fill in missing values.
+	
+
+Other tools to judgmental decision making:
+
+- The decision making tree, where you assign costs and probabilities to events.
+
+Bayesian statistics, also where you create a tree of probabilities.
+
+
+## Articles
+
+### A new product growth model for consumer durables,” Management Science
+
+The Bass Model i.e. the Bass Curve is the model for sales of new products, or more correct a generalization of the sales for a product, hence he created the model for adopters, where it has later been separated into innovators, early adopters, early majority, etc. that is then the product life cycle.
+
+Thus the purpose of the Bass Model is to predict sales of a new product, based on questionnaires or early sales
+
+The Bass Curve is based on the early adopters and calculates the curve based on their numbers. The model has proven that it only needs very few observations to plot when it is going to peak and at what amount. Basically the model is based on a conditional likelihood with respect to time.
+
+In fact, it has shown to predict peak and sales amount based on research and questionnaires prior to sales
+	
+Then there are some notes on what further research that can be done and some notes on extensions to the Bass Model
+
+### Sales Forecasts for Existing Consumer Products
+and Services: Do Purchase Intentions Contribute
+to Accuracy?
+
+As we know from the Bass Model we can use consumer intentions (questionnaires about whether a person think he will buy it or not) to guestimate the total sales and when it is going to peak, but are we are able to optimize accuracy of forecasts on existing products using consumer intentions?
+
+A previous study has shown, that intentions does not improve the model, although the data did not have available the intentions and whether the person made a purchase or not. In this study there is an improvement to the forecast when the historical data is combined with the intentions of the persons. Also they ruled out, the factor that if the data does not have historical data on intentions and sales history. Hence they experienced on their seven data set, that combining historical data and intentions improved the forecast. To be noted is that the manipulated the intentions in different ways to experiment, e.g. moving average, binary (intentions or not) and some other faucets.
+
+### Judgmental forecasting A review of progress over the last 25 years, International Journal of Forecasting
+
+This is basically just more information on the judgemental forecasting where they tested different set ups, such as groups, bootsstrapping etc. 
+
+Did not read all of this, it seemed very much like HW9
+
+
+

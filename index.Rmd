@@ -1,0 +1,46 @@
+---
+title: "Business Forecasting"
+author: "Jonas Ringive Korsholm"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the book description"
+---
+# setup {-}
+
+All the output formatting is done in the _output.yml file while all bookdown rendering options is done in the _bookdown.yml file.§
+
+```{r setup,include=FALSE}
+knitr::opts_chunk$set(echo = TRUE
+                      ,message = FALSE
+                      ,error = FALSE
+                      ,warning = FALSE
+                      ,strip.white = FALSE #To remove white space before and after chunk in output
+                      )
+```
+
+
+```{r}
+library(bookdown)
+```
+
+**Tips and tricks**
+
+*Referencing*
+
+This is making a figure with a caption and where we center the figure and set the size. Notice, that the figure is automatically numbered according to the chapter number.
+
+```{r nice-fig, fig.cap="A fig", out.width='80%', fig.asp=.75, fig.align='center'}
+plot(pressure,type = 'b',pch = 19)
+```
+
+Now we are able to make a reference to the chunk.
+
+Refer to a chunk: \@ref(fig:nice-fig)
+
+*Options*
+
+[RMarkdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf?_ga=2.47682403.59925266.1608407175-330761457.1608407175)
+

@@ -1,0 +1,5 @@
+bookdown::gitbook:
+  css: style.css
+  split_by: section
+  #Scripts to be run before and after each chapter
+  download: ["pdf", "epub"]

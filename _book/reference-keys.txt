@@ -1,0 +1,9 @@
+fig:nice-fig
+introduction
+curriculum
+qualitative-forecasting-methods
+judgmental-forecasting-and-forecast-adjustments
+articles
+a-new-product-growth-model-for-consumer-durables-management-science
+sales-forecasts-for-existing-consumer-products
+judgmental-forecasting-a-review-of-progress-over-the-last-25-years-international-journal-of-forecasting

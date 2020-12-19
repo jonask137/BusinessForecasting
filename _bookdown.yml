@@ -1,0 +1,4 @@
+book_filename: "Business Forecasting Notebook"
+delete_merged_file: true
+before_chapter_script: ["before_chapter_script.R"]
+after_chapter_script: []
