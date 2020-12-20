@@ -4,6 +4,10 @@ fig:unnamed-chunk-8
 fig:unnamed-chunk-9
 eq:NaiveForecast
 eq:SimpleAverages
+eq:MA
+eq:DMA
+eq:DMA2
+eq:DMAPPeriods
 eq:ME
 eq:MAD
 eq:MPE
@@ -29,10 +33,14 @@ Methods
 ForecastMethods
 using-averages
 simple-averages
-moving-average-ma
+MA
 double-moving-average
 linear-regressions
 non-linear-regressions
 smoothing-methods
+exponential-smoothing
+holts-exponential-smoothing-put-words-to-this
+winters-exponential-smoothing-put-words-to-this
+moving-averages-see-section-refma
 arima
 PerformanceMeasurements

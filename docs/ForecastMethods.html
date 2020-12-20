@@ -157,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="5.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html"><i class="fa fa-check"></i><b>5.1</b> Forecasting Methods</a>
 <ul>
-<li class="chapter" data-level="5.1.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html#using-averages"><i class="fa fa-check"></i><b>5.1.1</b> Using averages</a></li>
+<li class="chapter" data-level="5.1.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html#using-averages"><i class="fa fa-check"></i><b>5.1.1</b> Using Averages</a></li>
 <li class="chapter" data-level="5.1.2" data-path="ForecastMethods.html"><a href="ForecastMethods.html#linear-regressions"><i class="fa fa-check"></i><b>5.1.2</b> Linear regressions</a></li>
 <li class="chapter" data-level="5.1.3" data-path="ForecastMethods.html"><a href="ForecastMethods.html#non-linear-regressions"><i class="fa fa-check"></i><b>5.1.3</b> Non linear regressions</a></li>
 <li class="chapter" data-level="5.1.4" data-path="ForecastMethods.html"><a href="ForecastMethods.html#smoothing-methods"><i class="fa fa-check"></i><b>5.1.4</b> Smoothing methods</a></li>
@@ -199,15 +199,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><span class="math inline">\(\hat{Y}_{t+1}=Y_{t-3}+\frac{Y_t-Y_{t-4}}{4}\)</span>, to account for quarterly trending data, the periods can naturally be changed by changing the formula, e.g. to 12. <strong><em>but notice, that this is just replicating previous periods, hence also previous seasons</em></strong></li>
 </ul>
 <div id="using-averages" class="section level3" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> Using averages</h3>
+<h3><span class="header-section-number">5.1.1</span> Using Averages</h3>
 <p>We have the following:</p>
 <ol style="list-style-type: decimal">
 <li>Simple averages, which merely takes the average of all observations.</li>
-<li>Moving averages, which account for the given timeframe. This can be extenden by,</li>
+<li>Moving averages, which account for the given time frame. This can be extended by,</li>
 <li>Double moving averages, often seen when you need the center value of a period consisting of an even number of periods, where there is no actual median value, thus one can extend the MA with a double MA.</li>
 </ol>
 <div id="simple-averages" class="section level4" number="5.1.1.1">
-<h4><span class="header-section-number">5.1.1.1</span> Simple averages</h4>
+<h4><span class="header-section-number">5.1.1.1</span> Simple Averages</h4>
 <p><em>One may assume that it is sufficient to apply the average of all observations, to predict the next period, hence we can say:</em></p>
 <p><span class="math display" id="eq:SimpleAverages">\[\begin{equation} 
 \hat{Y}_{t+1}=\frac{1}{n}\sum^t_{i=1}Y_i
@@ -215,14 +215,38 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 \end{equation}\]</span></p>
 <p>This is appropriate if the data has shown historical stability, thus without seasons, trends and etc.</p>
 </div>
-<div id="moving-average-ma" class="section level4" number="5.1.1.2">
+<div id="MA" class="section level4" number="5.1.1.2">
 <h4><span class="header-section-number">5.1.1.2</span> Moving Average (MA)</h4>
-<p><em>One may apply a moving average instead</em></p>
+<p><em>One may apply a moving average instead, accounting for k periods, also one could extend this by adding weights. For practical purposes only a k period MA is show:</em></p>
+<p><span class="math display" id="eq:MA">\[\begin{equation}
+\hat{Y}_{t+1}=\frac{Y_t+Y_{t-1}+...+Y_{t-k}}{k}
+\tag{5.3}
+\end{equation}\]</span></p>
+<p><em>this may be applied to remove seasonal effect, either by k=4 or 12 if the data is respectively quarterly or monthly</em></p>
 </div>
 <div id="double-moving-average" class="section level4" number="5.1.1.3">
 <h4><span class="header-section-number">5.1.1.3</span> Double Moving Average</h4>
-<p><em>This is simply doing moving averages twice</em></p>
+<p><em>This is simply doing moving averages twice, hence it is an extension of equation <a href="ForecastMethods.html#eq:MA">(5.3)</a></em></p>
 <p>As mentioned, often seen when one wants the median when using an even number of periods, e.g. 12 months, hence double MA can be applied.</p>
+<p><span class="math display" id="eq:DMA">\[\begin{equation}
+M_t=\hat{Y}_{t+1}=\frac{Y_t+Y_{t-1}+...+Y_{t-k+1}}{k}
+\tag{5.4}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:DMA2">\[\begin{equation}
+M&#39;_t=\frac{M_t+M_{t-1}+...+M_{t-k+1}}{k}
+\tag{5.5}
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+a_t=M_t+\left(M_t-M_t\right)
+\end{equation}\]</span></p>
+<p><span class="math display">\[\begin{equation}
+b_t=\frac{2}{k-1}\left(M_t-M&#39;_t\right)
+\end{equation}\]</span></p>
+<p>Thence we are able to say:</p>
+<p><span class="math display" id="eq:DMAPPeriods">\[\begin{equation}
+\hat{Y}_{t+p}=a_t+b_t*p
+\tag{5.6}
+\end{equation}\]</span></p>
 </div>
 </div>
 <div id="linear-regressions" class="section level3" number="5.1.2">
@@ -240,11 +264,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="smoothing-methods" class="section level3" number="5.1.4">
 <h3><span class="header-section-number">5.1.4</span> Smoothing methods</h3>
-<ul>
-<li>Normal exponential smoothing</li>
-<li>Holt’s exponential smoothing, <strong>Put words to this</strong></li>
-<li>Winters’ exponential smoothing, <strong>Put words to this</strong></li>
-</ul>
+<div id="exponential-smoothing" class="section level4" number="5.1.4.1">
+<h4><span class="header-section-number">5.1.4.1</span> Exponential smoothing</h4>
+<p><em>This is exponentially weighted moving average of all historical values, meaning that the most recent value will be assigned the most weight. Hence we merely add different weights to past periods, thus there is no specific way to adjust for trend and seasonality, which is a limitation of exponential smoothing, it can be written as:</em></p>
+<p><span class="math display">\[\begin{equation}
+\hat{Y}_{t+1}=\alpha Y_t+\left(1-\alpha\right)\hat{Y}_t
+\end{equation}\]</span>
+thus:
+<span class="math display">\[\begin{equation}
+=\hat{Y}_t+\alpha(Y_t-\hat{Y}_t)
+\end{equation}\]</span></p>
+</div>
+<div id="holts-exponential-smoothing-put-words-to-this" class="section level4" number="5.1.4.2">
+<h4><span class="header-section-number">5.1.4.2</span> Holt’s exponential smoothing, <strong>Put words to this</strong></h4>
+</div>
+<div id="winters-exponential-smoothing-put-words-to-this" class="section level4" number="5.1.4.3">
+<h4><span class="header-section-number">5.1.4.3</span> Winters’ exponential smoothing, <strong>Put words to this</strong></h4>
+</div>
+<div id="moving-averages-see-section-refma" class="section level4" number="5.1.4.4">
+<h4><span class="header-section-number">5.1.4.4</span> Moving Averages, see section <a href="ForecastMethods.html#MA">5.1.1.2</a></h4>
+</div>
 </div>
 <div id="arima" class="section level3" number="5.1.5">
 <h3><span class="header-section-number">5.1.5</span> ARIMA</h3>

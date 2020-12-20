@@ -22,15 +22,15 @@ One can make several iterations to account for trending, the growth rate, or sea
 + $\hat{Y}_{t+1}=Y_t * \frac{Y_t}{Y_{t-1}}$, to account for the growth rate, notice that it only assess the growth rate to the prior period.
 + $\hat{Y}_{t+1}=Y_{t-3}+\frac{Y_t-Y_{t-4}}{4}$, to account for  quarterly trending data, the periods can naturally be changed by changing the formula, e.g. to 12. ***but notice, that this is just replicating previous periods, hence also previous seasons***
 
-### Using averages
+### Using Averages
 
 We have the following:
 
 1. Simple averages, which merely takes the average of all observations.
-2. Moving averages, which account for the given timeframe. This can be extenden by,
+2. Moving averages, which account for the given time frame. This can be extended by,
 3. Double moving averages, often seen when you need the center value of a period consisting of an even number of periods, where there is no actual median value, thus one can extend the MA with a double MA.
 
-#### Simple averages
+#### Simple Averages
 
 *One may assume that it is sufficient to apply the average of all observations, to predict the next period, hence we can say:*
 
@@ -42,16 +42,47 @@ We have the following:
 
 This is appropriate if the data has shown historical stability, thus without seasons, trends and etc.
 
-#### Moving Average (MA)
+#### Moving Average (MA) {#MA}
 
-*One may apply a moving average instead*
+*One may apply a moving average instead, accounting for k periods, also one could extend this by adding weights. For practical purposes only a k period MA is show:*
 
+\begin{equation}
+\hat{Y}_{t+1}=\frac{Y_t+Y_{t-1}+...+Y_{t-k}}{k}
+(\#eq:MA)
+\end{equation}
+
+*this may be applied to remove seasonal effect, either by k=4 or 12 if the data is respectively quarterly or monthly*
 
 #### Double Moving Average
 
-*This is simply doing moving averages twice*
+*This is simply doing moving averages twice, hence it is an extension of equation \@ref(eq:MA)*
 
 As mentioned, often seen when one wants the median when using an even number of periods, e.g. 12 months, hence double MA can be applied.
+
+\begin{equation}
+M_t=\hat{Y}_{t+1}=\frac{Y_t+Y_{t-1}+...+Y_{t-k+1}}{k}
+(\#eq:DMA)
+\end{equation}
+
+\begin{equation}
+M'_t=\frac{M_t+M_{t-1}+...+M_{t-k+1}}{k}
+(\#eq:DMA2)
+\end{equation}
+
+\begin{equation}
+a_t=M_t+\left(M_t-M_t\right)
+\end{equation}
+
+\begin{equation}
+b_t=\frac{2}{k-1}\left(M_t-M'_t\right)
+\end{equation}
+
+Thence we are able to say:
+
+\begin{equation}
+\hat{Y}_{t+p}=a_t+b_t*p
+(\#eq:DMAPPeriods)
+\end{equation}
 
 
 ### Linear regressions
@@ -65,9 +96,23 @@ As mentioned, often seen when one wants the median when using an even number of 
 
 ### Smoothing methods
 
-+ Normal exponential smoothing
-+ Holt's exponential smoothing, **Put words to this**
-+ Winters' exponential smoothing, **Put words to this**
+#### Exponential smoothing
+
+*This is exponentially weighted moving average of all historical values, meaning that the most recent value will be assigned the most weight. Hence we merely add different weights to past periods, thus there is no specific way to adjust for trend and seasonality, which is a limitation of exponential smoothing, it can be written as:*
+
+\begin{equation}
+\hat{Y}_{t+1}=\alpha Y_t+\left(1-\alpha\right)\hat{Y}_t
+\end{equation}
+thus:
+\begin{equation}
+=\hat{Y}_t+\alpha(Y_t-\hat{Y}_t)
+\end{equation}
+
+
+
+#### Holt's exponential smoothing, **Put words to this**
+#### Winters' exponential smoothing, **Put words to this**
+#### Moving Averages, see section \@ref(MA)
 
 
 ### ARIMA
