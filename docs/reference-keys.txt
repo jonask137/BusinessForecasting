@@ -1,5 +1,6 @@
 fig:nice-fig
 fig:unnamed-chunk-7
+fig:unnamed-chunk-8
 introduction
 curriculum
 qualitative-forecasting-methods
@@ -10,3 +11,6 @@ sales-forecasts-for-existing-consumer-products
 judgmental-forecasting-a-review-of-progress-over-the-last-25-years-international-journal-of-forecasting
 exploring-patterns-forecasting-techniques
 the-forecasting-process
+data-patterns-and-terminology
+terminology
+autocorrelation

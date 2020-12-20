@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>1 Introduction | Business Forecasting</title>
+  <title>4.2 Data Patterns and terminology | Business Forecasting</title>
   <meta name="description" content="This is the book description" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="1 Introduction | Business Forecasting" />
+  <meta property="og:title" content="4.2 Data Patterns and terminology | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="1 Introduction | Business Forecasting" />
+  <meta name="twitter:title" content="4.2 Data Patterns and terminology | Business Forecasting" />
   
   <meta name="twitter:description" content="This is the book description" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="curriculum.html"/>
+<link rel="prev" href="the-forecasting-process.html"/>
+
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,17 +169,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="introduction" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Introduction</h1>
+<div id="data-patterns-and-terminology" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Data Patterns and terminology</h2>
+<p><em>Basically the data is assumed to consist of up to four components, that is:</em></p>
+<ol style="list-style-type: decimal">
+<li>Trend
+<ul>
+<li>Long-term change in the level of data</li>
+<li>Positive vs. negative trends</li>
+<li>Stationary series <em>have no trend</em></li>
+<li><em>Example: Increasing technology leading to increase in productivity</em></li>
+</ul></li>
+<li>Seasonal
+<ul>
+<li>Repeated regular variation the level of data</li>
+<li><em>Example: Number of tourists in Mallorca</em></li>
+</ul></li>
+<li>Cyclical
+<ul>
+<li>Wavelike upward and downward movements around the long-term trend</li>
+<li>Longer duration than seasonal fluctuations</li>
+<li><em>Example: Business cycles</em></li>
+<li><em>Note, this is very often to identify</em></li>
+</ul></li>
+<li>Irregular
+<ul>
+<li>Random fluctuations</li>
+<li>Possibly carrying more dynamics than just deterministic ones</li>
+<li>Hardest to capture in a forecasting model</li>
+</ul></li>
+</ol>
+<p>The four components may look similar to this:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
+<img src="Images/Components.png" alt="Components in a timeseries" width="330" />
+<p class="caption">
+Figure 4.2: Components in a timeseries
+</p>
+</div>
+<div id="terminology" class="section level3" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Terminology</h3>
+<p><span class="math inline">\(Y_t\)</span>: Denotes a time series variable</p>
+<p><span class="math inline">\(\hat{Y_t}\)</span>: Denotes the foretasted value of <span class="math inline">\(Y_t\)</span></p>
+<p><span class="math inline">\(e_t=Y_t-\hat{Y_t}\)</span>: Denotes the residual or the forecast error.</p>
+<p><span class="math inline">\(Y_{t-k}\)</span>: Denotes a time series variable lagged by <em>k</em> periods.</p>
+<div id="autocorrelation" class="section level4" number="4.2.1.1">
+<h4><span class="header-section-number">4.2.1.1</span> Autocorrelation</h4>
+<p><strong>Autocorrelation</strong>: is the correlation between a time series and its past (lagged) observations. To identify this, one can merely compare the lagged values as a series for itself, hence comparing actual time series against the lagged time series. This can be written as:</p>
+<p><span class="math display">\[r_k=\frac{\sum_{t=k+1}^n\left(Y_{t\ }-\hat{Y}\right)}{\sum_{t=1}^n\left(Y_t-\hat{Y}\right)^{^2}}\]</span></p>
+<p>Where <span class="math inline">\(k = 0,1,2,...\)</span>, hence take on numbers, typically whole numbers, as the result must be measurable.</p>
+<p>We assess autocorrelation to identify if the data have a trend, seasons, cycles or it is random? If we have seasons, trends or cycles, we must make the model account for this, otherwise one is prone to have a model where it is just implicitly correlated, but that is merely due to the autocorrelation, as it says in the word, it is automatically correlated, but that also implies, that it is not necessarily caused by the data, but rather other factors, often we see macro factors, that have an influence, e.g. an economic book.</p>
+<p><strong>Manually testing for autocorrelation</strong></p>
+<p>One must:</p>
+<ol style="list-style-type: decimal">
+<li>Calculate <span class="math inline">\(r_k\)</span></li>
+<li>Calculate <span class="math inline">\(SE(r_k)\)</span></li>
+<li>Hypothesis: <span class="math inline">\(H0 : \rho=0\)</span>, <span class="math inline">\(H0 : \rho≠0\)</span>
+<ul>
+<li>We apply t-test</li>
+</ul></li>
+</ol>
+<p>Where:
+<span class="math display">\[SE\left(r_k\right)=\sqrt{\left\{\frac{1+2\sum_{i=1}^{k-1}r_i^2}{n}\right\}}\]</span>
+Although, with normal approximation
+<span class="math display">\[SE\left(r_k\right)=\frac{1}{\sqrt{n-k}}\]</span></p>
+<p>and test statistic equal
+<span class="math display">\[t=\frac{r_k}{SE(r_k)}\]</span></p>
+<p>Thence one merely must look up the cut off values and assess if there is statistical evidance for autocorrelation or not.</p>
+<p><strong>Alternative: Ljung-Box Q statistic</strong></p>
 
 </div>
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="curriculum.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="the-forecasting-process.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

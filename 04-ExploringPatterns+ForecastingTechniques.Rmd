@@ -74,6 +74,93 @@ include_graphics("Images/ModelSelection.png")
 **Conclusion:** One should realize that it is an iterative process, that one must be aware of.
 
 
+## Data Patterns and terminology
+
+*Basically the data is assumed to consist of up to four components, that is:*
+
+1. Trend
+    + Long-term change in the level of data
+    + Positive vs. negative trends
+    + Stationary series *have no trend*
+    + *Example: Increasing technology leading to increase in productivity*
+    
+2. Seasonal
+    + Repeated regular variation the level of data
+    + *Example: Number of tourists in Mallorca*
+    
+3. Cyclical
+    + Wavelike upward and downward movements around the long-term trend
+    + Longer duration than seasonal fluctuations
+    + *Example: Business cycles*
+    + *Note, this is very often to identify*
+
+4. Irregular
+    + Random fluctuations
+    + Possibly carrying more dynamics than just deterministic ones
+    + Hardest to capture in a forecasting model
+    
+The four components may look similar to this:
+
+```{r,echo=FALSE,fig.cap="Components in a timeseries"}
+include_graphics("Images/Components.png")
+```
+
+
+### Terminology
+
+$Y_t$: Denotes a time series variable
+
+$\hat{Y_t}$: Denotes the foretasted value of $Y_t$ 
+
+$e_t=Y_t-\hat{Y_t}$: Denotes the residual or the forecast error.
+
+$Y_{t-k}$: Denotes a time series variable lagged by *k* periods.
+
+#### Autocorrelation
+
+**Autocorrelation**: is the correlation between a time series and its past (lagged) observations. To identify this, one can merely compare the lagged values as a series for itself, hence comparing actual time series against the lagged time series. This can be written as:
+
+$$r_k=\frac{\sum_{t=k+1}^n\left(Y_{t\ }-\hat{Y}\right)}{\sum_{t=1}^n\left(Y_t-\hat{Y}\right)^{^2}}$$
+
+Where $k = 0,1,2,...$, hence take on numbers, typically whole numbers, as the result must be measurable.
+
+We assess autocorrelation to identify if the data have a trend, seasons, cycles or it is random? If we have seasons, trends or cycles, we must make the model account for this, otherwise one is prone to have a model where it is just implicitly correlated, but that is merely due to the autocorrelation, as it says in the word, it is automatically correlated, but that also implies, that it is not necessarily caused by the data, but rather other factors, often we see macro factors, that have an influence, e.g. an economic book.
+
+**Manually testing for autocorrelation**
+
+One must:
+
+1. Calculate $r_k$
+2. Calculate $SE(r_k)$
+3. Hypothesis: $H0 : \rho=0$, $H0 : \rho≠0$
+    + We apply t-test
+    
+Where:
+$$SE\left(r_k\right)=\sqrt{\left\{\frac{1+2\sum_{i=1}^{k-1}r_i^2}{n}\right\}}$$
+Although, with normal approximation
+$$SE\left(r_k\right)=\frac{1}{\sqrt{n-k}}$$
+
+and test statistic equal
+$$t=\frac{r_k}{SE(r_k)}$$
+
+Thence one merely must look up the cut off values and assess if there is statistical evidance for autocorrelation or not.
+
+
+**Alternative: Ljung-Box Q statistic**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
