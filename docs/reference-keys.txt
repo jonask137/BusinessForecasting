@@ -12,6 +12,13 @@ eq:MA
 eq:DMA
 eq:DMA2
 eq:DMAPPeriods
+eq:LevelEstimateHolts
+eq:TrendEstimateHolts
+eq:ForecastPPeriodsHolts
+eq:LevelEstimateWinters
+eq:TrendEstimateWinters
+eq:SeasonEstimateWinters
+eq:ForecastPPeriodsWinters
 eq:ME
 eq:MAD
 eq:MPE
@@ -38,6 +45,11 @@ p.-92-hw-problem-8
 moving-averages
 exponential-moving-averages-holts-and-winters
 p.-93-hw-problem-9-10
+co2-and-sales-data
+case-6-oo.-108-111-hw
+simple-and-multiple-linear-regression
+simple-linear-regression
+multiple-linear-regression
 Methods
 ForecastMethods
 using-averages
@@ -48,8 +60,8 @@ linear-regressions
 non-linear-regressions
 smoothing-methods
 exponential-smoothing
-holts-exponential-smoothing-put-words-to-this
-winters-exponential-smoothing-put-words-to-this
+holts-exponential-smoothing
+winters-exponential-smoothing
 moving-averages-see-section-refma
 arima
 PerformanceMeasurements

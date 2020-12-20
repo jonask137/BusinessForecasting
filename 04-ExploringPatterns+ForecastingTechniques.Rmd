@@ -305,7 +305,7 @@ Where we see an RMSE of 6.37, hence lower than the initial test.
 
 **Holt's exponential smoothing**
 
-exponential smoothing when a trend component is present: beta= TRUE
+exponential smoothing when a trend component is present: beta = TRUE
 
 ```{r,fig.cap="Holt's Exponential Smoothing"}
 {fit3 <- HoltWinters(yt
@@ -341,8 +341,15 @@ rm(list = ls())
 
 ### p. 93 HW Problem 9-10
 
+Basically just another example of the exercise above.
 
+### CO2 and Sales Data
 
+Not done again. Do if time allows.
+
+### Case 6 oo. 108-111 HW
+
+Not done again. Do if time allows.
 
 
 

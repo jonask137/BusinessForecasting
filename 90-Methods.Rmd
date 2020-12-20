@@ -116,8 +116,90 @@ Where $\alpha$ = the smoothing constant, thus is can be between 0 and 1. The hig
 + For sensitive predictions, choose low alpha
 + Test different alpha values and compare the models using the performance measures in section \@ref(PerformanceMeasurements).
 
-#### Holt's exponential smoothing, **Put words to this**
-#### Winters' exponential smoothing, **Put words to this**
+#### Holt's exponential smoothing
+
+*Exponential smoothing method with adjustment for trend, hence we introduce a new tuning parameter, hence we have $\alpha$ and $\beta$*
+
++ $\alpha$ = Weight to the most recent observations
++ $\beta$ = adjustment for trend. R will automatically set this, when beta = TRUE
+
+Hence the smoothing now consists of two elements:
+
+1. The level estimate
+
+\begin{equation}
+L_t=\alpha Y_t+\left(1-\alpha\right)\left(L_{t-1}+T_{t-1}\right)
+(\#eq:LevelEstimateHolts)
+\end{equation}
+
+2. The trend estimate
+
+\begin{equation}
+T_t=\beta\left(L_t-L_{t-1}\right)+\left(1-\beta\right)T_{t-1}
+(\#eq:TrendEstimateHolts)
+\end{equation}
+
+Thus, the forecasting of p periods into the future, can be explained by:
+
+\begin{equation}
+\hat{Y}_{t+p}=L_t+pT_t
+(\#eq:ForecastPPeriodsHolts)
+\end{equation}
+
+**To apply**: use `HoltWinters()` and select parameters that lowers the performance measurements.
+
+When one assigns large weights the model will become more sensitive to changes in the observed data.
+
+One can either set the initial value to 0 or take the average of the first few observations.
+
+If $\alpha = \beta$, then we have the Brown's double exponential smoothing model.
+
+If $\beta$ = 0, then we merely have a simple exponential smoothing.
+
+
+#### Winters' exponential smoothing
+
+*Exponential smoothing method with adjustment for trend and seasonality, hence we introduce two new tuning parameters, hence we have $\alpha$, $\beta$ (as in Holt's) and $\gamma$*
+
+Hence the smoothing now consists of three elements:
+
+1. The level estimate
+
+\begin{equation}
+L_t=\alpha\frac{Y_t}{S_{t-s}}+\left(1-\alpha\right)\left(L_{t-1}+T_{t-1}\right)
+(\#eq:LevelEstimateWinters)
+\end{equation}
+
+2. The trend estimate
+
+\begin{equation}
+T_t=\beta\left(L_t-L_{t-1}\right)+\left(1-\beta\right)T_{t-1}
+(\#eq:TrendEstimateWinters)
+\end{equation}
+
+3. The seasonality estimate
+
+\begin{equation}
+S_t=\gamma\frac{Y_t}{L_t}+\left(1-\gamma\right)S_{t-s}
+(\#eq:SeasonEstimateWinters)
+\end{equation}
+
+Thus, the forecasting of p periods into the future, can be explained by:
+
+\begin{equation}
+\hat{Y}_{t+p}=\left(L_t+pT_t\right)S_{t-s+p}
+(\#eq:ForecastPPeriodsWinters)
+\end{equation}
+
+**To apply**: use `HoltWinters()` and select parameters that lowers the performance measurements.
+
+When one assigns large weights the model will become more sensitive to changes in the observed data.
+
+One can either set the initial value to 0 or take the average of the first few observations.
+
+if $\beta = \gamma = 0$ the model is merely simple exponential smoothing.
+
+
 #### Moving Averages, see section \@ref(MA)
 
 
