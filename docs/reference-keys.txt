@@ -27,4 +27,12 @@ stationary-vs.-non-stationary-data
 DataPatternsAndModelSelection
 Methods
 ForecastMethods
+using-averages
+simple-averages
+moving-average-ma
+double-moving-average
+linear-regressions
+non-linear-regressions
+smoothing-methods
+arima
 PerformanceMeasurements

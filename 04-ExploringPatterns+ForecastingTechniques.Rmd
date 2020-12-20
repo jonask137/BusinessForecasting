@@ -156,6 +156,8 @@ Thence one merely must look up the cut off values and assess if there is statist
 
 **Alternative: Ljung-Box Q statistic**
 
+*The Ljung Box Q is to identify if at least one of the components explains the Y. Thence H0 = p1 = p2 = p3 = pm, thence we want to reject this one. If not, then none of the predictors explain the Y, thus they are irregular components.*
+
 $$Q\ =\ n\left(n+2\right)\sum_{k=1}^m\frac{r_k^2}{n-k}$$
 
 Where *m* is the number of lags to be tested.
@@ -165,11 +167,11 @@ The Q statistic is commonly used for testing correlation in the residuals of a f
 
 #### Random vs. correlated data
 
-Randomness is important for forecast model residuals. One can write simple random model, as
+Randomness is important for forecast model residuals. One can write simple random model, **but we dont want complete randomness**. Hence we don't want patterns in our error, where the previous error can explain the next error. E.g. if the data contain trend or seasons, that we have not accounted for, then the errors will be able to predict the coming errors (can be tested by testing errors (residuals) against the lagged errors (residuals)).
 
 $$Y_t=c+\epsilon_t$$
 
-Where c is the component and $\epsilon_t$ is the random error comonent. That is assumed to be uncorrelated period to period.
+Where c is the component and $\epsilon_t$ is the random error component. That is assumed to be uncorrelated period to period.
 
 #### Stationary vs. non stationary data
 

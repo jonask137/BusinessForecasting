@@ -155,7 +155,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>5</b> Methods and Performance Measurement</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html"><i class="fa fa-check"></i><b>5.1</b> Forecasting Methods</a></li>
+<li class="chapter" data-level="5.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html"><i class="fa fa-check"></i><b>5.1</b> Forecasting Methods</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html#using-averages"><i class="fa fa-check"></i><b>5.1.1</b> Using averages</a></li>
+<li class="chapter" data-level="5.1.2" data-path="ForecastMethods.html"><a href="ForecastMethods.html#linear-regressions"><i class="fa fa-check"></i><b>5.1.2</b> Linear regressions</a></li>
+<li class="chapter" data-level="5.1.3" data-path="ForecastMethods.html"><a href="ForecastMethods.html#non-linear-regressions"><i class="fa fa-check"></i><b>5.1.3</b> Non linear regressions</a></li>
+<li class="chapter" data-level="5.1.4" data-path="ForecastMethods.html"><a href="ForecastMethods.html#smoothing-methods"><i class="fa fa-check"></i><b>5.1.4</b> Smoothing methods</a></li>
+<li class="chapter" data-level="5.1.5" data-path="ForecastMethods.html"><a href="ForecastMethods.html#arima"><i class="fa fa-check"></i><b>5.1.5</b> ARIMA</a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html"><i class="fa fa-check"></i><b>5.2</b> Performance Measurements</a></li>
 </ul></li>
 </ul>
@@ -250,15 +257,16 @@ Although, with normal approximation
 <span class="math display">\[t=\frac{r_k}{SE(r_k)}\]</span></p>
 <p>Thence one merely must look up the cut off values and assess if there is statistical evidance for autocorrelation or not.</p>
 <p><strong>Alternative: Ljung-Box Q statistic</strong></p>
+<p><em>The Ljung Box Q is to identify if at least one of the components explains the Y. Thence H0 = p1 = p2 = p3 = pm, thence we want to reject this one. If not, then none of the predictors explain the Y, thus they are irregular components.</em></p>
 <p><span class="math display">\[Q\ =\ n\left(n+2\right)\sum_{k=1}^m\frac{r_k^2}{n-k}\]</span></p>
 <p>Where <em>m</em> is the number of lags to be tested.</p>
 <p>The Q statistic is commonly used for testing correlation in the residuals of a forecast model and the comparison is mate to <span class="math inline">\(X^2_{m-q}\)</span>, where q is the number of parameters in the model.</p>
 </div>
 <div id="random-vs.-correlated-data" class="section level4" number="4.2.1.2">
 <h4><span class="header-section-number">4.2.1.2</span> Random vs. correlated data</h4>
-<p>Randomness is important for forecast model residuals. One can write simple random model, as</p>
+<p>Randomness is important for forecast model residuals. One can write simple random model, <strong>but we dont want complete randomness</strong>. Hence we don’t want patterns in our error, where the previous error can explain the next error. E.g. if the data contain trend or seasons, that we have not accounted for, then the errors will be able to predict the coming errors (can be tested by testing errors (residuals) against the lagged errors (residuals)).</p>
 <p><span class="math display">\[Y_t=c+\epsilon_t\]</span></p>
-<p>Where c is the component and <span class="math inline">\(\epsilon_t\)</span> is the random error comonent. That is assumed to be uncorrelated period to period.</p>
+<p>Where c is the component and <span class="math inline">\(\epsilon_t\)</span> is the random error component. That is assumed to be uncorrelated period to period.</p>
 </div>
 <div id="stationary-vs.-non-stationary-data" class="section level4" number="4.2.1.3">
 <h4><span class="header-section-number">4.2.1.3</span> Stationary vs. non stationary data</h4>
