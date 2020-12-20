@@ -47,7 +47,7 @@ library(knitr)
     + The length of the forecast horizon
     
 ```{r,echo=FALSE,fig.cap="Model Selection"}
-include_graphics("Images/ModelSelection.png")
+include_graphics("Images/04/ModelSelection.png")
 ```
 
 6. Model evaluation
@@ -102,7 +102,7 @@ include_graphics("Images/ModelSelection.png")
 The four components may look similar to this:
 
 ```{r,echo=FALSE,fig.cap="Components in a timeseries"}
-include_graphics("Images/Components.png")
+include_graphics("Images/04/Components.png")
 ```
 
 
@@ -126,6 +126,14 @@ Where $k = 0,1,2,...$, hence take on numbers, typically whole numbers, as the re
 
 We assess autocorrelation to identify if the data have a trend, seasons, cycles or it is random? If we have seasons, trends or cycles, we must make the model account for this, otherwise one is prone to have a model where it is just implicitly correlated, but that is merely due to the autocorrelation, as it says in the word, it is automatically correlated, but that also implies, that it is not necessarily caused by the data, but rather other factors, often we see macro factors, that have an influence, e.g. an economic book.
 
+Autocorrelation can be plotted using an autocorrelation function (ACF) or merely by using a correlogram, which is a k-period plot of the autocorelation, that looks like the following:
+
+```{r,echo=FALSE,fig.cap="Correlogram Example"}
+include_graphics("Images/04/CorrelogramExample.png")
+```
+
+Where one wants to be within the upper and lower level.
+
 **Manually testing for autocorrelation**
 
 One must:
@@ -148,8 +156,54 @@ Thence one merely must look up the cut off values and assess if there is statist
 
 **Alternative: Ljung-Box Q statistic**
 
+$$Q\ =\ n\left(n+2\right)\sum_{k=1}^m\frac{r_k^2}{n-k}$$
+
+Where *m* is the number of lags to be tested.
+
+The Q statistic is commonly used for testing correlation in the residuals of a forecast model and the comparison is mate to $X^2_{m-q}$, where q is the number of parameters in the model.
 
 
+#### Random vs. correlated data
+
+Randomness is important for forecast model residuals. One can write simple random model, as
+
+$$Y_t=c+\epsilon_t$$
+
+Where c is the component and $\epsilon_t$ is the random error comonent. That is assumed to be uncorrelated period to period.
+
+#### Stationary vs. non stationary data
+
+**Stationary series** is not trending, where is **non stationary series** is trending, can both be linear or exponential.
+
+**The how is it solved?**
+
+One can merely apply differencing of order k. That is equal to:
+
+$$\Delta Y_t=Y_t-Y_{t-1}$$
+
+One could also apply growth rates are log differencing instead.
+
+
+## Data Patterns and Model Selection {#DataPatternsAndModelSelection}
+
+*Here are some examples from the lectures*
+
++ Tend, no cycle, no seasonality
+    + Holt's exponential Smoothing
+    + Linear regression with trend
+    
++ Trend, seasonality, cycle
+    + Winters' exponential smoothing
+    + Linear regression with trend and seasonal adjustment
+    + Causal regression
+    + Time-series decomposition
+    
++ Non linear trend, no seasonality, no cycle
+    + Non linear regression with trend
+    + Causal regression
+    + Holt's exponential smoothing
+    
+Learn more about the methods in section \@ref(ForecastMethods), where a collection of performance measures can be found in section \@ref(PerformanceMeasurements)
 
 
 

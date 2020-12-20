@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.1 Judgmental Forecasting and Forecast Adjustments | Business Forecasting</title>
+  <title>5.2 Performance Measurements | Business Forecasting</title>
   <meta name="description" content="This is the book description" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.1 Judgmental Forecasting and Forecast Adjustments | Business Forecasting" />
+  <meta property="og:title" content="5.2 Performance Measurements | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.1 Judgmental Forecasting and Forecast Adjustments | Business Forecasting" />
+  <meta name="twitter:title" content="5.2 Performance Measurements | Business Forecasting" />
   
   <meta name="twitter:description" content="This is the book description" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="qualitative-forecasting-methods.html"/>
-<link rel="next" href="articles.html"/>
+<link rel="prev" href="ForecastMethods.html"/>
+
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -175,30 +175,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="judgmental-forecasting-and-forecast-adjustments" class="section level2" number="3.1">
-<h2><span class="header-section-number">3.1</span> Judgmental Forecasting and Forecast Adjustments</h2>
-<p>A forecast on its own does not include the analysts judgements well enough.</p>
-<p>To include experts insights, one can apply different methods for this, that is called judgmental forecasting. There er different methods for including experts input on the analysis. See below:</p>
-<p><strong>The Delphi Method:</strong> That is an iterative process where experts makes analysis an predictions independently, then the findings are distributed and then they are able to independently make corrections to their output if they feel to. The results are then distributed and they are possible to correct their output</p>
-<p>The feedback loop ends when they have reached redundancy and they make no more corrections.</p>
-<p>Thus, the output is different expert views, that you can select between.</p>
-<p>Scenario writing: you have different experts that write scenarios that are likely to happen in the future, you rank those events after likelyhood.</p>
-<p>The scenario writing is followed by discussion. Thus they are able to defend and modify predictions.</p>
-<p><strong>Combining forecasts:</strong> This is where you make different predicte analysis perhaps not including the same predictors, then you use the outputs to compute a forecast, that is done either by finding the mean of the forecasts or assigning weights to the different forecasts that now act as predictors.</p>
-<p><strong>Forecasting and Neural Networks:</strong> NN is used to find its own variables, it is particularly good to fill in missing values.</p>
-<p>Other tools to judgmental decision making:</p>
+<div id="PerformanceMeasurements" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Performance Measurements</h2>
 <ul>
-<li>The decision making tree, where you assign costs and probabilities to events.</li>
+<li>Mean error (ME): <span class="math inline">\(ME=\frac{1}{n}\sum_{ }^{ }\left(Y_t-\hat{Y}_t\right)\)</span></li>
+<li>Mean Absolute Deviation (error): <span class="math inline">\(MAD\left(i.e.\ MAE\right)\ =\ \frac{1}{n}\cdot\sum_{ }^{ }\left|Y_t-\hat{Y}_t\right|\)</span></li>
+<li>Mean Percentage Error (MPE): <span class="math inline">\(MPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{\left(Y_t-\hat{Y}_t\right)}{Y_t}\)</span></li>
+<li>Mean Absolute Percentage Error (MAPE): <span class="math inline">\(MAPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{|\left(Y_t-\hat{Y}_t\right)|}{|Y_t|}\)</span></li>
+<li>Mean-Squared Error (MSE): <span class="math inline">\(MSE=\frac{1}{n}\sum_{ }^{ }(Y_t-\hat{Y}_t)^2\)</span></li>
+<li>Root Mean-Squared Error: <span class="math inline">\(RMSE=\sqrt{MSE}\)</span></li>
 </ul>
-<p>Bayesian statistics, also where you create a tree of probabilities.</p>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="qualitative-forecasting-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="articles.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ForecastMethods.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

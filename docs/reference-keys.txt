@@ -1,6 +1,7 @@
 fig:nice-fig
 fig:unnamed-chunk-7
 fig:unnamed-chunk-8
+fig:unnamed-chunk-9
 introduction
 curriculum
 qualitative-forecasting-methods
@@ -14,3 +15,9 @@ the-forecasting-process
 data-patterns-and-terminology
 terminology
 autocorrelation
+random-vs.-correlated-data
+stationary-vs.-non-stationary-data
+DataPatternsAndModelSelection
+Methods
+ForecastMethods
+PerformanceMeasurements

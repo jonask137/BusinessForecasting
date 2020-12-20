@@ -1,0 +1,48 @@
+
+# Methods and Performance Measurement {#Methods}
+
+## Forecasting Methods {#ForecastMethods}
+
+**Linear regressions**
+
++ Linear regression with a trend: that is normal linear regression, where the trend is added as a counter, which will account for the trend, given it is linear.
+
+**Non linear regressions**
+
++ Non linear regression with trend
++ Causal regression
+
+**Smoothing methods**
+
++ Normal exponential smoothing
++ Holt's exponential smoothing, **Put words to this**
++ Winters' exponential smoothing, **Put words to this**
+
+
+**ARIMA**
+
+*Decomposition of the time series*
+
++ AR:
++ MA:
++ ARMA:
++ ARIMA:
+
+## Performance Measurements {#PerformanceMeasurements}
+
++ Mean error (ME): $ME=\frac{1}{n}\sum_{ }^{ }\left(Y_t-\hat{Y}_t\right)$
++ Mean Absolute Deviation (error): $MAD\left(i.e.\ MAE\right)\ =\ \frac{1}{n}\cdot\sum_{ }^{ }\left|Y_t-\hat{Y}_t\right|$
++ Mean Percentage Error (MPE): $MPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{\left(Y_t-\hat{Y}_t\right)}{Y_t}$
++ Mean Absolute Percentage Error (MAPE): $MAPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{|\left(Y_t-\hat{Y}_t\right)|}{|Y_t|}$
++ Mean-Squared Error (MSE): $MSE=\frac{1}{n}\sum_{ }^{ }(Y_t-\hat{Y}_t)^2$
++ Root Mean-Squared Error: $RMSE=\sqrt{MSE}$
+
+
+
+
+
+
+
+
+
+
