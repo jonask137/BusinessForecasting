@@ -216,6 +216,8 @@ Learn more about the methods in section \@ref(ForecastMethods), where a collecti
 
 ### p. 92 HW Problem 8
 
+#### Moving Averages
+
 ```{r}
 df <- read_excel("Data/Week45/prob8p92HW.xlsx")
 yt <- ts(df) #Rename and define as time series
@@ -240,7 +242,7 @@ One could extend this, by adding this value to the time series and then calculat
 
 This problem is solvable using `filter()`. See the following chunk
 
-```{r}
+```{r,fig.cap="5k Moving Average"}
 k <- 5 #specify the order of the moving average
 c <- rep (1/k,k) #remember that simple average is a weighted average with equal weights, 
                 #you need to specify weights for the filter command to work
@@ -249,12 +251,64 @@ ts.plot(yt5)# "Plotting the MA's
 yt5 #The updated vector of MA's
 ```
 
-This we see, that 
+This we see, that scores are moved to the end, so even though it is the center of the MA, it is now presented as recent values.
+
+For simple moving averages, one may do it in excel, it may be easier and quicker.
+
+#### Exponential moving averages, normal, Holts and Winters
+
+**Simple exponential smoothing**
+
+Where;
+  
++ alpha is the smoothing parameter, 
++ beta tells you if you should account for a trend or not, 
++ gamma is responsible for the presence of a seasonal component in the model
+
+```{r}
+fit <- HoltWinters(yt
+                   ,alpha = 0.4
+                   ,beta = FALSE
+                   ,gamma = FALSE)
+plot(fit,xlim = c(1,nrow(df))) + grid(col = "lightgrey")
+legend("topleft",c("Observed","Fitted"),lty = 1,col = c(1:2))
+```
+
+Hence we see the smoothed values, where the higher alpha, the more will the fitted line track the changes in the observations.
+
+We can now plot the forecast values:
+
+```{r,fig.cap="Forecast Exponential Smoothing"}
+plot(forecast(fit),xlim = c(1,nrow(df)+10))# + grid(col = "lightgrey")
+legend("topleft",c("Observed","Forecast"),lty = 1,col = c("Black","Blue"))
+```
+
+One see the confidence intervals of the forecast widening as we get further away from the actual values.
+
+Now one may assess the accuracy:
+
+```{r}
+accuracy(forecast(fit))
+```
+
+One see an RMSE of 8.2. Hence one could compare it with an exponential smoothing, which is more sensitive to the observations.
+
+```{r}
+fit0.6 <- HoltWinters(yt
+                   ,alpha = 0.6 #Changed
+                   ,beta = FALSE
+                   ,gamma = FALSE)
+accuracy(forecast(fit0.6))
+```
+
+Where we see an RMSE of 6.37, hence lower than the initial test.
+
+
+
 
 ```{r cleaning environment,include=TRUE}
 rm(list = ls())
 ```
-
 
 
 

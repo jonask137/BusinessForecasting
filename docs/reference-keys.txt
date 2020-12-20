@@ -2,6 +2,8 @@ fig:nice-fig
 fig:unnamed-chunk-7
 fig:unnamed-chunk-8
 fig:unnamed-chunk-9
+fig:unnamed-chunk-12
+fig:unnamed-chunk-14
 eq:NaiveForecast
 eq:SimpleAverages
 eq:MA
@@ -31,6 +33,8 @@ stationary-vs.-non-stationary-data
 DataPatternsAndModelSelection
 exercises
 p.-92-hw-problem-8
+moving-averages
+exponential-moving-averages-normal-holts-and-winters
 Methods
 ForecastMethods
 using-averages

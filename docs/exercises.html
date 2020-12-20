@@ -191,14 +191,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><em>This section contain exercises, hence the methods applied on data</em></p>
 <div id="p.-92-hw-problem-8" class="section level3" number="4.4.1">
 <h3><span class="header-section-number">4.4.1</span> p. 92 HW Problem 8</h3>
+<div id="moving-averages" class="section level4" number="4.4.1.1">
+<h4><span class="header-section-number">4.4.1.1</span> Moving Averages</h4>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exercises.html#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week45/prob8p92HW.xlsx&quot;</span>)</span>
 <span id="cb3-2"><a href="exercises.html#cb3-2" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">&lt;-</span> <span class="fu">ts</span>(df) <span class="co">#Rename and define as time series</span></span>
 <span id="cb3-3"><a href="exercises.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt) <span class="co">#We can plot the</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-10-1.png" alt=" " width="480" />
-<p class="caption">
-</p>
-</div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>We see that there is a trend in the data.</p>
 <p>We can calculate the five period moving average by:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="exercises.html#cb4-1" aria-hidden="true" tabindex="-1"></a>yt5c <span class="ot">&lt;-</span> <span class="fu">ma</span>(yt <span class="co">#The time series</span></span>
@@ -227,9 +225,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-3"><a href="exercises.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="co">#you need to specify weights for the filter command to work</span></span>
 <span id="cb6-4"><a href="exercises.html#cb6-4" aria-hidden="true" tabindex="-1"></a>yt5<span class="ot">&lt;-</span> <span class="fu">filter</span>(yt, c, <span class="at">sides =</span> <span class="dv">1</span>)</span>
 <span id="cb6-5"><a href="exercises.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt5)<span class="co"># &quot;Plotting the MA&#39;s</span></span></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-12-1.png" alt=" " width="480" />
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-12-1.png" alt="5k Moving Average" width="480" />
 <p class="caption">
+Figure 4.4: 5k Moving Average
 </p>
 </div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exercises.html#cb7-1" aria-hidden="true" tabindex="-1"></a>yt5 <span class="co">#The updated vector of MA&#39;s</span></span></code></pre></div>
@@ -246,9 +245,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [6,] 216.0
 ## [7,] 219.0
 ## [8,] 221.2</code></pre>
-<p>This we see, that</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exercises.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+<p>This we see, that scores are moved to the end, so even though it is the center of the MA, it is now presented as recent values.</p>
+<p>For simple moving averages, one may do it in excel, it may be easier and quicker.</p>
+</div>
+<div id="exponential-moving-averages-normal-holts-and-winters" class="section level4" number="4.4.1.2">
+<h4><span class="header-section-number">4.4.1.2</span> Exponential moving averages, normal, Holts and Winters</h4>
+<p>Simple and Holt-Winters exponential smoothing</p>
+<p>Where;</p>
+<ul>
+<li>alpha is the smoothing parameter,</li>
+<li>beta tells you if you should account for a trend or not,</li>
+<li>gamma is responsible for the presence of a seasonal component in the model</li>
+</ul>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exercises.html#cb9-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(yt</span>
+<span id="cb9-2"><a href="exercises.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb9-3"><a href="exercises.html#cb9-3" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">beta =</span> <span class="cn">FALSE</span></span>
+<span id="cb9-4"><a href="exercises.html#cb9-4" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">gamma =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-5"><a href="exercises.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">nrow</span>(df))) <span class="sc">+</span> <span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>)</span></code></pre></div>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="exercises.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;Observed&quot;</span>,<span class="st">&quot;Fitted&quot;</span>),<span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>))</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-13-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Hence we see the smoothed values, where the higher alpha, the more will the fitted line track the changes in the observations.</p>
+<p>We can now plot the forecast values:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="exercises.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit),<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">nrow</span>(df)<span class="sc">+</span><span class="dv">10</span>))<span class="co"># + grid(col = &quot;lightgrey&quot;)</span></span>
+<span id="cb12-2"><a href="exercises.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;Observed&quot;</span>,<span class="st">&quot;Forecast&quot;</span>),<span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;Black&quot;</span>,<span class="st">&quot;Blue&quot;</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-14-1.png" alt="Forecast Exponential Smoothing" width="480" />
+<p class="caption">
+Figure 4.5: Forecast Exponential Smoothing
+</p>
+</div>
+<p>One see the confidence intervals of the forecast widening as we get further away from the actual values.</p>
+<p>Now one may assess the accuracy:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="exercises.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">forecast</span>(fit))</span></code></pre></div>
+<pre><code>##                    ME     RMSE      MAE      MPE     MAPE     MASE      ACF1
+## Training set 8.001509 8.209102 8.001509 3.673623 3.673623 2.154252 0.1962194</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="exercises.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 
+</div>
 </div>
 </div>
 <!-- </div> -->
