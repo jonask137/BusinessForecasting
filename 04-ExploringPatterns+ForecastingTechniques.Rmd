@@ -255,7 +255,7 @@ This we see, that scores are moved to the end, so even though it is the center o
 
 For simple moving averages, one may do it in excel, it may be easier and quicker.
 
-#### Exponential moving averages, normal, Holts and Winters
+#### Exponential moving averages + Holts and Winters
 
 **Simple exponential smoothing**
 
@@ -265,7 +265,7 @@ Where;
 + beta tells you if you should account for a trend or not, 
 + gamma is responsible for the presence of a seasonal component in the model
 
-```{r}
+```{r,fig.cap="Exponential Smoothing"}
 fit <- HoltWinters(yt
                    ,alpha = 0.4
                    ,beta = FALSE
@@ -303,14 +303,43 @@ accuracy(forecast(fit0.6))
 
 Where we see an RMSE of 6.37, hence lower than the initial test.
 
+**Holt's exponential smoothing**
 
+exponential smoothing when a trend component is present: beta= TRUE
 
+```{r,fig.cap="Holt's Exponential Smoothing"}
+{fit3 <- HoltWinters(yt
+                    ,alpha = 0.6
+                    ,beta = TRUE
+                    ,gamma = FALSE)
+plot(forecast(fit3))
+accuracy(forecast(fit3))}
+```
 
-```{r cleaning environment,include=TRUE}
+We see that the RMSE is even lower (4.37). Which is expected, as Holt's exponential smoothing accounts for trend.
+
+**Winter's Exponential Smoothing**
+
+Which accounts for trend and seasonality
+
+in order to make it work one needs to define the frequency of your seasonal component, when specifying the ts data
+
+```{r}
+{yt <- ts(df
+         ,frequency = 4) # let's assume we suspect a quarterly pattern
+fit4 <- HoltWinters(yt, alpha=0.6, beta=TRUE, gamma=TRUE)
+plot(forecast(fit4))
+accuracy(forecast(fit4))} # experiment with seasonality frequency to see if you can get any lower in MSE
+```
+
+We see that the RMSE is even lower (3.97), hence Winters Exponential Smoothing appear to be the best model for prediction.
+
+```{r cleaning environment,include=FALSE}
 rm(list = ls())
 ```
 
 
+### p. 93 HW Problem 9-10
 
 
 
