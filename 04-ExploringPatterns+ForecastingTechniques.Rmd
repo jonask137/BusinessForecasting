@@ -4,7 +4,7 @@ library(knitr)
 ```
 
 
-# Exploring Patterns + forecasting techniques
+# Exploring Patterns and Forecasting Techniques
 
 *This chapter will elaborate on how one identify patterns in data thus how to account for this. Thus, we are looking into smoothing methods and moving averages*
 
@@ -194,7 +194,7 @@ One could also apply growth rates are log differencing instead.
     
 + Trend, seasonality, cycle
     + Winters' exponential smoothing
-    + Linear regression with trend and seasonal adjustment
+    + Linear regression with trend and seasonal adjustments
     + Causal regression
     + Time-series decomposition
     
@@ -204,6 +204,7 @@ One could also apply growth rates are log differencing instead.
     + Holt's exponential smoothing
     
 Learn more about the methods in section \@ref(ForecastMethods), where a collection of performance measures can be found in section \@ref(PerformanceMeasurements)
+
 
 
 

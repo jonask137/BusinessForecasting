@@ -3,6 +3,37 @@
 
 ## Forecasting Methods {#ForecastMethods}
 
+**Naive forecasts**
+
+*This is merely the current period is assumed to be the best predictor for the future, hence it can be written as:*
+
+\begin{equation} 
+\hat{Y}_{t+1}=Y_t
+(\#eq:NaiveForecast)
+\end{equation}
+
+where, $Y_t$ = the last period, hence $\hat{Y}_{t+1}$ = the following period.
+
+Therefore, the error can merely be written as: $e_t=Y_{t+1}-\hat{Y}_{t+1}$, being the actual amount compared with the foretasted value.
+
+One can make several iterations to account for trending, the growth rate, or seasonal data. Those being:
+
++ $\hat{Y}_{t+1}=Y_t+(Y_t-Y_{t-1})$, to account for trending data (non stationary data)
++ $\hat{Y}_{t+1}=Y_t * \frac{Y_t}{Y_{t-1}}$, to account for the growth rate, notice that it only assess the growth rate to the prior period.
++ $\hat{Y}_{t+1}=Y_{t-3}+\frac{Y_t-Y_{t-4}}{4}$, to account for  quarterly trending data, the periods can naturally be changed by changing the formula, e.g. to 12.
+
+**Simple averages**
+
+*One may assume that it is sufficient to apply the average of all observations, to predict the next period, hence we can say:*
+
+\begin{equation} 
+\hat{Y}_{t+1}=\frac{1}{n}\sum^t_{i=1}Y_i
+(\#eq:SimpleAverages)
+\end{equation} 
+
+
+*Thus one take the sum of *
+
 **Linear regressions**
 
 + Linear regression with a trend: that is normal linear regression, where the trend is added as a counter, which will account for the trend, given it is linear.

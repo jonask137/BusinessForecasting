@@ -2,6 +2,8 @@ fig:nice-fig
 fig:unnamed-chunk-7
 fig:unnamed-chunk-8
 fig:unnamed-chunk-9
+eq:NaiveForecast
+eq:SimpleAverages
 introduction
 curriculum
 qualitative-forecasting-methods
@@ -10,7 +12,7 @@ articles
 a-new-product-growth-model-for-consumer-durables-management-science
 sales-forecasts-for-existing-consumer-products
 judgmental-forecasting-a-review-of-progress-over-the-last-25-years-international-journal-of-forecasting
-exploring-patterns-forecasting-techniques
+exploring-patterns-and-forecasting-techniques
 the-forecasting-process
 data-patterns-and-terminology
 terminology

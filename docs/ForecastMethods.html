@@ -144,7 +144,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.2.3" data-path="articles.html"><a href="articles.html#judgmental-forecasting-a-review-of-progress-over-the-last-25-years-international-journal-of-forecasting"><i class="fa fa-check"></i><b>3.2.3</b> Judgmental forecasting A review of progress over the last 25 years, International Journal of Forecasting</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="exploring-patterns-forecasting-techniques.html"><a href="exploring-patterns-forecasting-techniques.html"><i class="fa fa-check"></i><b>4</b> Exploring Patterns + forecasting techniques</a>
+<li class="chapter" data-level="4" data-path="exploring-patterns-and-forecasting-techniques.html"><a href="exploring-patterns-and-forecasting-techniques.html"><i class="fa fa-check"></i><b>4</b> Exploring Patterns and Forecasting Techniques</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="the-forecasting-process.html"><a href="the-forecasting-process.html"><i class="fa fa-check"></i><b>4.1</b> The forecasting process</a></li>
 <li class="chapter" data-level="4.2" data-path="data-patterns-and-terminology.html"><a href="data-patterns-and-terminology.html"><i class="fa fa-check"></i><b>4.2</b> Data Patterns and terminology</a>
@@ -177,6 +177,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="ForecastMethods" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Forecasting Methods</h2>
+<p><strong>Naive forecasts</strong></p>
+<p><em>This is merely the current period is assumed to be the best predictor for the future, hence it can be written as:</em></p>
+<p><span class="math display" id="eq:NaiveForecast">\[\begin{equation} 
+\hat{Y}_{t+1}=Y_t
+\tag{5.1}
+\end{equation}\]</span></p>
+<p>where, <span class="math inline">\(Y_t\)</span> = the last period, hence <span class="math inline">\(\hat{Y}_{t+1}\)</span> = the following period.</p>
+<p>Therefore, the error can merely be written as: <span class="math inline">\(e_t=Y_{t+1}-\hat{Y}_{t+1}\)</span>, being the actual amount compared with the foretasted value.</p>
+<p>One can make several iterations to account for trending, the growth rate, or seasonal data. Those being:</p>
+<ul>
+<li><span class="math inline">\(\hat{Y}_{t+1}=Y_t+(Y_t-Y_{t-1})\)</span>, to account for trending data (non stationary data)</li>
+<li><span class="math inline">\(\hat{Y}_{t+1}=Y_t * \frac{Y_t}{Y_{t-1}}\)</span>, to account for the growth rate, notice that it only assess the growth rate to the prior period.</li>
+<li><span class="math inline">\(\hat{Y}_{t+1}=Y_{t-3}+\frac{Y_t-Y_{t-4}}{4}\)</span>, to account for quarterly trending data, the periods can naturally be changed by changing the formula, e.g. to 12.</li>
+</ul>
+<p><strong>Simple averages</strong></p>
+<p><em>One may assume that it is sufficient to apply the average of all observations, to predict the next period, hence we can say:</em></p>
+<p><span class="math display" id="eq:SimpleAverages">\[\begin{equation} 
+\hat{Y}_{t+1}=\frac{1}{n}\sum^t_{i=1}Y_i
+\tag{5.2}
+\end{equation}\]</span></p>
+<p><em>Thus one take the sum of </em></p>
 <p><strong>Linear regressions</strong></p>
 <ul>
 <li>Linear regression with a trend: that is normal linear regression, where the trend is added as a counter, which will account for the trend, given it is linear.</li>
