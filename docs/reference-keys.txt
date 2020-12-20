@@ -4,6 +4,11 @@ fig:unnamed-chunk-8
 fig:unnamed-chunk-9
 eq:NaiveForecast
 eq:SimpleAverages
+eq:ME
+eq:MAD
+eq:MPE
+eq:MAPE
+eq:MSE
 introduction
 curriculum
 qualitative-forecasting-methods

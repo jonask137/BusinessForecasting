@@ -61,12 +61,47 @@ One can make several iterations to account for trending, the growth rate, or sea
 
 ## Performance Measurements {#PerformanceMeasurements}
 
-+ Mean error (ME): $ME=\frac{1}{n}\sum_{ }^{ }\left(Y_t-\hat{Y}_t\right)$
-+ Mean Absolute Deviation (error): $MAD\left(i.e.\ MAE\right)\ =\ \frac{1}{n}\cdot\sum_{ }^{ }\left|Y_t-\hat{Y}_t\right|$
-+ Mean Percentage Error (MPE): $MPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{\left(Y_t-\hat{Y}_t\right)}{Y_t}$
-+ Mean Absolute Percentage Error (MAPE): $MAPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{|\left(Y_t-\hat{Y}_t\right)|}{|Y_t|}$
-+ Mean-Squared Error (MSE): $MSE=\frac{1}{n}\sum_{ }^{ }(Y_t-\hat{Y}_t)^2$
-+ Root Mean-Squared Error: $RMSE=\sqrt{MSE}$
++ Mean error (ME): 
+
+\begin{equation}
+ME=\frac{1}{n}\sum_{ }^{ }\left(Y_t-\hat{Y}_t\right)$
+(\#eq:ME)
+\end{equation} 
+
++ Mean Absolute Deviation (error): 
+
+\begin{equation}
+MAD\left(i.e.\ MAE\right)\ =\ \frac{1}{n}\cdot\sum_{ }^{ }\left|Y_t-\hat{Y}_t\right|
+(\#eq:MAD)
+\end{equation} 
+
++ Mean Percentage Error (MPE): 
+
+\begin{equation}
+MPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{\left(Y_t-\hat{Y}_t\right)}{Y_t}
+(\#eq:MPE)
+\end{equation} 
+
++ Mean Absolute Percentage Error (MAPE): 
+
+\begin{equation}
+MAPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{|\left(Y_t-\hat{Y}_t\right)|}{|Y_t|}
+(\#eq:MAPE)
+\end{equation} 
+
++ Mean-Squared Error (MSE): 
+
+\begin{equation}
+MSE=\frac{1}{n}\sum_{ }^{ }(Y_t-\hat{Y}_t)^2
+(\#eq:MSE)
+\end{equation}
+
++ Root Mean-Squared Error: 
+
+\begin{equation}
+RMSE=\sqrt{MSE}
+(\#eq:MSE)
+\end{equation}
 
 
 
