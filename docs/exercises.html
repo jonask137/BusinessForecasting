@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Exploring Patterns and Forecasting Techniques | Business Forecasting</title>
+  <title>4.4 Exercises | Business Forecasting</title>
   <meta name="description" content="This is the book description" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta property="og:title" content="4.4 Exercises | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta name="twitter:title" content="4.4 Exercises | Business Forecasting" />
   
   <meta name="twitter:description" content="This is the book description" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="articles.html"/>
-<link rel="next" href="the-forecasting-process.html"/>
+<link rel="prev" href="DataPatternsAndModelSelection.html"/>
+<link rel="next" href="Methods.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -186,24 +186,79 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploring-patterns-and-forecasting-techniques" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Exploring Patterns and Forecasting Techniques</h1>
-<p><em>This chapter will elaborate on how one identify patterns in data thus how to account for this. Thus, we are looking into smoothing methods and moving averages</em></p>
-<p><em>Additionally, we will explore how we select forecasting methods</em></p>
-<p><strong>Literature:</strong></p>
-<ul>
-<li>HW: Exploring Data Patterns and an Introduction to Forecasting Techniques</li>
-<li>HW: Moving Averages and Smoothing Methods</li>
-<li>Armstrong, J.S. (2001) “Selecting Forecast Methods,” In Principles of Forecasting: A Handbook for Researchers and Practitioners (Ed. J. Scott Armstrong), Kluwer</li>
-</ul>
+<div id="exercises" class="section level2" number="4.4">
+<h2><span class="header-section-number">4.4</span> Exercises</h2>
+<p><em>This section contain exercises, hence the methods applied on data</em></p>
+<div id="p.-92-hw-problem-8" class="section level3" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> p. 92 HW Problem 8</h3>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exercises.html#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week45/prob8p92HW.xlsx&quot;</span>)</span>
+<span id="cb3-2"><a href="exercises.html#cb3-2" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">&lt;-</span> <span class="fu">ts</span>(df) <span class="co">#Rename and define as time series</span></span>
+<span id="cb3-3"><a href="exercises.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt) <span class="co">#We can plot the</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-10-1.png" alt=" " width="480" />
+<p class="caption">
+</p>
 </div>
+<p>We see that there is a trend in the data.</p>
+<p>We can calculate the five period moving average by:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="exercises.html#cb4-1" aria-hidden="true" tabindex="-1"></a>yt5c <span class="ot">&lt;-</span> <span class="fu">ma</span>(yt <span class="co">#The time series</span></span>
+<span id="cb4-2"><a href="exercises.html#cb4-2" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">order =</span> <span class="dv">5</span> <span class="co">#Amount of periods to be evaluated</span></span>
+<span id="cb4-3"><a href="exercises.html#cb4-3" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">centre =</span> <span class="cn">TRUE</span> <span class="co">#We want the center value of the MA</span></span>
+<span id="cb4-4"><a href="exercises.html#cb4-4" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb4-5"><a href="exercises.html#cb4-5" aria-hidden="true" tabindex="-1"></a>yt5c</span></code></pre></div>
+<pre><code>## Time Series:
+## Start = 1 
+## End = 8 
+## Frequency = 1 
+##       [,1]
+## [1,]    NA
+## [2,]    NA
+## [3,] 212.0
+## [4,] 216.0
+## [5,] 219.0
+## [6,] 221.2
+## [7,]    NA
+## [8,]    NA</code></pre>
+<p>Hence we are able to produce moving averages based on the data. Notice, that the most recent MA is the prediction, hence being <span class="math inline">\(\hat{Y}_{t+1}\)</span>.</p>
+<p>One could extend this, by adding this value to the time series and then calculate MA for the period hereafter. We see that the output of the table above is somewhat misleading, as the most recent MA predictinos, are not positioned in the end, but instead where the center actually is.</p>
+<p>This problem is solvable using <code>filter()</code>. See the following chunk</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="exercises.html#cb6-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#specify the order of the moving average</span></span>
+<span id="cb6-2"><a href="exercises.html#cb6-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">rep</span> (<span class="dv">1</span><span class="sc">/</span>k,k) <span class="co">#remember that simple average is a weighted average with equal weights, </span></span>
+<span id="cb6-3"><a href="exercises.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="co">#you need to specify weights for the filter command to work</span></span>
+<span id="cb6-4"><a href="exercises.html#cb6-4" aria-hidden="true" tabindex="-1"></a>yt5<span class="ot">&lt;-</span> <span class="fu">filter</span>(yt, c, <span class="at">sides =</span> <span class="dv">1</span>)</span>
+<span id="cb6-5"><a href="exercises.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt5)<span class="co"># &quot;Plotting the MA&#39;s</span></span></code></pre></div>
+<div class="figure" style="text-align: center">
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-12-1.png" alt=" " width="480" />
+<p class="caption">
+</p>
+</div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exercises.html#cb7-1" aria-hidden="true" tabindex="-1"></a>yt5 <span class="co">#The updated vector of MA&#39;s</span></span></code></pre></div>
+<pre><code>## Time Series:
+## Start = 1 
+## End = 8 
+## Frequency = 1 
+##       [,1]
+## [1,]    NA
+## [2,]    NA
+## [3,]    NA
+## [4,]    NA
+## [5,] 212.0
+## [6,] 216.0
+## [7,] 219.0
+## [8,] 221.2</code></pre>
+<p>This we see, that</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exercises.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+
+</div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="articles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-forecasting-process.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="DataPatternsAndModelSelection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="Methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

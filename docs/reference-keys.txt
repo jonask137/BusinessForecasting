@@ -29,6 +29,8 @@ autocorrelation
 random-vs.-correlated-data
 stationary-vs.-non-stationary-data
 DataPatternsAndModelSelection
+exercises
+p.-92-hw-problem-8
 Methods
 ForecastMethods
 using-averages

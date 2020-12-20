@@ -1,6 +1,8 @@
 
 ```{r libraries,include=FALSE}
 library(knitr)
+library(readxl)
+library(forecast)
 ```
 
 
@@ -206,6 +208,54 @@ One could also apply growth rates are log differencing instead.
     + Holt's exponential smoothing
     
 Learn more about the methods in section \@ref(ForecastMethods), where a collection of performance measures can be found in section \@ref(PerformanceMeasurements)
+
+
+## Exercises
+
+*This section contain exercises, hence the methods applied on data*
+
+### p. 92 HW Problem 8
+
+```{r}
+df <- read_excel("Data/Week45/prob8p92HW.xlsx")
+yt <- ts(df) #Rename and define as time series
+ts.plot(yt) #We can plot the
+```
+
+We see that there is a trend in the data.
+
+We can calculate the five period moving average by:
+
+```{r}
+yt5c <- ma(yt #The time series
+           ,order = 5 #Amount of periods to be evaluated
+           ,centre = TRUE #We want the center value of the MA
+           )
+yt5c
+```
+
+Hence we are able to produce moving averages based on the data. Notice, that the most recent MA is the prediction, hence being $\hat{Y}_{t+1}$.
+
+One could extend this, by adding this value to the time series and then calculate MA for the period hereafter. We see that the output of the table above is somewhat misleading, as the most recent MA predictinos, are not positioned in the end, but instead where the center actually is.
+
+This problem is solvable using `filter()`. See the following chunk
+
+```{r}
+k <- 5 #specify the order of the moving average
+c <- rep (1/k,k) #remember that simple average is a weighted average with equal weights, 
+                #you need to specify weights for the filter command to work
+yt5<- filter(yt, c, sides = 1)
+ts.plot(yt5)# "Plotting the MA's
+yt5 #The updated vector of MA's
+```
+
+This we see, that 
+
+```{r cleaning environment,include=TRUE}
+rm(list = ls())
+```
+
+
 
 
 

@@ -108,7 +108,13 @@ thus:
 =\hat{Y}_t+\alpha(Y_t-\hat{Y}_t)
 \end{equation}
 
+Where $\alpha$ = the smoothing constant, thus is can be between 0 and 1. The higher alpha the largest weight to the most recent observation.
 
+**Then how to choose the smoothing parameter $\alpha$?**
+
++ For stable predictions, choose a high alpha
++ For sensitive predictions, choose low alpha
++ Test different alpha values and compare the models using the performance measures in section \@ref(PerformanceMeasurements).
 
 #### Holt's exponential smoothing, **Put words to this**
 #### Winters' exponential smoothing, **Put words to this**

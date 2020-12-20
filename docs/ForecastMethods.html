@@ -152,6 +152,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.1" data-path="data-patterns-and-terminology.html"><a href="data-patterns-and-terminology.html#terminology"><i class="fa fa-check"></i><b>4.2.1</b> Terminology</a></li>
 </ul></li>
 <li class="chapter" data-level="4.3" data-path="DataPatternsAndModelSelection.html"><a href="DataPatternsAndModelSelection.html"><i class="fa fa-check"></i><b>4.3</b> Data Patterns and Model Selection</a></li>
+<li class="chapter" data-level="4.4" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>4.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="exercises.html"><a href="exercises.html#p.-92-hw-problem-8"><i class="fa fa-check"></i><b>4.4.1</b> p. 92 HW Problem 8</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>5</b> Methods and Performance Measurement</a>
 <ul>
@@ -274,6 +278,13 @@ thus:
 <span class="math display">\[\begin{equation}
 =\hat{Y}_t+\alpha(Y_t-\hat{Y}_t)
 \end{equation}\]</span></p>
+<p>Where <span class="math inline">\(\alpha\)</span> = the smoothing constant, thus is can be between 0 and 1. The higher alpha the largest weight to the most recent observation.</p>
+<p><strong>Then how to choose the smoothing parameter <span class="math inline">\(\alpha\)</span>?</strong></p>
+<ul>
+<li>For stable predictions, choose a high alpha</li>
+<li>For sensitive predictions, choose low alpha</li>
+<li>Test different alpha values and compare the models using the performance measures in section <a href="PerformanceMeasurements.html#PerformanceMeasurements">5.2</a>.</li>
+</ul>
 </div>
 <div id="holts-exponential-smoothing-put-words-to-this" class="section level4" number="5.1.4.2">
 <h4><span class="header-section-number">5.1.4.2</span> Holt’s exponential smoothing, <strong>Put words to this</strong></h4>
