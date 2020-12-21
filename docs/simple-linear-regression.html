@@ -263,8 +263,15 @@ R^2=\frac{SSR}{SST}
 <p><strong><em>Serial correlation and Heteroskedasticity</em></strong></p>
 <p><em>Notice that autocorrelation = serial correlation</em></p>
 <p>Serial correlation is where the observations are trailing each other, where heteroskedasticity is where the variance is changing over timer:</p>
-<div id="serial-correlation-checking-for-independent" class="section level4" number="5.1.1.1">
-<h4><span class="header-section-number">5.1.1.1</span> Serial correlation (checking for independent ):</h4>
+<div id="serial-correlation-checking-for-independent-residuals" class="section level4" number="5.1.1.1">
+<h4><span class="header-section-number">5.1.1.1</span> Serial correlation (checking for independent residuals):</h4>
+<p>We must make sure that the residuals does not have a clear pattern, as that means that some variables has been omitted. This can be assessed for example by:</p>
+<ul>
+<li>Visual inspection</li>
+<li>Durbin Watson test, see equation <a href="simple-linear-regression.html#eq:DurbinWatsonTest">(5.6)</a></li>
+<li>Correlogram</li>
+<li>Statistical test for relationship between residuals and lagged residuals</li>
+</ul>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
 <img src="Images/05/SerialCorrelationExample.png" alt="Serial Correlation Example" width="308" />
 <p class="caption">
@@ -279,13 +286,17 @@ DW\ =\frac{\sum_{ }^{ }\left(e_t-e_{t-1}\right)^{^2}}{\sum_{ }^{ }e_t^{^2}}
 <p>0 &lt; DW &lt; 4, where if DW = 2 it indicates no serial correlation (this is the ideal), generally if 1.5 &lt; DW &lt; 2.5 is widely used as an acceptable level.</p>
 <p>If DW &gt; 2, it indicates negative serial correlation and if DW &lt; 2, it indicates that there is positive serial correlation.</p>
 <p><em>One could also use correlation testing by checking correlogram of residuals or testing residuals against lagged residuals</em></p>
-<p>Heteroskedasticity:</p>
+</div>
+<div id="heteroskedasticity" class="section level4" number="5.1.1.2">
+<h4><span class="header-section-number">5.1.1.2</span> Heteroskedasticity:</h4>
+<p>We want the variance to have a constant variance. This can be checked visually, where we dont want to see a funnel shape, as in the visualization below.</p>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-21"></span>
 <img src="Images/05/HeteroskedasticityExample.png" alt="Heteroskedasticity Example" width="107" />
 <p class="caption">
 Figure 5.2: Heteroskedasticity Example
 </p>
 </div>
+<p>What do</p>
 <p>If one observe serial correlation (auto correlation) and heteroskedasticity in the residuals, then the model cannot be used.</p>
 </div>
 </div>

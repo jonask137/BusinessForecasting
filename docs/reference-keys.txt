@@ -58,7 +58,8 @@ case-6-oo.-108-111-hw
 simple-and-multiple-linear-regression
 simple-linear-regression
 assumptions
-serial-correlation-checking-for-independent
+serial-correlation-checking-for-independent-residuals
+heteroskedasticity
 multiple-linear-regression
 Methods
 ForecastMethods

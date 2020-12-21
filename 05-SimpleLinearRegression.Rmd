@@ -95,9 +95,14 @@ Some can be done before analysis and others after the model is applied, hence it
 
 Serial correlation is where the observations are trailing each other, where heteroskedasticity is where the variance is changing over timer:
 
-#### Serial correlation (checking for independent ):
+#### Serial correlation (checking for independent residuals):
 
+We must make sure that the residuals does not have a clear pattern, as that means that some variables has been omitted. This can be assessed for example by:
 
++ Visual inspection
++ Durbin Watson test, see equation \@ref(eq:DurbinWatsonTest)
++ Correlogram
++ Statistical test for relationship between residuals and lagged residuals
 
 ```{r,echo=FALSE,fig.cap="Serial Correlation Example"}
 include_graphics("Images/05/SerialCorrelationExample.png")
@@ -116,11 +121,16 @@ If DW > 2, it indicates negative serial correlation and if DW < 2, it indicates 
 
 *One could also use correlation testing by checking correlogram of residuals or testing residuals against lagged residuals*
 
-Heteroskedasticity:
+#### Heteroskedasticity:
+
+We want the variance to have a constant variance. This can be checked visually, where we dont want to see a funnel shape, as in the visualization below.
 
 ```{r,echo=FALSE,fig.cap="Heteroskedasticity Example"}
 include_graphics("Images/05/HeteroskedasticityExample.png")
 ```
+
+What do
+
 
 If one observe serial correlation (auto correlation) and heteroskedasticity in the residuals, then the model cannot be used.
 
