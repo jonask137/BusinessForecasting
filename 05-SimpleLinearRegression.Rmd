@@ -1,6 +1,12 @@
 
 # Simple and Multiple Linear Regression
 
+**Lectures**
+
++ 5th lecture - simple linear regression
++ 6th lecture - multiple linear regression
+
+
 **Literature**
 
 + HW: Simple Linear Regression
@@ -8,11 +14,127 @@
 
 ## Simple Linear Regression
 
+I will not go much in details with what simple linaer regression is.
+
+One can calculate the beta values by the following
+
+\begin{equation}
+b_0=\ \overline{Y}-\ b_1\overline{X}
+(\#eq:b0)
+\end{equation}
+
+\begin{equation}
+b_1=\frac{\sum_{ }^{ }\left(X-\overline{X}\right)\left(Y-\overline{Y}\right)}{\sum_{ }^{ }\left(X-\overline{X}\right)^{^2}}
+(\#eq:b1)
+\end{equation}
+
+Where point forecast, hence $\hat{Y}$ is merely the sum of the linear equation, hence $\hat{Y}=b_0+b_1X^*$, where $X^*$ is the specific X values. Thence one can estimate the standard error by:
+
+\begin{equation}
+s_{yx}=\sqrt{\frac{\sum_{ }^{ }\left(Y-\overline{Y}\right)^{^2}}{n-2}}
+(\#eq:SELinear)
+\end{equation}
+
+*Equations \@ref(eq:SELinear) can also be written otherwise, see the slides for that.*
+
+**The residuals can be broken down to the following**
 
 
+\begin{equation}
+\sum_{ }^{ }\left(Y-\overline{Y}\right)^{^2}=\sum_{ }^{ }\left(\hat{Y}-\ \overline{Y}\right)^{^2}+\sum_{ }^{ }\left(Y-\ \hat{Y}\right)^{^2}
+(\#eq:error)
+\end{equation}
+
+Which consist of the following three elements.
+
+\begin{equation}
+SST = SSR + SSE
+(\#eq:error2)
+\end{equation}
+
+The residuals can then be applied for a goodness of fit assessment, where one can identify R squared- 
+
+\begin{equation}
+R^2=\frac{SSR}{SST}
+(\#eq:error2)
+\end{equation}
+
+***So what can the linear regression then be used for?***
+
+1. Inference
+2. Prediction
+
+*Notice, that inference can only be done when the model is adequate, hence the assumptions actually being met.*
+
+### Assumptions
+
+We have the following assumptions for a linear model:
+
+1. The underlying relationship between dependent and independent variable is actually linear
+2. Independent residuals
+3. Homoskedastic residuals (show constant variance)
+4. Identically distributed (In general, normal distribution is assumed)
+
+**Hence how is the assumptions tested?**
+
+Some can be done before analysis and others after the model is applied, hence it can be described by the following:
+
++ Before the model is applied:
+  1. The underlying relationship between dependent and independent variable is actually linear
+  
++ After the model is applied (doing diagnostics):
+  2. Independent residuals
+  3. Homoskedastic residuals (show constant variance)
+  4. Identically distributed (In general, normal distribution is assumed)
+  
+**Now lets dive into the data**
+
+***Serial correlation and Heteroskedasticity***
+
+*Notice that autocorrelation = serial correlation*
+
+Serial correlation is where the observations are trailing each other, where heteroskedasticity is where the variance is changing over timer:
+
+#### Serial correlation (checking for independent ):
+
+
+
+```{r,echo=FALSE,fig.cap="Serial Correlation Example"}
+include_graphics("Images/05/SerialCorrelationExample.png")
+```
+
+Notice, that one should also test for autocorrelation in the errors, that can be done with a Durbin-Watson statistic:
+
+\begin{equation}
+DW\ =\frac{\sum_{ }^{ }\left(e_t-e_{t-1}\right)^{^2}}{\sum_{ }^{ }e_t^{^2}}
+(\#eq:DurbinWatsonTest)
+\end{equation}
+
+0 < DW < 4, where if DW = 2 it indicates no serial correlation (this is the ideal), generally if 1.5 < DW < 2.5 is widely used as an acceptable level.
+
+If DW > 2, it indicates negative serial correlation and if DW < 2, it indicates that there is positive serial correlation.
+
+*One could also use correlation testing by checking correlogram of residuals or testing residuals against lagged residuals*
+
+Heteroskedasticity:
+
+```{r,echo=FALSE,fig.cap="Heteroskedasticity Example"}
+include_graphics("Images/05/HeteroskedasticityExample.png")
+```
+
+If one observe serial correlation (auto correlation) and heteroskedasticity in the residuals, then the model cannot be used.
 
 
 
 
 
 ## Multiple Linear Regression
+
+
+
+
+
+
+
+
+

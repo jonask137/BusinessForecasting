@@ -162,7 +162,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="simple-and-multiple-linear-regression.html"><a href="simple-and-multiple-linear-regression.html"><i class="fa fa-check"></i><b>5</b> Simple and Multiple Linear Regression</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>5.1</b> Simple Linear Regression</a></li>
+<li class="chapter" data-level="5.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>5.1</b> Simple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#assumptions"><i class="fa fa-check"></i><b>5.1.1</b> Assumptions</a></li>
+</ul></li>
 <li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>6</b> Methods and Performance Measurement</a>
@@ -196,6 +199,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="simple-linear-regression" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Simple Linear Regression</h2>
+<p>I will not go much in details with what simple linaer regression is.</p>
+<p>One can calculate the beta values by the following</p>
+<p><span class="math display" id="eq:b0">\[\begin{equation}
+b_0=\ \overline{Y}-\ b_1\overline{X}
+\tag{5.1}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:b1">\[\begin{equation}
+b_1=\frac{\sum_{ }^{ }\left(X-\overline{X}\right)\left(Y-\overline{Y}\right)}{\sum_{ }^{ }\left(X-\overline{X}\right)^{^2}}
+\tag{5.2}
+\end{equation}\]</span></p>
+<p>Where point forecast, hence <span class="math inline">\(\hat{Y}\)</span> is merely the sum of the linear equation, hence <span class="math inline">\(\hat{Y}=b_0+b_1X^*\)</span>, where <span class="math inline">\(X^*\)</span> is the specific X values. Thence one can estimate the standard error by:</p>
+<p><span class="math display" id="eq:SELinear">\[\begin{equation}
+s_{yx}=\sqrt{\frac{\sum_{ }^{ }\left(Y-\overline{Y}\right)^{^2}}{n-2}}
+\tag{5.3}
+\end{equation}\]</span></p>
+<p><em>Equations <a href="simple-linear-regression.html#eq:SELinear">(5.3)</a> can also be written otherwise, see the slides for that.</em></p>
+<p><strong>The residuals can be broken down to the following</strong></p>
+<p><span class="math display" id="eq:error">\[\begin{equation}
+\sum_{ }^{ }\left(Y-\overline{Y}\right)^{^2}=\sum_{ }^{ }\left(\hat{Y}-\ \overline{Y}\right)^{^2}+\sum_{ }^{ }\left(Y-\ \hat{Y}\right)^{^2}
+\tag{5.4}
+\end{equation}\]</span></p>
+<p>Which consist of the following three elements.</p>
+<p><span class="math display" id="eq:error2">\[\begin{equation}
+SST = SSR + SSE
+\tag{5.5}
+\end{equation}\]</span></p>
+<p>The residuals can then be applied for a goodness of fit assessment, where one can identify R squared-</p>
+<p><span class="math display" id="eq:error2">\[\begin{equation}
+R^2=\frac{SSR}{SST}
+\tag{5.5}
+\end{equation}\]</span></p>
+<p><strong><em>So what can the linear regression then be used for?</em></strong></p>
+<ol style="list-style-type: decimal">
+<li>Inference</li>
+<li>Prediction</li>
+</ol>
+<p><em>Notice, that inference can only be done when the model is adequate, hence the assumptions actually being met.</em></p>
+<div id="assumptions" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> Assumptions</h3>
+<p>We have the following assumptions for a linear model:</p>
+<ol style="list-style-type: decimal">
+<li>The underlying relationship between dependent and independent variable is actually linear</li>
+<li>Independent residuals</li>
+<li>Homoskedastic residuals (show constant variance)</li>
+<li>Identically distributed (In general, normal distribution is assumed)</li>
+</ol>
+<p><strong>Hence how is the assumptions tested?</strong></p>
+<p>Some can be done before analysis and others after the model is applied, hence it can be described by the following:</p>
+<ul>
+<li>Before the model is applied:
+<ol style="list-style-type: decimal">
+<li>The underlying relationship between dependent and independent variable is actually linear</li>
+</ol></li>
+<li>After the model is applied (doing diagnostics):
+<ol start="2" style="list-style-type: decimal">
+<li>Independent residuals</li>
+<li>Homoskedastic residuals (show constant variance)</li>
+<li>Identically distributed (In general, normal distribution is assumed)</li>
+</ol></li>
+</ul>
+<p><strong>Now lets dive into the data</strong></p>
+<p><strong><em>Serial correlation and Heteroskedasticity</em></strong></p>
+<p><em>Notice that autocorrelation = serial correlation</em></p>
+<p>Serial correlation is where the observations are trailing each other, where heteroskedasticity is where the variance is changing over timer:</p>
+<div id="serial-correlation-checking-for-independent" class="section level4" number="5.1.1.1">
+<h4><span class="header-section-number">5.1.1.1</span> Serial correlation (checking for independent ):</h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-20"></span>
+<img src="Images/05/SerialCorrelationExample.png" alt="Serial Correlation Example" width="308" />
+<p class="caption">
+Figure 5.1: Serial Correlation Example
+</p>
+</div>
+<p>Notice, that one should also test for autocorrelation in the errors, that can be done with a Durbin-Watson statistic:</p>
+<p><span class="math display" id="eq:DurbinWatsonTest">\[\begin{equation}
+DW\ =\frac{\sum_{ }^{ }\left(e_t-e_{t-1}\right)^{^2}}{\sum_{ }^{ }e_t^{^2}}
+\tag{5.6}
+\end{equation}\]</span></p>
+<p>0 &lt; DW &lt; 4, where if DW = 2 it indicates no serial correlation (this is the ideal), generally if 1.5 &lt; DW &lt; 2.5 is widely used as an acceptable level.</p>
+<p>If DW &gt; 2, it indicates negative serial correlation and if DW &lt; 2, it indicates that there is positive serial correlation.</p>
+<p><em>One could also use correlation testing by checking correlogram of residuals or testing residuals against lagged residuals</em></p>
+<p>Heteroskedasticity:</p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-21"></span>
+<img src="Images/05/HeteroskedasticityExample.png" alt="Heteroskedasticity Example" width="107" />
+<p class="caption">
+Figure 5.2: Heteroskedasticity Example
+</p>
+</div>
+<p>If one observe serial correlation (auto correlation) and heteroskedasticity in the residuals, then the model cannot be used.</p>
+</div>
+</div>
 </div>
             </section>
 

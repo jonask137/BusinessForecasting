@@ -3,88 +3,56 @@
 Description of qualifications (Expectations from you): This course will provide you with the ability to:
 
 + Understand and argue why forecasting is important and discuss different approaches/strategies/principles implemented in the business world.
-
 + Explain the key difference between qualitative and quantitative methods in forecasting.
-
 + Reason and argue for which model to use in the face of real-world business situations.
-
 + Carry out static and dynamic forecasting based on linear regressions and time-series methodology.
-
 + Evaluate the accuracy of forecast outcomes.
 
 Contents: This course is designed to give a solid theoretical and applied background to graduate students in forecasting. Students are expected to have taken Quantitative Research Methods, or an equivalent course that covers regression analysis with a good understanding of the statistical methodology used. The course will not only be a methodology course but equally an applied course in that students will develop skills to approach business life situations critically, evaluate and communicate their findings with ease. The applications that immediately follow the theoretical topics to be taught will cover different business topics including quality control, product demand analysis, marketing and advertising.
 Tentative Outline of Course Topics:
 
 1. Qualitative Forecasting Methods
-
     + Quantitative and qualitative forecasting
-
     + New product forecasting + Executive opinions
-
     + Sales forces opinions
-
     + Consumer surveys
-
     + Delphi method
 
 2. Forecast process, data considerations and model selection
-
     + Trend, seasonal, cycle and irregular components + Statistical review
-
     + Correlograms
 
 3. Moving average and exponential smoothing methods
-
     + Moving average
-
     + Holt’s and Holt-Winter’s exponential smoothing models + Product demand forecasting
 
 4. Forecasting with static regression methods
-
     + Bivariate regression model review
-
     + Forecasting with simple linear trend
-
     + Serial correlation and heteroskedasticity
 
 5. Time-series decomposition
-
     + Basic time series decomposition models + Deseasonalizing and seasonal indices
-
     + Time-series decomposition forecast
-
     + Applications
 
 6. ARIMA processes and Box-Jenkins methodology
-
     + Moving average models + Autoregressive models
-
     + Mixed autoregressive and moving average models
-
     + Model selection, Box-Jenkins identification process, estimation of ARIMA processes
-
     + Forecasting seasonal time series
-
     + Applications
 
 7. Dynamic forecasting of economic and financial time series
-
     + Nonstationary time series + Cointegration
-
     + Spurious regression
 
 8. Combining forecast results
-
     + Some basic theorems on diversification of forecasts     + Nelson combination method
-
     + Granger-Ramanathan combination method
-
     + Combinations with time-varying weights
-
     + Applications 
 
 9. Forecast evaluation
-
     + Measures of forecasting accuracy
-
     + Diebold-Mariano test for significant differences in forecasting accuracies
