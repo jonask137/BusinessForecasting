@@ -121,6 +121,10 @@ If DW > 2, it indicates negative serial correlation and if DW < 2, it indicates 
 
 *One could also use correlation testing by checking correlogram of residuals or testing residuals against lagged residuals*
 
+**Solution**
+
++ Try with lagging the variables
+
 #### Heteroskedasticity:
 
 We want the variance to have a constant variance. This can be checked visually, where we dont want to see a funnel shape, as in the visualization below.
@@ -129,12 +133,35 @@ We want the variance to have a constant variance. This can be checked visually, 
 include_graphics("Images/05/HeteroskedasticityExample.png")
 ```
 
-What do
+This can also be tested with a Breusch-Pagan Test.
+
+**Solution**
+
++ Try lagging the variables
++ Try applying differences in the observations
+
+If one observe heteroskedasticity and can't get rid of it, then one can apply a generalized least squares method. Although this introduce a set of new assumptions.
+
+### Forecasting with a linear trend
+
+*If the data contain a __linear__ trend, then we are able to make the model account for this trend.*
+
+Hence we are able to detrend the data, by including a counter as a variable.
+
+Another solution may be to using the differences in the observations, e.g., using growth rates.
+
+**This is important, as if one don't detrend the data, then the model will merely describe the trend and not the actual values behind the trend, thus you want the model to account for the trend**
 
 
-If one observe serial correlation (auto correlation) and heteroskedasticity in the residuals, then the model cannot be used.
+### Exercises
+
+#### Problems 5 and 11 pp. 209 
 
 
+#### Cases 2 and 3 from HW
+
+
+#### Detrending thorugh regression: CO2
 
 
 

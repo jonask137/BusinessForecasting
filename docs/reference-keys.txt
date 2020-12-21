@@ -60,6 +60,11 @@ simple-linear-regression
 assumptions
 serial-correlation-checking-for-independent-residuals
 heteroskedasticity
+forecasting-with-a-linear-trend
+exercises-1
+problems-5-and-11-pp.-209
+cases-2-and-3-from-hw
+detrending-thorugh-regression-co2
 multiple-linear-regression
 Methods
 ForecastMethods
