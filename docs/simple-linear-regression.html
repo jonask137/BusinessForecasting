@@ -168,7 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#forecasting-with-a-linear-trend"><i class="fa fa-check"></i><b>5.1.2</b> Forecasting with a linear trend</a></li>
 <li class="chapter" data-level="5.1.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#exercises-1"><i class="fa fa-check"></i><b>5.1.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multicollinearity"><i class="fa fa-check"></i><b>5.2.1</b> Multicollinearity</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>6</b> Methods and Performance Measurement</a>
 <ul>
@@ -302,7 +305,7 @@ DW\ =\frac{\sum_{ }^{ }\left(e_t-e_{t-1}\right)^{^2}}{\sum_{ }^{ }e_t^{^2}}
 Figure 5.2: Heteroskedasticity Example
 </p>
 </div>
-<p>This can also be tested with a Breusch-Pagan Test.</p>
+<p>This can also be tested with a Breusch-Pagan Test, where the null hypothesis is that all errors are equal, hence null hypothesis, is that the errors are homoskedastic.</p>
 <p><strong>Solution</strong></p>
 <ul>
 <li>Try lagging the variables</li>
@@ -320,14 +323,239 @@ Figure 5.2: Heteroskedasticity Example
 </div>
 <div id="exercises-1" class="section level3" number="5.1.3">
 <h3><span class="header-section-number">5.1.3</span> Exercises</h3>
-<div id="problems-5-and-11-pp.-209" class="section level4" number="5.1.3.1">
-<h4><span class="header-section-number">5.1.3.1</span> Problems 5 and 11 pp. 209</h4>
+<div id="problems-5-pp.-209" class="section level4" number="5.1.3.1">
+<h4><span class="header-section-number">5.1.3.1</span> Problems 5 pp. 209</h4>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="simple-linear-regression.html#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week46/prob5p209.xlsx&quot;</span>)</span>
+<span id="cb21-2"><a href="simple-linear-regression.html#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">x =</span> df<span class="sc">$</span>Age,<span class="at">y =</span> df<span class="sc">$</span>MaintenanceCost,) <span class="sc">+</span> <span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>) <span class="sc">+</span> <span class="fu">abline</span>(<span class="at">reg =</span> <span class="fu">lm</span>(MaintenanceCost <span class="sc">~</span> Age,<span class="at">data =</span> df))</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-22-1.png" width="480" style="display: block; margin: auto;" /></p>
+<pre><code>## integer(0)</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="simple-linear-regression.html#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(<span class="at">object =</span> <span class="fu">lm</span>(MaintenanceCost <span class="sc">~</span> Age,<span class="at">data =</span> df))</span></code></pre></div>
+<pre><code>## (Intercept)         Age 
+##   208.20335    70.91813</code></pre>
+<p><strong>If age is the dependent variable</strong>
+We see that the intercept is - 1.78, indicating that if there are no maintenance costs, then the age of the vehicle is -1.78 years old, which is naturally not possible, hence we see that the linear relathionship indicates that there will always be maintenance costs.</p>
+<p><strong>If maintenance cost is the dependent variable</strong>
+We see that the intercept is 208, hence there will be a begin maintenance of 208, which will always be there, and then for each year, it is expected to increase with about 71.</p>
+<p>We can then test to see if the relationship is significant from a statistic point of view.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="simple-linear-regression.html#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>(Age <span class="sc">~</span> .,<span class="at">data =</span> df) <span class="sc">%&gt;%</span> <span class="fu">summary</span>()</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Age ~ ., data = df)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.6658 -1.0498 -0.7737  1.0125  2.0119 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)     -1.789563   1.268264  -1.411 0.201098    
+## MaintenanceCost  0.012398   0.001737   7.139 0.000187 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.476 on 7 degrees of freedom
+## Multiple R-squared:  0.8792, Adjusted R-squared:  0.862 
+## F-statistic: 50.96 on 1 and 7 DF,  p-value: 0.0001872</code></pre>
+<p>We see that there is statistical evidence to say that the relationship is linear. Also the coefficient of determination is 86% hence 86 of the variance is explained by the x variable.</p>
+<p>Now we can do the diagnostics:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="simple-linear-regression.html#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">lm</span>(Age <span class="sc">~</span> .,<span class="at">data =</span> df))</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-25-1.png" width="480" style="display: block; margin: auto;" /><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-25-2.png" width="480" style="display: block; margin: auto;" /><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-25-3.png" width="480" style="display: block; margin: auto;" /><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-25-4.png" width="480" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Before the model is applied:
+<ul>
+<li>The underlying relationship between dependent and independent variable is actually linear, <strong>This we must assume</strong></li>
+</ul></li>
+<li>After the model is applied (doing diagnostics):
+<ul>
+<li>Independent residuals <strong>We dont say any indication that the residuals are not independent.</strong></li>
+<li>Homoskedastic residuals (show constant variance) <strong>The variance appear to be constant</strong></li>
+<li>Identically distributed (In general, normal distribution is assumed) <strong>This we must assume</strong></li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="simple-linear-regression.html#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 </div>
-<div id="cases-2-and-3-from-hw" class="section level4" number="5.1.3.2">
-<h4><span class="header-section-number">5.1.3.2</span> Cases 2 and 3 from HW</h4>
+<div id="problem-11-p.-212-hw" class="section level4" number="5.1.3.2">
+<h4><span class="header-section-number">5.1.3.2</span> Problem 11 p. 212 HW</h4>
 </div>
-<div id="detrending-thorugh-regression-co2" class="section level4" number="5.1.3.3">
-<h4><span class="header-section-number">5.1.3.3</span> Detrending thorugh regression: CO2</h4>
+<div id="cases-2-hw" class="section level4" number="5.1.3.3">
+<h4><span class="header-section-number">5.1.3.3</span> Cases 2 HW</h4>
+<p>Notice that the X is deviations from 65 degrees, as 65 degrees is the ideal for the production, hence when one read 10 degrees, then it is in fact 75 degrees or 55. Notice that the deviation is in absolut values.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="simple-linear-regression.html#cb29-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week46/Case2p222.xlsx&quot;</span>)</span>
+<span id="cb29-2"><a href="simple-linear-regression.html#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#head(df) #To see the first observations in each</span></span>
+<span id="cb29-3"><a href="simple-linear-regression.html#cb29-3" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> df<span class="sc">$</span>Y</span>
+<span id="cb29-4"><a href="simple-linear-regression.html#cb29-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> df<span class="sc">$</span>X</span>
+<span id="cb29-5"><a href="simple-linear-regression.html#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">scatter.smooth</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y, <span class="at">main=</span><span class="st">&quot;Y ~ X&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-26"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-26-1.png" alt="Plotting the model" width="480" />
+<p class="caption">
+Figure 5.3: Plotting the model
+</p>
+</div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="simple-linear-regression.html#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Y, X)</span></code></pre></div>
+<pre><code>## [1] -0.8010968</code></pre>
+<p>We see that the correlation is negative, hence -0.8</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="simple-linear-regression.html#cb32-1" aria-hidden="true" tabindex="-1"></a>linMod <span class="ot">&lt;-</span> <span class="fu">lm</span>(Y <span class="sc">~</span> X) <span class="co">#To omit intercept when necessary, the formula can be written for example as lm(cost ~ age - 1)</span></span>
+<span id="cb32-2"><a href="simple-linear-regression.html#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(linMod)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = Y ~ X)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -91.38 -43.83 -12.64  44.48 122.25 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  552.040     22.851  24.158  &lt; 2e-16 ***
+## X             -8.911      1.453  -6.133 4.37e-06 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 59.41 on 21 degrees of freedom
+## Multiple R-squared:  0.6418, Adjusted R-squared:  0.6247 
+## F-statistic: 37.62 on 1 and 21 DF,  p-value: 4.374e-06</code></pre>
+<p>We see an R square of 62.47 indicating that the linear relationship is not describing the relationship in the sample data very well, which the illustration above also show quite well.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="simple-linear-regression.html#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">resid</span>(linMod))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-29"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-29-1.png" alt="Residuals Case 2" width="480" />
+<p class="caption">
+Figure 5.4: Residuals Case 2
+</p>
+</div>
+<p>Now we can assess if the data show autocorrelation. That can be done by using the <code>acf()</code></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="simple-linear-regression.html#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">resid</span>(linMod)) <span class="co"># white noise residuals?</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-30"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-30-1.png" alt="Correlogram" width="480" />
+<p class="caption">
+Figure 5.5: Correlogram
+</p>
+</div>
+<p>The data appear to show white noise, although there appear to be some pattern, which may show seasons in the data.</p>
+<p>We can test to see if the residuals actually show constant variance, of the variance is not constant (heteroskedasticity)</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="simple-linear-regression.html#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bptest</span>(linMod) <span class="co"># Breusch-Pagan test H_0: variance is constant.</span></span></code></pre></div>
+<pre><code>## 
+##  studentized Breusch-Pagan test
+## 
+## data:  linMod
+## BP = 1.069, df = 1, p-value = 0.3012</code></pre>
+<p>Since the p value is not significant, there is not enough evidance to reject the null hypothesis, hence we may assume that the residuals show constant variance.</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="simple-linear-regression.html#cb38-1" aria-hidden="true" tabindex="-1"></a>{ <span class="fu">AIC</span>(linMod) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span>
+<span id="cb38-2"><a href="simple-linear-regression.html#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">BIC</span>(linMod) <span class="sc">%&gt;%</span> <span class="fu">print</span>()}</span></code></pre></div>
+<pre><code>## [1] 257.0604
+## [1] 260.4669</code></pre>
+<p>We see the different information criteria, but we need other models to assess what is good and what is bad.</p>
+<p><strong>Q1 How many units would your forecast for a day in which the high temperatire is 80 degrees</strong></p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="simple-linear-regression.html#cb40-1" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">X=</span><span class="dv">24</span>) <span class="co">#65+24=89 degrees</span></span>
+<span id="cb40-2"><a href="simple-linear-regression.html#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(linMod, a) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span></code></pre></div>
+<pre><code>##        1 
+## 338.1778</code></pre>
+<p>Hence we may expect 338 units to be produced on a day with 89 degrees.</p>
+<p><strong>Q2</strong></p>
+<p>When the degrees is 41, hence also a deviation of 24 degrees.</p>
+<p><strong>Q3 Is the forecasting tool effective?</strong></p>
+<p>We saw earlier that 80% of the variance is explained, although there is probably room for optimization</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="simple-linear-regression.html#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+</div>
+<div id="case-3-from-hw" class="section level4" number="5.1.3.4">
+<h4><span class="header-section-number">5.1.3.4</span> Case 3 from HW</h4>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="simple-linear-regression.html#cb43-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week46/Case2p222.xlsx&quot;</span>)</span>
+<span id="cb43-2"><a href="simple-linear-regression.html#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co">#head(df) #To see the first observations in each</span></span>
+<span id="cb43-3"><a href="simple-linear-regression.html#cb43-3" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">&lt;-</span> df<span class="sc">$</span>Y</span>
+<span id="cb43-4"><a href="simple-linear-regression.html#cb43-4" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> df<span class="sc">$</span>X</span>
+<span id="cb43-5"><a href="simple-linear-regression.html#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(X,Y)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-35-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="simple-linear-regression.html#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(Y, X)</span></code></pre></div>
+<pre><code>## [1] -0.8010968</code></pre>
+<p>We see that the correlation is negative, hence -0.8</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="simple-linear-regression.html#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(Y,X)</span></code></pre></div>
+<pre><code>## 
+##  Pearson&#39;s product-moment correlation
+## 
+## data:  Y and X
+## t = -6.1335, df = 21, p-value = 4.374e-06
+## alternative hypothesis: true correlation is not equal to 0
+## 95 percent confidence interval:
+##  -0.9121082 -0.5806250
+## sample estimates:
+##        cor 
+## -0.8010968</code></pre>
+</div>
+<div id="detrending-thorugh-regression-co2" class="section level4" number="5.1.3.5">
+<h4><span class="header-section-number">5.1.3.5</span> Detrending thorugh regression: CO2</h4>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="simple-linear-regression.html#cb48-1" aria-hidden="true" tabindex="-1"></a>CO2levels <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week46/CO2levels(1).xlsx&quot;</span>)</span>
+<span id="cb48-2"><a href="simple-linear-regression.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="simple-linear-regression.html#cb48-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(CO2levels, <span class="at">frequency =</span> <span class="dv">12</span>) <span class="co">#Monthly series, so we specify the frequency=12.</span></span>
+<span id="cb48-4"><a href="simple-linear-regression.html#cb48-4" aria-hidden="true" tabindex="-1"></a>trend <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(y)) <span class="co">#Creating the linear trend, simply a counter</span></span>
+<span id="cb48-5"><a href="simple-linear-regression.html#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="simple-linear-regression.html#cb48-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-37"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-37-1.png" alt="CO2 data" width="480" />
+<p class="caption">
+Figure 5.6: CO2 data
+</p>
+</div>
+<p>We see that there is a trend and cycles. This we want to get rid of, by enabling the model to account for that.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="simple-linear-regression.html#cb49-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> trend)</span>
+<span id="cb49-2"><a href="simple-linear-regression.html#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ trend)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -4.392 -1.866  0.199  2.190  3.677 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 3.293e+02  3.462e-01  951.40   &lt;2e-16 ***
+## trend       1.210e-01  3.707e-03   32.64   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.186 on 159 degrees of freedom
+## Multiple R-squared:  0.8701, Adjusted R-squared:  0.8693 
+## F-statistic:  1065 on 1 and 159 DF,  p-value: &lt; 2.2e-16</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="simple-linear-regression.html#cb51-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-2"><a href="simple-linear-regression.html#cb51-2" aria-hidden="true" tabindex="-1"></a>ystar <span class="ot">&lt;-</span> <span class="fu">resid</span>(fit) <span class="co">#ystar is the detrended series, which is simply the residuals from the previous regression.</span></span>
+<span id="cb51-3"><a href="simple-linear-regression.html#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="simple-linear-regression.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ystar) <span class="sc">+</span> <span class="fu">lines</span>(ystar, <span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-38"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-38-1.png" alt="Detrended series" width="480" />
+<p class="caption">
+Figure 5.7: Detrended series
+</p>
+</div>
+<pre><code>## integer(0)</code></pre>
+<p>Now wee see that the data show constant variance and appear to be stationary around a mean of 0.</p>
+<p>But did we get rid of the seasonality?</p>
+<p>To compare, one can print the detrended and the initial data.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="simple-linear-regression.html#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb53-2"><a href="simple-linear-regression.html#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(y, <span class="dv">50</span>)</span>
+<span id="cb53-3"><a href="simple-linear-regression.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="at">x =</span> ystar,<span class="at">lag.max =</span>  <span class="dv">50</span>) <span class="co">#We can specify how many lags we want to plot. Here I just chose 50. </span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-39"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-39-1.png" alt="Correlogram comparison detrended" width="480" />
+<p class="caption">
+Figure 5.8: Correlogram comparison detrended
+</p>
+</div>
+<p>Hence we see that we got rid of the trend, but still see that there is great seasonality in the data.</p>
+<p><strong>Alternative to detrending –&gt; differencing</strong></p>
+<p><em>An alternative to detrending with the trend variable, is to using differencing</em></p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="simple-linear-regression.html#cb54-1" aria-hidden="true" tabindex="-1"></a>dy <span class="ot">&lt;-</span> <span class="fu">diff</span>(<span class="at">x =</span> y,<span class="at">lag =</span> <span class="dv">1</span>)</span>
+<span id="cb54-2"><a href="simple-linear-regression.html#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dy) <span class="co">#</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40-1"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-40-1.png" alt="Detrending using differencing" width="480" />
+<p class="caption">
+Figure 5.9: Detrending using differencing
+</p>
+</div>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="simple-linear-regression.html#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(dy, <span class="dv">50</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-40-2"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-40-2.png" alt="Detrending using differencing" width="480" />
+<p class="caption">
+Figure 5.10: Detrending using differencing
+</p>
+</div>
 </div>
 </div>
 </div>

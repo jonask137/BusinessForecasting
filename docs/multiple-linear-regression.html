@@ -168,7 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#forecasting-with-a-linear-trend"><i class="fa fa-check"></i><b>5.1.2</b> Forecasting with a linear trend</a></li>
 <li class="chapter" data-level="5.1.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#exercises-1"><i class="fa fa-check"></i><b>5.1.3</b> Exercises</a></li>
 </ul></li>
-<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multicollinearity"><i class="fa fa-check"></i><b>5.2.1</b> Multicollinearity</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>6</b> Methods and Performance Measurement</a>
 <ul>
@@ -201,7 +204,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="multiple-linear-regression" class="section level2" number="5.2">
 <h2><span class="header-section-number">5.2</span> Multiple Linear Regression</h2>
+<p>Simply regression with more than one independent variable.</p>
+<p>The diagnostics tools are the same as before, significance testing, R square, DW stats, residuals diagnostics.</p>
+<div id="multicollinearity" class="section level3" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> Multicollinearity</h3>
+<p>Although in MLR one must be aware of <strong>multicollinearity</strong>, meaning that do we see a strong relationship between independent variables, hence are they explaining the same?</p>
+<p>To assess for multicollinearity one can apply VIF, which is the following:</p>
+<p><span class="math display" id="eq:VIFTest">\[\begin{equation}
+VIF_j=\frac{1}{1-R^2_j}
+\tag{5.7}
+\end{equation}\]</span></p>
+<p>Where <span class="math inline">\(j = 1,...,k\)</span></p>
+<p>Thus, we see that Rsquare is obtained from regression each IDV against the remaining variables. We can then have the following outputs:</p>
+<ul>
+<li>VIF = 1, no milticollinearity</li>
+<li>VIF &gt; 10, indicates multicollinearity</li>
+</ul>
+<p>If one gets an indication of multicollinearity, then one should drop one of the correlated variables.</p>
 
+</div>
 </div>
 <!-- </div> -->
             </section>

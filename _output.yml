@@ -3,3 +3,4 @@ bookdown::gitbook:
   split_by: section
   #Scripts to be run before and after each chapter
   download: ["pdf", "epub"]
+  df_print: kable
