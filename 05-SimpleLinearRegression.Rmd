@@ -8,6 +8,8 @@ library(tibble)
 
 # Simple and Multiple Linear Regression
 
+*This chapter elaborates on how linear regression may be applied to forecast data and also how we may get rid of trends when applying linear regression and assesing the assumptions for the model. Lastly, the chapter elaborates on how to chose a model*
+
 **Lectures**
 
 + 5th lecture - simple linear regression
@@ -378,6 +380,24 @@ Thus, we see that Rsquare is obtained from regression each IDV against the remai
 + VIF > 10, indicates multicollinearity
 
 If one gets an indication of multicollinearity, then one should drop one of the correlated variables.
+
+### Serial correlation and omitted variables
+
+When doing regression, we may observe that the IDVs are correlated with the error term, meaning that the errors are not randomly distributed, hence serial correlation in the error terms.
+
+For serial correlation in the error terms, we are able to make use of the Durbin-Watson, see \@ref(eq:DurbinWatsonTest).
+
+
+### Selection criteria
+
+We cannot use R square anymore, as it will never really penalize when we are adding variables. Hence one should use>
+
++ AIC
++ BIC
+
+Depending on whether one is interested in the best model for prediction or the true model.
+
+
 
 
 

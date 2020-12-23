@@ -1,0 +1,14 @@
+
+# Time-Series Decomposition and Regression with Time-Series Data
+
+*This chapter identifies what elements a time series can be broken into, hence it elaborates on the trend, seasonality, cycles and irregular movements*
+
+
+**Litterature**
+
++ HW: Time Series and Their Components
++ HW: Regression with Time Series Data
+
+
+
+

@@ -1,0 +1,8 @@
+
+# ARIMA Models and Box-Jenkins Methodology
+
+*Explanation here*
+
+**Litterature**
+
++ HW: The Box-Jenkins (ARIMA) Methodology

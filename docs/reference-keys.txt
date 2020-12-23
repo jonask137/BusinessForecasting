@@ -78,6 +78,11 @@ case-3-from-hw
 detrending-thorugh-regression-co2
 multiple-linear-regression
 multicollinearity
+serial-correlation-and-omitted-variables
+selection-criteria
+time-series-decomposition-and-regression-with-time-series-data
+arima-models-and-box-jenkins-methodology
+communicating-technical-findings
 Methods
 ForecastMethods
 using-averages

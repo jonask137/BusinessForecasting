@@ -1,0 +1,21 @@
+
+# Communicating Technical Findings
+
+This chapter is about efficient report writing
+
+**Litteratur**
+
++ Link to article: https://www.wgtn.ac.nz/learning-teaching/support/approach/steps-to-teaching-success/resources/WSBG-report-writing-guide-2017.pdf
+
+**Lectures**
+
++ Lecture 6
+
+
+The following path contain a folder with a template for reports: Business Forecasting/Week 46 Simple Linear Regression/BusinessReportRMD
+
+
+
+
+
+
