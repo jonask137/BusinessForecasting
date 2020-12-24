@@ -1,5 +1,5 @@
 
-# ARIMA Models and Box-Jenkins Methodology
+# ARIMA Models and Box-Jenkins Methodology {#ARIMA}
 
 *Explanation here*
 

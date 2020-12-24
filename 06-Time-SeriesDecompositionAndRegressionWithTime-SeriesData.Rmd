@@ -1,4 +1,11 @@
 
+
+```{r libraries,include=FALSE}
+library(forecast)
+library(readxl)
+```
+
+
 # Time-Series Decomposition and Regression with Time-Series Data
 
 *This chapter identifies what elements a time series can be broken into, hence it elaborates on the trend, seasonality, cycles and irregular movements*
@@ -100,7 +107,7 @@ One of the assumptions for regression models, is that the errors are independent
 1. Do we have trend?
 2. Do we have cyclical movements?
 3. Do we have seasons?
-4. Do we have autocorellation? If yes:
+4. Do we have autocorellation (elaborated in section \@ref(Autocorellation))? If yes:
     a. If RHO = 1, then we can take first differences
     b. If RHO <> 1, then we can do the generalized differences., thus implies the following:
         1. Do an OLS and get the residuals
@@ -187,18 +194,21 @@ CMAT = C\hat{M}A
  
 #### Cyclical Component
    
-Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.
+Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor. Thus, the cyclical factor is: 
 
-  a. Cyclical factor: $CF = \frac{CMA}{CMAT}$
-    + If CF > 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.
+\begin{equation}
+CF = \frac{CMA}{CMAT}
+(\#CF)
+\end{equation}
+
+If CF > 1, the deseasonalised value is above the long-term trend of the data. If the opposite, then below.
     
-   
-   
+
 #### Time-Series decomposition forecast
 
 Now we can do the reverse procedure, using the factors, that we have just found.
 
-The reverse procedure is there assembling the predicted Y based on the factors that have just been found.
+The reverse procedure is assembling the predicted Y based on the factors that have just been found.
 
 \begin{equation}
 \hat{Y}=CMAT*SI*CF*I
@@ -213,13 +223,77 @@ Where,
 + I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)
 
 
+### Autocorellation {#Autocorellation}
 
+ALWAYS ALWAYS CHECK FOR AUTOCORRELATION.
+
+What to do?
+
++ You are missing some variable, find the missing variable(s). In practice this can be very difficult.
++ Do differencing
++ Use autoregressive model approach, where you are using lagged variables as variables to predict the coming period
+  + We are going to talk about ARIMA (The box and jenkins methodology, more about this in section \@ref(ARIMA))
+
+
+If our residuals have autocorelation, it means that there is some relationship in the model, that our model does not account four. In worst case, we can end up 'proving' some relationships between variables, that are in fact not true, but it is rather autocorellation that is proving the model, and the not the relationship between the variables and the dependent variables.
 
 
 
 ## Exercises
 
 ### Alomega Food Stores, case 6 p. 166 + case 7 p. 348
+
+```{r}
+y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
+str(y)
+```
+
+We see that there are 21 variables, where sales is the DV and all others are IDVs, consisting of continous and factors.
+
+Now we are interested in constructing a time series, which consist of the dependent variable. That is done in the following:
+
+```{r,fig.cap="Time series Alomega Food"}
+y <- ts(data = y$Sales #The dependent variable
+        ,end = c(2006,12) #The end date
+        ,frequency = 12 #The frequency, 12 as we are working with months
+        )
+options(scipen = 999)
+plot(y)
+```
+
+Now we want to address if there is:
+
++ Trend: visually it does not look like. But it will be tested by testing the time series against a trend variable
++ Seasons:  
++ Cycles: THis is difficult to say, also as we only have data for four years
+
+**Trend**
+
+```{r}
+#Creating trend variable
+trend <- seq(from = 1,to = length(y),by = 1)
+
+#Creating a linear model with the trend variable
+lm.fit <- lm(y ~ trend)
+summary(lm.fit)
+```
+
+We see that the trend variable appear to be non significant, hence there is not enough evidance to reject the null hypothesis, being that there is no relationship between the dependent- and independent variable.
+
+```{r}
+accuracy(object = lm.fit #The fitted values from the linear model
+         ,y = y #The actual value
+         )
+```
+
+We see the RMSE of 125.940, this can also be plotted to see the fitted values against the residuals, where the mean absolute error is just below 100.000 units. Notice, that this test in done in sample.
+
+```{r,fig.cap="Residuals plot"}
+plot(x = lm.fit$fitted.values,y = lm.fit$residuals,main = "Resduals plot") + 
+  grid(col = "lightgrey") + 
+  abline(h = 0,lty = 3,col = "blue")
+```
+
 
 
 ### Monthly Sales Data

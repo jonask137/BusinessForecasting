@@ -353,6 +353,9 @@ plot(dy) #
 acf(dy, 50)
 ```
 
+```{r cleaning environment,include=FALSE}
+rm(list = ls())
+```
 
 
 ## Multiple Linear Regression

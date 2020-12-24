@@ -188,6 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="6.3.1" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#success-criteria"><i class="fa fa-check"></i><b>6.3.1</b> Success Criteria</a></li>
 <li class="chapter" data-level="6.3.2" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#the-process"><i class="fa fa-check"></i><b>6.3.2</b> The Process</a></li>
+<li class="chapter" data-level="6.3.3" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#Autocorellation"><i class="fa fa-check"></i><b>6.3.3</b> Autocorellation</a></li>
 </ul></li>
 <li class="chapter" data-level="6.4" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>6.4</b> Exercises</a>
 <ul>
@@ -195,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.2" data-path="exercises-2.html"><a href="exercises-2.html#monthly-sales-data"><i class="fa fa-check"></i><b>6.4.2</b> Monthly Sales Data</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="arima-models-and-box-jenkins-methodology.html"><a href="arima-models-and-box-jenkins-methodology.html"><i class="fa fa-check"></i><b>7</b> ARIMA Models and Box-Jenkins Methodology</a></li>
+<li class="chapter" data-level="7" data-path="ARIMA.html"><a href="ARIMA.html"><i class="fa fa-check"></i><b>7</b> ARIMA Models and Box-Jenkins Methodology</a></li>
 <li class="chapter" data-level="8" data-path="communicating-technical-findings.html"><a href="communicating-technical-findings.html"><i class="fa fa-check"></i><b>8</b> Communicating Technical Findings</a></li>
 <li class="chapter" data-level="9" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>9</b> Methods and Performance Measurement</a>
 <ul>
@@ -236,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Do we have trend?</li>
 <li>Do we have cyclical movements?</li>
 <li>Do we have seasons?</li>
-<li>Do we have autocorellation? If yes:
+<li>Do we have autocorellation (elaborated in section <a href="the-success-criteria-and-process.html#Autocorellation">6.3.3</a>)? If yes:
 <ol style="list-style-type: lower-alpha">
 <li>If RHO = 1, then we can take first differences</li>
 <li>If RHO &lt;&gt; 1, then we can do the generalized differences., thus implies the following:
@@ -313,16 +314,17 @@ CMAT = C\hat{M}A
 </div>
 <div id="cyclical-component" class="section level4" number="6.3.2.3">
 <h4><span class="header-section-number">6.3.2.3</span> Cyclical Component</h4>
-<p>Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.</p>
-<ol style="list-style-type: lower-alpha">
-<li>Cyclical factor: <span class="math inline">\(CF = \frac{CMA}{CMAT}\)</span>
-+ If CF &gt; 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.</li>
-</ol>
+<p>Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor. Thus, the cyclical factor is:</p>
+<p><span class="math display">\[\begin{equation}
+CF = \frac{CMA}{CMAT}
+(\#CF)
+\end{equation}\]</span></p>
+<p>If CF &gt; 1, the deseasonalised value is above the long-term trend of the data. If the opposite, then below.</p>
 </div>
 <div id="time-series-decomposition-forecast" class="section level4" number="6.3.2.4">
 <h4><span class="header-section-number">6.3.2.4</span> Time-Series decomposition forecast</h4>
 <p>Now we can do the reverse procedure, using the factors, that we have just found.</p>
-<p>The reverse procedure is there assembling the predicted Y based on the factors that have just been found.</p>
+<p>The reverse procedure is assembling the predicted Y based on the factors that have just been found.</p>
 <p><span class="math display" id="eq:Forecast">\[\begin{equation}
 \hat{Y}=CMAT*SI*CF*I
 \tag{6.6}
@@ -335,6 +337,20 @@ CMAT = C\hat{M}A
 <li>I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)</li>
 </ul>
 </div>
+</div>
+<div id="Autocorellation" class="section level3" number="6.3.3">
+<h3><span class="header-section-number">6.3.3</span> Autocorellation</h3>
+<p>ALWAYS ALWAYS CHECK FOR AUTOCORRELATION.</p>
+<p>What to do?</p>
+<ul>
+<li>You are missing some variable, find the missing variable(s). In practice this can be very difficult.</li>
+<li>Do differencing</li>
+<li>Use autoregressive model approach, where you are using lagged variables as variables to predict the coming period
+<ul>
+<li>We are going to talk about ARIMA (The box and jenkins methodology, more about this in section <a href="ARIMA.html#ARIMA">7</a>)</li>
+</ul></li>
+</ul>
+<p>If our residuals have autocorelation, it means that there is some relationship in the model, that our model does not account four. In worst case, we can end up ‘proving’ some relationships between variables, that are in fact not true, but it is rather autocorellation that is proving the model, and the not the relationship between the variables and the dependent variables.</p>
 </div>
 </div>
             </section>
