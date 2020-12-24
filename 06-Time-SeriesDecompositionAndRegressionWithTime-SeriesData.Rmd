@@ -114,17 +114,48 @@ One of the assumptions for regression models, is that the errors are independent
 
 *Note, if you do not have seasonality, then jump to section 2. trend etc.*
 
-1. Desaesonalizing
-    a. Remove the short-term fluctuations
-    b. If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:
-        1. Find the MA_t with $$MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}$$ and $$MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}$$. *Note, that the MA for each is centered in the center and rounded up to the coming period*
-        2. Then do the average of the two periods, which will find the actual center: $$CMA_t=\frac{(MA_t+MA_{t+1})}{2}$$
-        
-        Notice, that the example is with quarterly MA, hence the MAs are divided with 4.
-        
-    c. $CMA_t$ is representing the deseasonalized data.
-    d. One can find the seasonal factor by saying $$SF_t=\frac{Y_t}{CMA_t}$$
-    e. CONCLUSION: IF $SF_t > 1$, then Y is greater than the quartely (or what other period is used) average or, $SF_t < 1$, then the Y is less than the quarterly average
+#### Desaesonalizing
+
+a. Remove the short-term fluctuations
+b. If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:
+
+**1. Find the MA_t with equation \@ref(eq:MAt) and \@ref(eq:MAt2)**
+
+\begin{equation}
+MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}
+(\#eq:MAt)
+\end{equation} and 
+
+\begin{equation}
+MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}
+(\#eq:MAt2)
+\end{equation}
+
+
+*Note, that the MA for each is centered in the center and rounded up to the coming period*
+
+**2. Then find the centered MA**
+
+Then do the average of the two periods, which will find the actual center: 
+
+\begin{equation}
+CMA_t=\frac{(MA_t+MA_{t+1})}{2}
+(\#eq:CMAt)
+\end{equation}
+
+Notice, that the example is with quarterly MA, hence the MAs are divided with 4, this could have been monthly and then onw would divide by 12.
+
+c. $CMA_t$ is representing the depersonalized data.
+d. One can find the seasonal factor by saying 
+
+\begin{equation}
+SF_t=\frac{Y_t}{CMA_t}
+(\#eq:SFt)
+\end{equation}
+
+*This explains whether one as above or below the expect season level.*
+
+e. CONCLUSION: IF $SF_t > 1$, then Y is greater than the quarterly (or what other period is used) average or, $SF_t < 1$, then the Y is less than the quarterly average
 
 \
     
@@ -132,33 +163,54 @@ One of the assumptions for regression models, is that the errors are independent
 
 \
 
-2. Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).
+#### Long-term trend
 
-    a. We must find out if the trend is linear or quadratic.
-    
-    Linear: $$C\hat{M}A_t=f(t)=\beta_0 + \beta_1t$$
-    
-    Quadratic: $$C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2$$
-    
-    Where $t$ is the time indicator and 1 = the first observation and increases by 1 thereafter.
-    
-    b. Now we have obtained the centered moving-average trend ($CMAT = C\hat{M}A$)
-    
-    
-3. Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.
+Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).
 
-    a. Cyclical factor: $CF = \frac{CMA}{CMAT}$
+*Task 1*
+
+We must find out if the trend is linear or quadratic.
+  
+Linear: $C\hat{M}A_t=f(t)=\beta_0 + \beta_1t$
+
+Quadratic: $C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2$
+
+Where $t$ is the time indicator and 1 = the first observation and increases by 1 thereafter.
+
+Now we have obtained the centered moving-average trend
+
+\begin{equation}
+CMAT = C\hat{M}A
+(\#eq:CMAT)
+\end{equation}
     
-    If CF > 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.
+ 
+#### Cyclical Component
+   
+Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.
+
+  a. Cyclical factor: $CF = \frac{CMA}{CMAT}$
+    + If CF > 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.
     
-    
-4. Time-Series decomposition forecast. Now we can do the reverse procedure, using the factors, that we have just found.
+   
+   
+#### Time-Series decomposition forecast
+
+Now we can do the reverse procedure, using the factors, that we have just found.
 
 The reverse procedure is there assembling the predicted Y based on the factors that have just been found.
 
-$$\hat{Y}=CMAT*SI*CF*I$$
+\begin{equation}
+\hat{Y}=CMAT*SI*CF*I
+(\#eq:Forecast)
+\end{equation}
 
-Where, CMAT = T, S is the SF, CF is the CF and I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)
+Where, 
+
++ CMAT = T, 
++ S is the SF, 
++ CF is the CF and 
++ I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)
 
 
 

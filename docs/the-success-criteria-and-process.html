@@ -254,20 +254,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3><span class="header-section-number">6.3.2</span> The Process</h3>
 <p><strong>Deseasonalizing and detrending based on moving averages and accounting for cyclical moves</strong></p>
 <p><em>Note, if you do not have seasonality, then jump to section 2. trend etc.</em></p>
-<ol style="list-style-type: decimal">
-<li>Desaesonalizing
+<div id="desaesonalizing" class="section level4" number="6.3.2.1">
+<h4><span class="header-section-number">6.3.2.1</span> Desaesonalizing</h4>
 <ol style="list-style-type: lower-alpha">
-<li><p>Remove the short-term fluctuations</p></li>
-<li><p>If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:</p>
-<ol style="list-style-type: decimal">
-<li>Find the MA_t with <span class="math display">\[MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}\]</span> and <span class="math display">\[MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}\]</span>. <em>Note, that the MA for each is centered in the center and rounded up to the coming period</em></li>
-<li>Then do the average of the two periods, which will find the actual center: <span class="math display">\[CMA_t=\frac{(MA_t+MA_{t+1})}{2}\]</span></li>
+<li>Remove the short-term fluctuations</li>
+<li>If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:</li>
 </ol>
-<p>Notice, that the example is with quarterly MA, hence the MAs are divided with 4.</p></li>
-<li><p><span class="math inline">\(CMA_t\)</span> is representing the deseasonalized data.</p></li>
-<li><p>One can find the seasonal factor by saying <span class="math display">\[SF_t=\frac{Y_t}{CMA_t}\]</span></p></li>
-<li><p>CONCLUSION: IF <span class="math inline">\(SF_t &gt; 1\)</span>, then Y is greater than the quartely (or what other period is used) average or, <span class="math inline">\(SF_t &lt; 1\)</span>, then the Y is less than the quarterly average</p></li>
-</ol></li>
+<p><strong>1. Find the MA_t with equation <a href="the-success-criteria-and-process.html#eq:MAt">(6.1)</a> and <a href="the-success-criteria-and-process.html#eq:MAt2">(6.2)</a></strong></p>
+<p><span class="math display" id="eq:MAt">\[\begin{equation}
+MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}
+\tag{6.1}
+\end{equation}\]</span> and</p>
+<p><span class="math display" id="eq:MAt2">\[\begin{equation}
+MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}
+\tag{6.2}
+\end{equation}\]</span></p>
+<p><em>Note, that the MA for each is centered in the center and rounded up to the coming period</em></p>
+<p><strong>2. Then find the centered MA</strong></p>
+<p>Then do the average of the two periods, which will find the actual center:</p>
+<p><span class="math display" id="eq:CMAt">\[\begin{equation}
+CMA_t=\frac{(MA_t+MA_{t+1})}{2}
+\tag{6.3}
+\end{equation}\]</span></p>
+<p>Notice, that the example is with quarterly MA, hence the MAs are divided with 4, this could have been monthly and then onw would divide by 12.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li><span class="math inline">\(CMA_t\)</span> is representing the depersonalized data.</li>
+<li>One can find the seasonal factor by saying</li>
+</ol>
+<p><span class="math display" id="eq:SFt">\[\begin{equation}
+SF_t=\frac{Y_t}{CMA_t}
+\tag{6.4}
+\end{equation}\]</span></p>
+<p><em>This explains whether one as above or below the expect season level.</em></p>
+<ol start="5" style="list-style-type: lower-alpha">
+<li>CONCLUSION: IF <span class="math inline">\(SF_t &gt; 1\)</span>, then Y is greater than the quarterly (or what other period is used) average or, <span class="math inline">\(SF_t &lt; 1\)</span>, then the Y is less than the quarterly average</li>
 </ol>
 <p><br />
 </p>
@@ -276,27 +296,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p><br />
 </p>
-<ol start="2" style="list-style-type: decimal">
-<li><p>Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).</p>
-<ol style="list-style-type: lower-alpha">
-<li>We must find out if the trend is linear or quadratic.</li>
-</ol>
-<p>Linear: <span class="math display">\[C\hat{M}A_t=f(t)=\beta_0 + \beta_1t\]</span></p>
-<p>Quadratic: <span class="math display">\[C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2\]</span></p>
+</div>
+<div id="long-term-trend" class="section level4" number="6.3.2.2">
+<h4><span class="header-section-number">6.3.2.2</span> Long-term trend</h4>
+<p>Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).</p>
+<p><em>Task 1</em></p>
+<p>We must find out if the trend is linear or quadratic.</p>
+<p>Linear: <span class="math inline">\(C\hat{M}A_t=f(t)=\beta_0 + \beta_1t\)</span></p>
+<p>Quadratic: <span class="math inline">\(C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2\)</span></p>
 <p>Where <span class="math inline">\(t\)</span> is the time indicator and 1 = the first observation and increases by 1 thereafter.</p>
-<ol start="2" style="list-style-type: lower-alpha">
-<li>Now we have obtained the centered moving-average trend (<span class="math inline">\(CMAT = C\hat{M}A\)</span>)</li>
-</ol></li>
-<li><p>Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.</p>
+<p>Now we have obtained the centered moving-average trend</p>
+<p><span class="math display" id="eq:CMAT">\[\begin{equation}
+CMAT = C\hat{M}A
+\tag{6.5}
+\end{equation}\]</span></p>
+</div>
+<div id="cyclical-component" class="section level4" number="6.3.2.3">
+<h4><span class="header-section-number">6.3.2.3</span> Cyclical Component</h4>
+<p>Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.</p>
 <ol style="list-style-type: lower-alpha">
-<li>Cyclical factor: <span class="math inline">\(CF = \frac{CMA}{CMAT}\)</span></li>
+<li>Cyclical factor: <span class="math inline">\(CF = \frac{CMA}{CMAT}\)</span>
++ If CF &gt; 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.</li>
 </ol>
-<p>If CF &gt; 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.</p></li>
-<li><p>Time-Series decomposition forecast. Now we can do the reverse procedure, using the factors, that we have just found.</p></li>
-</ol>
+</div>
+<div id="time-series-decomposition-forecast" class="section level4" number="6.3.2.4">
+<h4><span class="header-section-number">6.3.2.4</span> Time-Series decomposition forecast</h4>
+<p>Now we can do the reverse procedure, using the factors, that we have just found.</p>
 <p>The reverse procedure is there assembling the predicted Y based on the factors that have just been found.</p>
-<p><span class="math display">\[\hat{Y}=CMAT*SI*CF*I\]</span></p>
-<p>Where, CMAT = T, S is the SF, CF is the CF and I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)</p>
+<p><span class="math display" id="eq:Forecast">\[\begin{equation}
+\hat{Y}=CMAT*SI*CF*I
+\tag{6.6}
+\end{equation}\]</span></p>
+<p>Where,</p>
+<ul>
+<li>CMAT = T,</li>
+<li>S is the SF,</li>
+<li>CF is the CF and</li>
+<li>I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)</li>
+</ul>
+</div>
 </div>
 </div>
             </section>

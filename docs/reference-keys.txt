@@ -23,6 +23,12 @@ fig:unnamed-chunk-39
 fig:unnamed-chunk-40-1
 fig:unnamed-chunk-40-2
 eq:VIFTest
+eq:MAt
+eq:MAt2
+eq:CMAt
+eq:SFt
+eq:CMAT
+eq:Forecast
 eq:NaiveForecast
 eq:SimpleAverages
 eq:MA
@@ -89,6 +95,10 @@ regression-with-time-series-data
 the-success-criteria-and-process
 success-criteria
 the-process
+desaesonalizing
+long-term-trend
+cyclical-component
+time-series-decomposition-forecast
 exercises-2
 alomega-food-stores-case-6-p.-166-case-7-p.-348
 monthly-sales-data
