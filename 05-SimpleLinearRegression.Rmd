@@ -19,7 +19,7 @@ library(tibble)
 **Literature**
 
 + HW: Simple Linear Regression
-+ ![How to write business reports](https://www.victoria.ac.nz/vbs/teaching/resources/VBS-Report-Writing-Guide-2017.pdf)
++ How to write business reports - https://www.victoria.ac.nz/vbs/teaching/resources/VBS-Report-Writing-Guide-2017.pdf
 
 ## Simple Linear Regression
 

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Exploring Patterns and Forecasting Techniques | Business Forecasting</title>
+  <title>6.1 Time Series and Their Components (HW) | Business Forecasting</title>
   <meta name="description" content="This is the book description" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta property="og:title" content="6.1 Time Series and Their Components (HW) | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta name="twitter:title" content="6.1 Time Series and Their Components (HW) | Business Forecasting" />
   
   <meta name="twitter:description" content="This is the book description" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="articles.html"/>
-<link rel="next" href="the-forecasting-process.html"/>
+<link rel="prev" href="time-series-decomposition-and-regression-with-time-series-data.html"/>
+<link rel="next" href="regression-with-time-series-data.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,24 +226,63 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploring-patterns-and-forecasting-techniques" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Exploring Patterns and Forecasting Techniques</h1>
-<p><em>This chapter will elaborate on how one identify patterns in data thus how to account for this. Thus, we are looking into smoothing methods and moving averages</em></p>
-<p><em>Additionally, we will explore how we select forecasting methods</em></p>
-<p><strong>Literature:</strong></p>
+<div id="time-series-and-their-components-hw" class="section level2" number="6.1">
+<h2><span class="header-section-number">6.1</span> Time Series and Their Components (HW)</h2>
+<p>Basically a Time Series is variables that are collected over time. The variables are highly likely to have autocorrelation</p>
+<p><em>Autocorellation: Variables are automatically dependant on each other over time, and the mere aspect of these synergies (patterns) where one will often be able to prove correlation between the variables</em></p>
+<p>One approach to assessing time series is by decomposing the patterns by finding the components hereof, these are:</p>
+<ol style="list-style-type: decimal">
+<li><p>Trend(T): if it is linear, then it can be explained by <span class="math inline">\(\hat{T}_t=\beta_0+\beta_1t\)</span>, hence we apply the linear function, hence what in statistics is <span class="math inline">\(\hat{y}=\hat{T}\)</span> in time series</p></li>
+<li><p>Cyclical(T or C)<em>Note, often included in practice as the trend, as it can be difficult to extinguish</em></p></li>
+<li><p>Seasonal(S)</p></li>
+<li><p>Irregular(random)(I)</p></li>
+</ol>
+<p><strong>The purpose</strong> of decomposing the time series data, can be either for exploration or prediction. Hence you can estimate the coefficients of the components by breaking down the data.</p>
+<p>Although the typical purpose of time series is exploration of the data and assess if there are seasons, trends etc. and perhaps to pinpoint whether you are above or below the season/trend/cycle.</p>
+<p>If the Y observations is the sum of the components, then we have <strong>additive model</strong>, if they are the product of the components, then it is called <strong>multiplicative model</strong></p>
+<p>Time series is typically an additive model, if the variance is more or less the same, it is a multiplicative model if the variance increases with time</p>
+<p><em>Note, one can transform a multiplicative model to an additive model by taking the logarithm</em></p>
+<div id="additional-on-trend" class="section level3" number="6.1.1">
+<h3><span class="header-section-number">6.1.1</span> Additional on trend</h3>
+<p><strong>Quadratic trend</strong></p>
+<p><em>e.g. where we have curvature</em></p>
+<p><span class="math display">\[\hat{T}_t=\beta_0+\beta_1t+\beta_1t^2\]</span></p>
+<p><strong>Exponential trend</strong></p>
+<p><em>e.g. exponentially growing population</em></p>
+<p><span class="math display">\[\hat{T}_t=\beta_0*\beta_2^t\]</span></p>
+<p><em>NOTE, one may transform this into a logistic trend instead, as continuous exponential trend is not typical</em></p>
+<p><br />
+</p>
+</div>
+<div id="additional-on-seasonal-pattern" class="section level3" number="6.1.2">
+<h3><span class="header-section-number">6.1.2</span> Additional on seasonal pattern</h3>
 <ul>
-<li>HW: Exploring Data Patterns and an Introduction to Forecasting Techniques</li>
-<li>HW: Moving Averages and Smoothing Methods</li>
-<li>Armstrong, J.S. (2001) “Selecting Forecast Methods,” In Principles of Forecasting: A Handbook for Researchers and Practitioners (Ed. J. Scott Armstrong), Kluwer</li>
+<li>One can manually rule out seasonality by adding seasonal index (that is hard coding the expected index in the respective periods)
+<ul>
+<li><strong><em>One must rule out other factors before doing this!</em></strong></li>
+</ul></li>
 </ul>
+<p><strong>Seasonally adjusted data</strong></p>
+<p>For additive</p>
+<p><span class="math display">\[Y_t - S_t = T_t + I_t\]</span></p>
+<p>For multiplicative</p>
+<p><span class="math display">\[\frac{Y_t}{S_t} = T_t * I_t\]</span></p>
+<p>One does often take out seasonality to better compare data and also create short term forecasts.</p>
+</div>
+<div id="cyclical-and-irregular-variations" class="section level3" number="6.1.3">
+<h3><span class="header-section-number">6.1.3</span> Cyclical and Irregular Variations</h3>
+<p>One can often rule out (or at least smooth out) irregularities by taking the moving average</p>
+<p><br />
+</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="articles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-forecasting-process.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="time-series-decomposition-and-regression-with-time-series-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regression-with-time-series-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

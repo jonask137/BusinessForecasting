@@ -4,10 +4,175 @@
 *This chapter identifies what elements a time series can be broken into, hence it elaborates on the trend, seasonality, cycles and irregular movements*
 
 
-**Litterature**
+**Literature**
 
 + HW: Time Series and Their Components
 + HW: Regression with Time Series Data
+
+
+
+## Time Series and Their Components (HW)
+
+Basically a Time Series is variables that are collected over time. The variables are highly likely to have autocorrelation 
+
+*Autocorellation: Variables are automatically dependant on each other over time, and the mere aspect of these synergies (patterns) where one will often be able to prove correlation between the variables*
+
+One approach to assessing time series is by decomposing the patterns by finding the components hereof, these are:
+
+1. Trend(T): if it is linear, then it can be explained by $\hat{T}_t=\beta_0+\beta_1t$, hence we apply the linear function, hence what in statistics is $\hat{y}=\hat{T}$ in time series
+
+2. Cyclical(T or C)*Note, often included in practice as the trend, as it can be difficult to extinguish*
+
+3. Seasonal(S)
+
+4. Irregular(random)(I)
+
+
+**The purpose** of decomposing the time series data, can be either for exploration or prediction. Hence you can estimate the coefficients of the components by breaking down the data.
+
+Although the typical purpose of time series is exploration of the data and assess if there are seasons, trends etc. and perhaps to pinpoint whether you are above or below the season/trend/cycle. 
+
+If the Y observations is the sum of the components, then we have **additive model**, if they are the product of the components, then it is called **multiplicative model**
+
+Time series is typically an additive model, if the variance is more or less the same, it is a multiplicative model if the variance increases with time
+
+*Note, one can transform a multiplicative model to an additive model by taking the logarithm*
+
+
+### Additional on trend
+
+**Quadratic trend**
+
+*e.g. where we have curvature*
+
+$$\hat{T}_t=\beta_0+\beta_1t+\beta_1t^2$$
+
+
+**Exponential trend**
+
+*e.g. exponentially growing population*
+
+$$\hat{T}_t=\beta_0*\beta_2^t$$
+
+*NOTE, one may transform this into a logistic trend instead, as continuous exponential trend is not typical*
+
+\
+
+### Additional on seasonal pattern
+
++ One can manually rule out seasonality by adding seasonal index (that is hard coding the expected index in the respective periods)
+  + ***One must rule out other factors before doing this!***
+
+
+**Seasonally adjusted data**
+
+For additive
+
+$$Y_t - S_t = T_t + I_t$$
+
+For multiplicative
+
+$$\frac{Y_t}{S_t} = T_t * I_t$$
+
+One does often take out seasonality to better compare data and also create short term forecasts.
+
+
+### Cyclical and Irregular Variations
+
+One can often rule out (or at least smooth out) irregularities by taking the moving average
+
+\
+
+## Regression with time series data
+
+
+One of the assumptions for regression models, is that the errors are independent (uncorrelated), THAT IS RARELY THE CASE WITH TIME SERIES. Hence one must be very precautions.
+
+## The success criteria and process
+
+
+*The following elaborates on success criteria and the process*
+
+### Success Criteria
+
+*Ultimately we want to be able to answer the following:*
+
+1. Do we have trend?
+2. Do we have cyclical movements?
+3. Do we have seasons?
+4. Do we have autocorellation? If yes:
+    a. If RHO = 1, then we can take first differences
+    b. If RHO <> 1, then we can do the generalized differences., thus implies the following:
+        1. Do an OLS and get the residuals
+        2. Use the residuals in the following equation $e_t=\rho e_{t-1}+ \sigma_t$, using OLS as estimated rho ($\hat{\rho}$)
+            a. If rho = 0, then 0 autocorellation
+
+
+### The Process
+
+**Deseasonalizing and detrending based on moving averages and accounting for cyclical moves**
+
+*Note, if you do not have seasonality, then jump to section 2. trend etc.*
+
+1. Desaesonalizing
+    a. Remove the short-term fluctuations
+    b. If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:
+        1. Find the MA_t with $$MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}$$ and $$MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}$$. *Note, that the MA for each is centered in the center and rounded up to the coming period*
+        2. Then do the average of the two periods, which will find the actual center: $$CMA_t=\frac{(MA_t+MA_{t+1})}{2}$$
+        
+        Notice, that the example is with quarterly MA, hence the MAs are divided with 4.
+        
+    c. $CMA_t$ is representing the deseasonalized data.
+    d. One can find the seasonal factor by saying $$SF_t=\frac{Y_t}{CMA_t}$$
+    e. CONCLUSION: IF $SF_t > 1$, then Y is greater than the quartely (or what other period is used) average or, $SF_t < 1$, then the Y is less than the quarterly average
+
+\
+    
+> Alternative, deseasonalizing data can be done by dividing the raw data with some seasonal index, that is adding dummy variables for the periods. Although by using the index, one assume, that the same seasonality is the same as preivous periods.
+
+\
+
+2. Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).
+
+    a. We must find out if the trend is linear or quadratic.
+    
+    Linear: $$C\hat{M}A_t=f(t)=\beta_0 + \beta_1t$$
+    
+    Quadratic: $$C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2$$
+    
+    Where $t$ is the time indicator and 1 = the first observation and increases by 1 thereafter.
+    
+    b. Now we have obtained the centered moving-average trend ($CMAT = C\hat{M}A$)
+    
+    
+3. Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.
+
+    a. Cyclical factor: $CF = \frac{CMA}{CMAT}$
+    
+    If CF > 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.
+    
+    
+4. Time-Series decomposition forecast. Now we can do the reverse procedure, using the factors, that we have just found.
+
+The reverse procedure is there assembling the predicted Y based on the factors that have just been found.
+
+$$\hat{Y}=CMAT*SI*CF*I$$
+
+Where, CMAT = T, S is the SF, CF is the CF and I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)
+
+
+
+
+
+
+## Exercises
+
+### Alomega Food Stores, case 6 p. 166 + case 7 p. 348
+
+
+### Monthly Sales Data
+
+
 
 
 

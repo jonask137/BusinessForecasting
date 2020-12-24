@@ -81,6 +81,17 @@ multicollinearity
 serial-correlation-and-omitted-variables
 selection-criteria
 time-series-decomposition-and-regression-with-time-series-data
+time-series-and-their-components-hw
+additional-on-trend
+additional-on-seasonal-pattern
+cyclical-and-irregular-variations
+regression-with-time-series-data
+the-success-criteria-and-process
+success-criteria
+the-process
+exercises-2
+alomega-food-stores-case-6-p.-166-case-7-p.-348
+monthly-sales-data
 arima-models-and-box-jenkins-methodology
 communicating-technical-findings
 Methods

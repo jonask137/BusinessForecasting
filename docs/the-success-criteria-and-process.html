@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Exploring Patterns and Forecasting Techniques | Business Forecasting</title>
+  <title>6.3 The success criteria and process | Business Forecasting</title>
   <meta name="description" content="This is the book description" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta property="og:title" content="6.3 The success criteria and process | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Exploring Patterns and Forecasting Techniques | Business Forecasting" />
+  <meta name="twitter:title" content="6.3 The success criteria and process | Business Forecasting" />
   
   <meta name="twitter:description" content="This is the book description" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="articles.html"/>
-<link rel="next" href="the-forecasting-process.html"/>
+<link rel="prev" href="regression-with-time-series-data.html"/>
+<link rel="next" href="exercises-2.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,24 +226,86 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exploring-patterns-and-forecasting-techniques" class="section level1" number="4">
-<h1><span class="header-section-number">4</span> Exploring Patterns and Forecasting Techniques</h1>
-<p><em>This chapter will elaborate on how one identify patterns in data thus how to account for this. Thus, we are looking into smoothing methods and moving averages</em></p>
-<p><em>Additionally, we will explore how we select forecasting methods</em></p>
-<p><strong>Literature:</strong></p>
-<ul>
-<li>HW: Exploring Data Patterns and an Introduction to Forecasting Techniques</li>
-<li>HW: Moving Averages and Smoothing Methods</li>
-<li>Armstrong, J.S. (2001) “Selecting Forecast Methods,” In Principles of Forecasting: A Handbook for Researchers and Practitioners (Ed. J. Scott Armstrong), Kluwer</li>
-</ul>
+<div id="the-success-criteria-and-process" class="section level2" number="6.3">
+<h2><span class="header-section-number">6.3</span> The success criteria and process</h2>
+<p><em>The following elaborates on success criteria and the process</em></p>
+<div id="success-criteria" class="section level3" number="6.3.1">
+<h3><span class="header-section-number">6.3.1</span> Success Criteria</h3>
+<p><em>Ultimately we want to be able to answer the following:</em></p>
+<ol style="list-style-type: decimal">
+<li>Do we have trend?</li>
+<li>Do we have cyclical movements?</li>
+<li>Do we have seasons?</li>
+<li>Do we have autocorellation? If yes:
+<ol style="list-style-type: lower-alpha">
+<li>If RHO = 1, then we can take first differences</li>
+<li>If RHO &lt;&gt; 1, then we can do the generalized differences., thus implies the following:
+<ol style="list-style-type: decimal">
+<li>Do an OLS and get the residuals</li>
+<li>Use the residuals in the following equation <span class="math inline">\(e_t=\rho e_{t-1}+ \sigma_t\)</span>, using OLS as estimated rho (<span class="math inline">\(\hat{\rho}\)</span>)
+<ol style="list-style-type: lower-alpha">
+<li>If rho = 0, then 0 autocorellation</li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol>
+</div>
+<div id="the-process" class="section level3" number="6.3.2">
+<h3><span class="header-section-number">6.3.2</span> The Process</h3>
+<p><strong>Deseasonalizing and detrending based on moving averages and accounting for cyclical moves</strong></p>
+<p><em>Note, if you do not have seasonality, then jump to section 2. trend etc.</em></p>
+<ol style="list-style-type: decimal">
+<li>Desaesonalizing
+<ol style="list-style-type: lower-alpha">
+<li><p>Remove the short-term fluctuations</p></li>
+<li><p>If we have even number of periods, one must center the data. Whith odd period numbers, you can merely center with the period in the middle. The procedure with even number of periods is the following:</p>
+<ol style="list-style-type: decimal">
+<li>Find the MA_t with <span class="math display">\[MA_t = \frac{(Y_{t-2}+Y_{t-1}+Y_{t}+Y_{t+1}+)}{4}\]</span> and <span class="math display">\[MA_{t+1} = \frac{(Y_{t-1}+Y_{t}+Y_{t+1}+Y_{t+2}+)}{4}\]</span>. <em>Note, that the MA for each is centered in the center and rounded up to the coming period</em></li>
+<li>Then do the average of the two periods, which will find the actual center: <span class="math display">\[CMA_t=\frac{(MA_t+MA_{t+1})}{2}\]</span></li>
+</ol>
+<p>Notice, that the example is with quarterly MA, hence the MAs are divided with 4.</p></li>
+<li><p><span class="math inline">\(CMA_t\)</span> is representing the deseasonalized data.</p></li>
+<li><p>One can find the seasonal factor by saying <span class="math display">\[SF_t=\frac{Y_t}{CMA_t}\]</span></p></li>
+<li><p>CONCLUSION: IF <span class="math inline">\(SF_t &gt; 1\)</span>, then Y is greater than the quartely (or what other period is used) average or, <span class="math inline">\(SF_t &lt; 1\)</span>, then the Y is less than the quarterly average</p></li>
+</ol></li>
+</ol>
+<p><br />
+</p>
+<blockquote>
+<p>Alternative, deseasonalizing data can be done by dividing the raw data with some seasonal index, that is adding dummy variables for the periods. Although by using the index, one assume, that the same seasonality is the same as preivous periods.</p>
+</blockquote>
+<p><br />
+</p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>Long-term trend, this is estimated from the deseasonalized data. This is estimated using simple linear regression. Basically the detrended data consists of the residuals between the actual data and the estimated data by using the trend variable (the counter 1 to n).</p>
+<ol style="list-style-type: lower-alpha">
+<li>We must find out if the trend is linear or quadratic.</li>
+</ol>
+<p>Linear: <span class="math display">\[C\hat{M}A_t=f(t)=\beta_0 + \beta_1t\]</span></p>
+<p>Quadratic: <span class="math display">\[C\hat{M}A_t=f(t)=\beta_0 + \beta_1t+\beta_2t^2\]</span></p>
+<p>Where <span class="math inline">\(t\)</span> is the time indicator and 1 = the first observation and increases by 1 thereafter.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Now we have obtained the centered moving-average trend (<span class="math inline">\(CMAT = C\hat{M}A\)</span>)</li>
+</ol></li>
+<li><p>Cyclical component, one can compare the CMA with the CMAT to find the cyclical factor.</p>
+<ol style="list-style-type: lower-alpha">
+<li>Cyclical factor: <span class="math inline">\(CF = \frac{CMA}{CMAT}\)</span></li>
+</ol>
+<p>If CF &gt; 1, the deseasonaliced value is above the long-term trend of the data. If the opposite, then below.</p></li>
+<li><p>Time-Series decomposition forecast. Now we can do the reverse procedure, using the factors, that we have just found.</p></li>
+</ol>
+<p>The reverse procedure is there assembling the predicted Y based on the factors that have just been found.</p>
+<p><span class="math display">\[\hat{Y}=CMAT*SI*CF*I\]</span></p>
+<p>Where, CMAT = T, S is the SF, CF is the CF and I is the irregular component (this is assumed to be 1 given its random nature, if one expects a boom or shock, this can be modeled with)</p>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="articles.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="the-forecasting-process.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regression-with-time-series-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercises-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
