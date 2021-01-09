@@ -120,19 +120,19 @@ Then how do we select an apporpriate number of lags to be included?
 The Box-Jenkins model-building strategy. It has th following steps
 
 1. Model Identification
-  1. Assessment for stationarity - can be done with ACF correlogram.
-    a. If found, then use difference, hence ARIMA
-  2. Identify what form of model to be used, e.g., MA, ARMA, ARIMA, or AR. This is done by assessing the time-series' ACF (see examples on page 357 - 359)
+    i. Assessment for stationarity - can be done with ACF correlogram.
+        a. If found, then use difference, hence ARIMA
+    ii. Identify what form of model to be used, e.g., MA, ARMA, ARIMA, or AR. This is done by assessing the time-series' ACF (see examples on page 357 - 359)
 
 2. Model Specification: This is estimating model parameters
   
 3. Model Checking
-  1. Make model diagnostics:
-    a. Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats
-    b. No heteroskedasticity
-    c. No spike in the ACF, must be within $±2/\sqrt{n}$ confidence interval from 0.
-  2. If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
-    a. if that concludes indecisive result, then choose the simplest model (principle of parsimony)
+    i. Make model diagnostics:
+        a. Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats
+        b. No heteroskedasticity
+        c. No spike in the ACF, must be within $±2/\sqrt{n}$ confidence interval from 0.
+    ii. If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
+        a. if that concludes indecisive result, then choose the simplest model (principle of parsimony)
     
 4. Forecasting with the Model
 

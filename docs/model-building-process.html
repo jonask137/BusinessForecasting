@@ -253,18 +253,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">7.2</span> Model Building Process</h2>
 <p>The Box-Jenkins model-building strategy. It has th following steps</p>
 <ol style="list-style-type: decimal">
-<li><p>Model Identification</p></li>
-<li><p>Assessment for stationarity - can be done with ACF correlogram.
-a. If found, then use difference, hence ARIMA</p></li>
-<li><p>Identify what form of model to be used, e.g., MA, ARMA, ARIMA, or AR. This is done by assessing the time-series’ ACF (see examples on page 357 - 359)</p></li>
+<li><p>Model Identification</p>
+<ol style="list-style-type: lower-roman">
+<li>Assessment for stationarity - can be done with ACF correlogram.
+<ol style="list-style-type: lower-alpha">
+<li>If found, then use difference, hence ARIMA</li>
+</ol></li>
+<li>Identify what form of model to be used, e.g., MA, ARMA, ARIMA, or AR. This is done by assessing the time-series’ ACF (see examples on page 357 - 359)</li>
+</ol></li>
 <li><p>Model Specification: This is estimating model parameters</p></li>
-<li><p>Model Checking</p></li>
-<li><p>Make model diagnostics:
-a. Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats
-b. No heteroskedasticity
-c. No spike in the ACF, must be within <span class="math inline">\(±2/\sqrt{n}\)</span> confidence interval from 0.</p></li>
-<li><p>If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
-a. if that concludes indecisive result, then choose the simplest model (principle of parsimony)</p></li>
+<li><p>Model Checking</p>
+<ol style="list-style-type: lower-roman">
+<li>Make model diagnostics:
+<ol style="list-style-type: lower-alpha">
+<li>Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats</li>
+<li>No heteroskedasticity</li>
+<li>No spike in the ACF, must be within <span class="math inline">\(±2/\sqrt{n}\)</span> confidence interval from 0.</li>
+</ol></li>
+<li>If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
+<ol style="list-style-type: lower-alpha">
+<li>if that concludes indecisive result, then choose the simplest model (principle of parsimony)</li>
+</ol></li>
+</ol></li>
 <li><p>Forecasting with the Model</p></li>
 </ol>
 </div>
