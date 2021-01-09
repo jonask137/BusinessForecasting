@@ -88,6 +88,8 @@ Thence we are able to say:
 ### Linear regressions
 
 + Linear regression with a trend: that is normal linear regression, where the trend is added as a counter, which will account for the trend, given it is linear.
++ Linear regression with seasonal dummies and a trend: That is making dummy variables for each period, using `seasonaldummary()`, to have a variable accounting for each period. The you can add a trend variable `seq(1,n,1)`, e.g., linear counter, when having linear trend.
+  + See \@ref(ex:MonthlySalesData)
 
 ### Non linear regressions
 
@@ -216,6 +218,8 @@ if $\beta = \gamma = 0$ the model is merely simple exponential smoothing.
 
 ## Performance Measurements {#PerformanceMeasurements}
 
+### Error terms
+
 + Mean error (ME): 
 
 \begin{equation}
@@ -258,6 +262,23 @@ RMSE=\sqrt{MSE}
 (\#eq:MSE)
 \end{equation}
 
+### Multicollinearity
+
+__VIF__
+
+\begin{equation}
+VIF_j=\frac{1}{1-R_j^2}
+(\#eq:VIF)
+\end{equation}
+
+Where $j = 1,...,k$
+
+Thus, we see that Rsquare is obtained from regression each IDV against the remaining variables. We can then have the following outputs:
+
++ VIF = 1, no milticollinearity
++ VIF > 10, indicates multicollinearity
+
+If one gets an indication of multicollinearity, then one should drop one of the correlated variables.
 
 
 

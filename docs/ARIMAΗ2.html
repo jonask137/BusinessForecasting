@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.4 Exercises | Business Forecasting</title>
-  <meta name="description" content="4.4 Exercises | Business Forecasting" />
+  <title>7.1 ARIMA | Business Forecasting</title>
+  <meta name="description" content="7.1 ARIMA | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.4 Exercises | Business Forecasting" />
+  <meta property="og:title" content="7.1 ARIMA | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.4 Exercises | Business Forecasting" />
+  <meta name="twitter:title" content="7.1 ARIMA | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="DataPatternsAndModelSelection.html"/>
-<link rel="next" href="simple-and-multiple-linear-regression.html"/>
+<link rel="prev" href="ARIMA.html"/>
+<link rel="next" href="model-building-process.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -249,169 +249,97 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="exercises" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Exercises</h2>
-<p><em>This section contain exercises, hence the methods applied on data</em></p>
-<div id="p.-92-hw-problem-8" class="section level3" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> p. 92 HW Problem 8</h3>
-<div id="moving-averages" class="section level4" number="4.4.1.1">
-<h4><span class="header-section-number">4.4.1.1</span> Moving Averages</h4>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="exercises.html#cb3-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week45/prob8p92HW.xlsx&quot;</span>)</span>
-<span id="cb3-2"><a href="exercises.html#cb3-2" aria-hidden="true" tabindex="-1"></a>yt <span class="ot">&lt;-</span> <span class="fu">ts</span>(df) <span class="co">#Rename and define as time series</span></span>
-<span id="cb3-3"><a href="exercises.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt) <span class="co">#We can plot the</span></span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-10-1.png" width="480" style="display: block; margin: auto;" /></p>
-<p>We see that there is a trend in the data.</p>
-<p>We can calculate the five period moving average by:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="exercises.html#cb4-1" aria-hidden="true" tabindex="-1"></a>yt5c <span class="ot">&lt;-</span> <span class="fu">ma</span>(yt <span class="co">#The time series</span></span>
-<span id="cb4-2"><a href="exercises.html#cb4-2" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">order =</span> <span class="dv">5</span> <span class="co">#Amount of periods to be evaluated</span></span>
-<span id="cb4-3"><a href="exercises.html#cb4-3" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">centre =</span> <span class="cn">TRUE</span> <span class="co">#We want the center value of the MA</span></span>
-<span id="cb4-4"><a href="exercises.html#cb4-4" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb4-5"><a href="exercises.html#cb4-5" aria-hidden="true" tabindex="-1"></a>yt5c</span></code></pre></div>
-<pre><code>## Time Series:
-## Start = 1 
-## End = 8 
-## Frequency = 1 
-##       [,1]
-## [1,]    NA
-## [2,]    NA
-## [3,] 212.0
-## [4,] 216.0
-## [5,] 219.0
-## [6,] 221.2
-## [7,]    NA
-## [8,]    NA</code></pre>
-<p>Hence we are able to produce moving averages based on the data. Notice, that the most recent MA is the prediction, hence being <span class="math inline">\(\hat{Y}_{t+1}\)</span>.</p>
-<p>One could extend this, by adding this value to the time series and then calculate MA for the period hereafter. We see that the output of the table above is somewhat misleading, as the most recent MA predictinos, are not positioned in the end, but instead where the center actually is.</p>
-<p>This problem is solvable using <code>filter()</code>. See the following chunk</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="exercises.html#cb6-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">5</span> <span class="co">#specify the order of the moving average</span></span>
-<span id="cb6-2"><a href="exercises.html#cb6-2" aria-hidden="true" tabindex="-1"></a>c <span class="ot">&lt;-</span> <span class="fu">rep</span> (<span class="dv">1</span><span class="sc">/</span>k,k) <span class="co">#remember that simple average is a weighted average with equal weights, </span></span>
-<span id="cb6-3"><a href="exercises.html#cb6-3" aria-hidden="true" tabindex="-1"></a>                <span class="co">#you need to specify weights for the filter command to work</span></span>
-<span id="cb6-4"><a href="exercises.html#cb6-4" aria-hidden="true" tabindex="-1"></a>yt5<span class="ot">&lt;-</span> <span class="fu">filter</span>(yt, c, <span class="at">sides =</span> <span class="dv">1</span>)</span>
-<span id="cb6-5"><a href="exercises.html#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(yt5)<span class="co"># &quot;Plotting the MA&#39;s</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-12"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-12-1.png" alt="5k Moving Average" width="480" />
-<p class="caption">
-Figure 4.4: 5k Moving Average
-</p>
-</div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="exercises.html#cb7-1" aria-hidden="true" tabindex="-1"></a>yt5 <span class="co">#The updated vector of MA&#39;s</span></span></code></pre></div>
-<pre><code>## Time Series:
-## Start = 1 
-## End = 8 
-## Frequency = 1 
-##       [,1]
-## [1,]    NA
-## [2,]    NA
-## [3,]    NA
-## [4,]    NA
-## [5,] 212.0
-## [6,] 216.0
-## [7,] 219.0
-## [8,] 221.2</code></pre>
-<p>This we see, that scores are moved to the end, so even though it is the center of the MA, it is now presented as recent values.</p>
-<p>For simple moving averages, one may do it in excel, it may be easier and quicker.</p>
-</div>
-<div id="exponential-moving-averages-holts-and-winters" class="section level4" number="4.4.1.2">
-<h4><span class="header-section-number">4.4.1.2</span> Exponential moving averages + Holts and Winters</h4>
-<p><strong>Simple exponential smoothing</strong></p>
-<p>Where;</p>
+<div id="ARIMAΗ2" class="section level2" number="7.1">
+<h2><span class="header-section-number">7.1</span> ARIMA</h2>
+<p>Basically it is a framework for adding AR and or MA into the regression model, where:</p>
 <ul>
-<li>alpha is the smoothing parameter,</li>
-<li>beta tells you if you should account for a trend or not,</li>
-<li>gamma is responsible for the presence of a seasonal component in the model</li>
+<li>AR: A time-series is predicted using its own history, can be explained by: <span class="math inline">\(Y_t=β_0+β_1Y_{t-1}+ε_1\)</span></li>
+<li>MA: Model predicts based on current and past shocks to the series. An MA(q) model: <span class="math inline">\(Y_t=\mu+\epsilon_t-\omega_1\ \epsilon_{e-1}-...-\omega_q\ \epsilon_{e-q}\)</span></li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="exercises.html#cb9-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(yt</span>
-<span id="cb9-2"><a href="exercises.html#cb9-2" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">alpha =</span> <span class="fl">0.4</span></span>
-<span id="cb9-3"><a href="exercises.html#cb9-3" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">beta =</span> <span class="cn">FALSE</span></span>
-<span id="cb9-4"><a href="exercises.html#cb9-4" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">gamma =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb9-5"><a href="exercises.html#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fit,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">nrow</span>(df))) <span class="sc">+</span> <span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>)</span></code></pre></div>
-<pre><code>## integer(0)</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="exercises.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;Observed&quot;</span>,<span class="st">&quot;Fitted&quot;</span>),<span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-13"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-13-1.png" alt="Exponential Smoothing" width="480" />
-<p class="caption">
-Figure 4.5: Exponential Smoothing
+<p><strong>It is important to notice, that it is not by default an advantage of including both methods, but one should select the appropriate method depending on the looks corellogram</strong></p>
+<p><strong>Key concepts</strong></p>
+<p>ARMA that is the approach to stationary data. If the data is nonstationary, one must make the data stationary by differencing. leading to ARIMA. Hence:</p>
+<ol style="list-style-type: decimal">
+<li>ARMA: When we have stationarity</li>
+<li>ARIMA: When we have non-stationarity</li>
+</ol>
+<p>The notations for ARIMA are:</p>
+<p><span class="math display">\[ARIMA_{(p,d,q)}\]</span></p>
+<p><em>Where:</em></p>
+<ul>
+<li><p>p = the order of AR</p></li>
+<li><p>d = the order of differencing (NOTE: if this is 0, then the model is reduced to an ARMA model)</p></li>
+<li><p>q = the order of MA, hence if q = 2, then MA for <span class="math inline">\(t_{-1}\)</span> and <span class="math inline">\(t_{-2}\)</span> is included in the regression model.</p></li>
+</ul>
+<p><br />
+</p>
+<div id="elaborating-on-ar-models" class="section level3" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> Elaborating on AR models</h3>
+<p>AR = Autoregressive</p>
+<p><strong>AR models are appropriate with stationary data</strong></p>
+<p><em>This makes sense, as if the data is non stationary (where the variance is constant)</em></p>
+<p>This can generalized with AR(p), where p = the order of AR, meaning how many prior periods to <span class="math inline">\(Y_t\)</span> to be included. Then how do we select an apporpriate number of lags?</p>
+<ol style="list-style-type: decimal">
+<li>The autocorrelation function (ACF): selection criteria: the ACF should decline to zero exponentially fast</li>
+<li>The partial autocorelation function (PACF)</li>
+</ol>
+<p>See the full equation on page 360.</p>
+<p>Process:</p>
+<ol style="list-style-type: decimal">
+<li>Select order of p</li>
+<li>Calculate coefficients for each lagged period</li>
+<li>Forecast using the coefficients</li>
+<li>Evaluate constantly if the coefficients are still applicable</li>
+</ol>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li>Data is stationary. If not, then one must deal with that</li>
+</ul>
+<p><br />
 </p>
 </div>
-<p>Hence we see the smoothed values, where the higher alpha, the more will the fitted line track the changes in the observations.</p>
-<p>We can now plot the forecast values:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="exercises.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit),<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="fu">nrow</span>(df)<span class="sc">+</span><span class="dv">10</span>))<span class="co"># + grid(col = &quot;lightgrey&quot;)</span></span>
-<span id="cb12-2"><a href="exercises.html#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,<span class="fu">c</span>(<span class="st">&quot;Observed&quot;</span>,<span class="st">&quot;Forecast&quot;</span>),<span class="at">lty =</span> <span class="dv">1</span>,<span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;Black&quot;</span>,<span class="st">&quot;Blue&quot;</span>))</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-14"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-14-1.png" alt="Forecast Exponential Smoothing" width="480" />
-<p class="caption">
-Figure 4.6: Forecast Exponential Smoothing
+<div id="elaborating-on-ma-models" class="section level3" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Elaborating on MA models</h3>
+<p>MA = Moving average</p>
+<p><strong><em>IMPORTANT NOTE: this has nothing to do with regular Moving Average, as with using past periods</em></strong></p>
+<p>This approach applies use residuals (between actual values and fitted values/or forecasted values) multiplied with a coefficient to forecast the coming period. As with AR, we are able to include x amount of previous periods. Thus, we are able to describe MA with:</p>
+<p><span class="math inline">\(Y_t=\mu+\epsilon_t-\omega_1\epsilon_{t-1}-\omega_2\epsilon_{t-2}-...-\omega_q\epsilon_{t-q}\)</span>
+(#eq:MA(q))
+\end{equation}</p>
+<p>where:</p>
+<ul>
+<li><span class="math inline">\(Y_t\)</span> = the forecast for time period t.</li>
+<li><span class="math inline">\(\mu\)</span> = just a constant that is applied in the calculation</li>
+<li><span class="math inline">\(\epsilon_t\)</span> = the error term as in any other regression</li>
+<li><span class="math inline">\(\omega\)</span> = the coefficients that we are to calculate for each period
+<ul>
+<li>NOTICE: these can be interpret as wheights put on each period. But it does NOT need to summarize to 1, it can be above and below</li>
+</ul></li>
+<li><span class="math inline">\(\epsilon_{1-q}\)</span> = The error (residual) for each period</li>
+</ul>
+<p>Process:</p>
+<ol style="list-style-type: decimal">
+<li>Select order of 1</li>
+<li>Calculate coefficients for each lagged period</li>
+<li>Forecast using the coefficients</li>
+<li>Evaluate constantly if the coefficients are still applicable</li>
+</ol>
+<p>Then how do we select an apporpriate number of lags to be included?</p>
+<ol style="list-style-type: decimal">
+<li>The autocorrelation function (ACF): selection criteria: the ACF should decline to zero exponentially fast</li>
+<li>The partial autocorelation function (PACF)</li>
+</ol>
+<p><br />
 </p>
 </div>
-<p>One see the confidence intervals of the forecast widening as we get further away from the actual values.</p>
-<p>Now one may assess the accuracy:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="exercises.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">forecast</span>(fit))</span></code></pre></div>
-<pre><code>##                    ME     RMSE      MAE      MPE     MAPE     MASE      ACF1
-## Training set 8.001509 8.209102 8.001509 3.673623 3.673623 2.154252 0.1962194</code></pre>
-<p>One see an RMSE of 8.2. Hence one could compare it with an exponential smoothing, which is more sensitive to the observations.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="exercises.html#cb15-1" aria-hidden="true" tabindex="-1"></a>fit0<span class="fl">.6</span> <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(yt</span>
-<span id="cb15-2"><a href="exercises.html#cb15-2" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">alpha =</span> <span class="fl">0.6</span> <span class="co">#Changed</span></span>
-<span id="cb15-3"><a href="exercises.html#cb15-3" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">beta =</span> <span class="cn">FALSE</span></span>
-<span id="cb15-4"><a href="exercises.html#cb15-4" aria-hidden="true" tabindex="-1"></a>                   ,<span class="at">gamma =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-5"><a href="exercises.html#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">forecast</span>(fit0<span class="fl">.6</span>))</span></code></pre></div>
-<pre><code>##                    ME     RMSE      MAE      MPE     MAPE     MASE     ACF1
-## Training set 5.860023 6.373698 5.860023 2.700235 2.700235 1.577698 0.264614</code></pre>
-<p>Where we see an RMSE of 6.37, hence lower than the initial test.</p>
-<p><strong>Holt’s exponential smoothing</strong></p>
-<p>exponential smoothing when a trend component is present: beta = TRUE</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="exercises.html#cb17-1" aria-hidden="true" tabindex="-1"></a>{fit3 <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(yt</span>
-<span id="cb17-2"><a href="exercises.html#cb17-2" aria-hidden="true" tabindex="-1"></a>                    ,<span class="at">alpha =</span> <span class="fl">0.6</span></span>
-<span id="cb17-3"><a href="exercises.html#cb17-3" aria-hidden="true" tabindex="-1"></a>                    ,<span class="at">beta =</span> <span class="cn">TRUE</span></span>
-<span id="cb17-4"><a href="exercises.html#cb17-4" aria-hidden="true" tabindex="-1"></a>                    ,<span class="at">gamma =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb17-5"><a href="exercises.html#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit3))</span>
-<span id="cb17-6"><a href="exercises.html#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">forecast</span>(fit3))}</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-17"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-17-1.png" alt="Holt's Exponential Smoothing" width="480" />
-<p class="caption">
-Figure 4.7: Holt’s Exponential Smoothing
-</p>
 </div>
-<pre><code>##                     ME     RMSE      MAE        MPE     MAPE     MASE      ACF1
-## Training set -1.990133 4.369207 3.451467 -0.9324372 1.581919 0.929241 0.4352197</code></pre>
-<p>We see that the RMSE is even lower (4.37). Which is expected, as Holt’s exponential smoothing accounts for trend.</p>
-<p><strong>Winter’s Exponential Smoothing</strong></p>
-<p>Which accounts for trend and seasonality</p>
-<p>in order to make it work one needs to define the frequency of your seasonal component, when specifying the ts data</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="exercises.html#cb19-1" aria-hidden="true" tabindex="-1"></a>{yt <span class="ot">&lt;-</span> <span class="fu">ts</span>(df</span>
-<span id="cb19-2"><a href="exercises.html#cb19-2" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">frequency =</span> <span class="dv">4</span>) <span class="co"># let&#39;s assume we suspect a quarterly pattern</span></span>
-<span id="cb19-3"><a href="exercises.html#cb19-3" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(yt, <span class="at">alpha=</span><span class="fl">0.6</span>, <span class="at">beta=</span><span class="cn">TRUE</span>, <span class="at">gamma=</span><span class="cn">TRUE</span>)</span>
-<span id="cb19-4"><a href="exercises.html#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">forecast</span>(fit4))</span>
-<span id="cb19-5"><a href="exercises.html#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">forecast</span>(fit4))} <span class="co"># experiment with seasonality frequency to see if you can get any lower in MSE</span></span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-18-1.png" width="480" style="display: block; margin: auto;" /></p>
-<pre><code>##                     ME     RMSE     MAE        MPE    MAPE      MASE
-## Training set -0.310075 3.973148 3.34445 -0.1227802 1.50834 0.2730163
-##                     ACF1
-## Training set 0.009251985</code></pre>
-<p>We see that the RMSE is even lower (3.97), hence Winters Exponential Smoothing appear to be the best model for prediction.</p>
-</div>
-</div>
-<div id="p.-93-hw-problem-9-10" class="section level3" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> p. 93 HW Problem 9-10</h3>
-<p>Basically just another example of the exercise above.</p>
-</div>
-<div id="co2-and-sales-data" class="section level3" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> CO2 and Sales Data</h3>
-<p>Not done again. Do if time allows.</p>
-</div>
-<div id="case-6-oo.-108-111-hw" class="section level3" number="4.4.4">
-<h3><span class="header-section-number">4.4.4</span> Case 6 oo. 108-111 HW</h3>
-<p>Not done again. Do if time allows.</p>
-
-</div>
-</div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="DataPatternsAndModelSelection.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="simple-and-multiple-linear-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="ARIMA.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-building-process.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

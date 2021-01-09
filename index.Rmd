@@ -1,12 +1,6 @@
 ---
-title: "Business Forecasting"
-author: "Jonas Ringive Korsholm"
-site: bookdown::bookdown_site
-documentclass: book
-bibliography: [book.bib]
-biblio-style: apalike
-link-citations: yes
-description: "This is the book description"
+title: "Business Forecasting" #appear to be mandatory
+site: bookdown::bookdown_site #appear to be mandatory
 ---
 # setup {-}
 

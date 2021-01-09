@@ -371,8 +371,8 @@ Although in MLR one must be aware of **multicollinearity**, meaning that do we s
 To assess for multicollinearity one can apply VIF, which is the following:
 
 \begin{equation}
-VIF_j=\frac{1}{1-R^2_j}
-(\#eq:VIFTest)
+VIF_j=\frac{1}{1-R_j^2}
+(\#eq:VIF)
 \end{equation}
 
 Where $j = 1,...,k$

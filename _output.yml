@@ -1,6 +1,11 @@
+author: "Jonas Ringive Korsholm"
+documentclass: book
+bibliography: [book.bib]
+biblio-style: apalike
+link-citations: yes
+description: "This is the book description"
 bookdown::gitbook:
   css: style.css
   split_by: section
-  #Scripts to be run before and after each chapter
   download: ["pdf", "epub"]
   df_print: kable

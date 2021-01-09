@@ -1,6 +1,6 @@
 
 
-```{r libraries,include=FALSE}
+```{r librariesTS,include=FALSE}
 library(forecast)
 library(readxl)
 ```
@@ -115,7 +115,7 @@ One of the assumptions for regression models, is that the errors are independent
             a. If rho = 0, then 0 autocorellation
 
 
-### The Process
+### The Process {#DecomposingWithMA}
 
 **Deseasonalizing and detrending based on moving averages and accounting for cyclical moves**
 
@@ -278,7 +278,7 @@ lm.fit <- lm(y ~ trend)
 summary(lm.fit)
 ```
 
-We see that the trend variable appear to be non significant, hence there is not enough evidance to reject the null hypothesis, being that there is no relationship between the dependent- and independent variable.
+We see that the trend variable appear to be non significant, hence there is not enough evidence to reject the null hypothesis, being that there is no relationship between the dependent- and independent variable.
 
 ```{r}
 accuracy(object = lm.fit #The fitted values from the linear model
@@ -294,9 +294,209 @@ plot(x = lm.fit$fitted.values,y = lm.fit$residuals,main = "Resduals plot") +
   abline(h = 0,lty = 3,col = "blue")
 ```
 
+#### What might Jackson Tilson say about the forecasts?
+
+With mean average percentage error of 28%, the forecast may not be super good. Although it was shown, that there is statistical evidence for the model being significant. Hence, we must try to convince him, that it does in fact contribute with some knowledge.
+
+__What other forecast methods could be used?__
+
+E.g., smoothing or moving averages.
 
 
-### Monthly Sales Data
+#### P.348 Case 7 (Alomega Food Stores)
+
+This is an extension of the case above. It has questions regarding what other things she might do.
+
+__How is Julie sure that it is the right predictors__
+
+We see on page 348, that some of the variables has a p-vale that is above the 5 percent level, hence there is a greater risk, that there is no statistical evidence for a relationship between the individual variables and the dependent variable.
+
+Also changes in VIF for the variables, although none are close to 10 and according to the rule of thumb, there is no indication of multicollinearity
+
+__How would you sell the model__
+
+Focus on how it prepares them for future changes, planning staffing, procurement, etc.
+
+__How may the model indicate future advertizing?__
+
+We see that it makes sense to spend money on all three types of advertisements.
+
+__What conditions to be aware of?__
+
+- Autocorrelation in the error terms?
+- Multicollinearity
+
+Other models that could be used?
+
+- ARIMA
+- Smoothing
+
+
+```{r}
+rm(list = ls())
+```
+
+
+### Monthly Sales Data {#ex:MonthlySalesData}
+
+Loading the data and storing only the y variable as a timeseries
+
+```{r,fig.cap="Visual interpretation"}
+df <- read_excel("Data/Week47/Salesdataseasonal.xlsx")
+y <- ts(df$Sales
+        ,frequency = 12 #Monthly data
+        ,start = c(1979,1) #start year 1971 month 1
+        )
+#Plotting for visual interpretation
+plot(y)
+```
+
+
+Goal:
+
+a. Seasonal dummies
+b. Trend variable
+
+Hereafter different approaches to decomposing data is presented
+
+1. OLS using seasonal dummies and trend variable
+2. Decomposition using `decompose()`
+3. Using CMA (centered moving averages)
+
+
+___a. finding seasonal dummies___
+
+Finding seasonal dummies using a trend
+
+```{r}
+#Creting matrix of dummies for each month
+month <- seasonaldummy(x = y)
+```
+
+This can be shown with the following table
+
+```{r,echo=F,fig.cap="Seasonal dummy matrix inspection"}
+knitr::kable(head(month))
+```
+
+We see that a matrix has been created identifying what month each period belongs to.
+
+___b. finding the trend variable___
+
+In addition hereof, we must create a trend variable to account for the trend:
+
+```{r}
+trend <- seq(1,to = length(y),by = 1)
+```
+
+
+___1. OLS using seasonal dummies and trend variable___
+
+```{r}
+#Constructing linear model
+lmmod <- lm(y ~ month + trend)
+summary(lmmod)
+```
+
+What can we deduct from this?
+
+- January, June, September and November are not significant on the 5% level in the full model. Hence the dummies may not explain the sales for these months
+- There is overwhelming evidence for trend being present in the data
+
+Lets now look into the fitted values and plot
+
+
+```{r}
+{#Plotting fitted values
+plot(lmmod$fitted.values,main = 'Fitted values',ylab = 'Sales') + 
+  lines(lmmod$fitted.values,col = 'red') +
+  grid(col = 'lightgrey')
+
+#Plotting residuals
+plot(lmmod$residuals,main = 'Residuals',ylab = 'Residuals') + 
+  lines(lmmod$residuals,col = 'green') +
+  grid(col = 'lightgrey')}
+```
+
+
+__2. Decomposition using `decompose()`__
+
+The following is able to decompose the series based on assuming additivity and multiplicative relationship.
+
+Although as we see that the variance is increasing over time, then one may expect that the multiplicative approach is more appropriate.
+
+```{r,fig.cap="Additive decomposition"}
+#Additive
+decompSalesAdd <- decompose(x = y #The timeseries
+                            ,type = "additive") #for additive decomposition
+#Plotting
+plot(decompSalesAdd)
+```
+
+
+```{rfig.cap="Multiplicative decomposition"}
+#Multiplicative
+decompSalesMult <- decompose(x = y #The timeseries
+                             ,type = "multiplicative") #for multiplicative decomposition
+#Plotting
+plot(decompSalesMult)
+```
+
+
+__3. CMA__
+
+see process in \@ref(DecomposingWithMA)
+
+1. Find the MA_t with equation (6.1) and (6.2) = __Deseasonalizing data__
+
+```{r,fig.cap="CMA"}
+#Finding centered MA
+CMA <- ma(x = y #The time series
+          ,order = 12 #We want the average of 12 periods
+          ,centre = TRUE) #As order is equal, then we want to make a centered MA
+
+plot(CMA)
+```
+
+We see that the centered moving averages have removed the seasons from the data. But there is clearly still a trend.
+
+We are now able to __estimate the trend__ using the deseasonalized data with with trend variable.
+
+_Just as we would deseasonalize any other data!!_
+
+2. Then find the centered MA (CMAT) = __detrending data__
+
+```{r,fig.cap="Cycle"}
+#Detrending data 
+linmod <- lm(CMA ~ trend
+             ,na.action = "na.exclude") #We want to remove rows with NAs
+
+  # NOTE: we dont really care about the model, we only want the fitted values
+  # as they represent the estimated linear trend
+
+#Estimated trend
+CMAT <- linmod$fitted.values #Extracting trend estimates and saving in an object
+plot(CMAT)
+```
+
+With the deseasonalized data and the trend estimates, we are able to assess whether we are above or below the trend in all of deseasonalized data.
+
+__The cycle__
+
+```{r,fig.cap="Cycle"}
+#Identifying the cycle
+Cycle <- na.exclude(CMA) / CMAT
+ts.plot(Cycle)
+abline(h=1, col = "red")
+```
+
+Now we see the whether we are above or below the trend in the respective periods, e.g., period 60 appear to be far below the trend level indicating it is a the lowest of the seasons.
+
+
+
+
+
+
 
 
 
