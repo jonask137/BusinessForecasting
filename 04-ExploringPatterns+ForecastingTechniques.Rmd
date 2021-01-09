@@ -1,5 +1,5 @@
 
-```{r libraries,include=FALSE}
+```{r libraries W45,include=FALSE}
 library(knitr)
 library(readxl)
 library(forecast)
@@ -334,7 +334,7 @@ accuracy(forecast(fit4))} # experiment with seasonality frequency to see if you 
 
 We see that the RMSE is even lower (3.97), hence Winters Exponential Smoothing appear to be the best model for prediction.
 
-```{r cleaning environment,include=FALSE}
+```{r cleaning environment problem 8 p92,include=FALSE}
 rm(list = ls())
 ```
 

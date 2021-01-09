@@ -1,6 +1,6 @@
 
 
-```{r Libraries,include=FALSE}
+```{r Libraries W46,include=FALSE}
 library(lmtest)
 library(tibble)
 ```
@@ -353,7 +353,7 @@ plot(dy) #
 acf(dy, 50)
 ```
 
-```{r cleaning environment,include=FALSE}
+```{r cleaning environment detrend ex,include=FALSE}
 rm(list = ls())
 ```
 
