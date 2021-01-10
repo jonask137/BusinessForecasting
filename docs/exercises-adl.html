@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7.6 Exercises - ADL | Business Forecasting</title>
+  <meta name="description" content="7.6 Exercises - ADL | Business Forecasting" />
+  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7.6 Exercises - ADL | Business Forecasting" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7.6 Exercises - ADL | Business Forecasting" />
+  
+  
+  
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="exercises-arima.html"/>
+<link rel="next" href="communicating-technical-findings.html"/>
+<script src="libs/header-attrs-2.5/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>setup</a></li>
+<li class="chapter" data-level="1" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="curriculum.html"><a href="curriculum.html"><i class="fa fa-check"></i><b>2</b> Curriculum</a></li>
+<li class="chapter" data-level="3" data-path="qualitative-forecasting-methods.html"><a href="qualitative-forecasting-methods.html"><i class="fa fa-check"></i><b>3</b> Qualitative Forecasting Methods</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="judgmental-forecasting-and-forecast-adjustments.html"><a href="judgmental-forecasting-and-forecast-adjustments.html"><i class="fa fa-check"></i><b>3.1</b> Judgmental Forecasting and Forecast Adjustments</a></li>
+<li class="chapter" data-level="3.2" data-path="articles.html"><a href="articles.html"><i class="fa fa-check"></i><b>3.2</b> Articles</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="articles.html"><a href="articles.html#a-new-product-growth-model-for-consumer-durables-management-science"><i class="fa fa-check"></i><b>3.2.1</b> A new product growth model for consumer durables,” Management Science</a></li>
+<li class="chapter" data-level="3.2.2" data-path="articles.html"><a href="articles.html#sales-forecasts-for-existing-consumer-products"><i class="fa fa-check"></i><b>3.2.2</b> Sales Forecasts for Existing Consumer Products</a></li>
+<li class="chapter" data-level="3.2.3" data-path="articles.html"><a href="articles.html#judgmental-forecasting-a-review-of-progress-over-the-last-25-years-international-journal-of-forecasting"><i class="fa fa-check"></i><b>3.2.3</b> Judgmental forecasting A review of progress over the last 25 years, International Journal of Forecasting</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="exploring-patterns-and-forecasting-techniques.html"><a href="exploring-patterns-and-forecasting-techniques.html"><i class="fa fa-check"></i><b>4</b> Exploring Patterns and Forecasting Techniques</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="the-forecasting-process.html"><a href="the-forecasting-process.html"><i class="fa fa-check"></i><b>4.1</b> The forecasting process</a></li>
+<li class="chapter" data-level="4.2" data-path="data-patterns-and-terminology.html"><a href="data-patterns-and-terminology.html"><i class="fa fa-check"></i><b>4.2</b> Data Patterns and terminology</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="data-patterns-and-terminology.html"><a href="data-patterns-and-terminology.html#terminology"><i class="fa fa-check"></i><b>4.2.1</b> Terminology</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="DataPatternsAndModelSelection.html"><a href="DataPatternsAndModelSelection.html"><i class="fa fa-check"></i><b>4.3</b> Data Patterns and Model Selection</a></li>
+<li class="chapter" data-level="4.4" data-path="exercises.html"><a href="exercises.html"><i class="fa fa-check"></i><b>4.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="exercises.html"><a href="exercises.html#p.-92-hw-problem-8"><i class="fa fa-check"></i><b>4.4.1</b> p. 92 HW Problem 8</a></li>
+<li class="chapter" data-level="4.4.2" data-path="exercises.html"><a href="exercises.html#p.-93-hw-problem-9-10"><i class="fa fa-check"></i><b>4.4.2</b> p. 93 HW Problem 9-10</a></li>
+<li class="chapter" data-level="4.4.3" data-path="exercises.html"><a href="exercises.html#co2-and-sales-data"><i class="fa fa-check"></i><b>4.4.3</b> CO2 and Sales Data</a></li>
+<li class="chapter" data-level="4.4.4" data-path="exercises.html"><a href="exercises.html#case-6-oo.-108-111-hw"><i class="fa fa-check"></i><b>4.4.4</b> Case 6 oo. 108-111 HW</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="simple-and-multiple-linear-regression.html"><a href="simple-and-multiple-linear-regression.html"><i class="fa fa-check"></i><b>5</b> Simple and Multiple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html"><i class="fa fa-check"></i><b>5.1</b> Simple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#assumptions"><i class="fa fa-check"></i><b>5.1.1</b> Assumptions</a></li>
+<li class="chapter" data-level="5.1.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#forecasting-with-a-linear-trend"><i class="fa fa-check"></i><b>5.1.2</b> Forecasting with a linear trend</a></li>
+<li class="chapter" data-level="5.1.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#exercises-1"><i class="fa fa-check"></i><b>5.1.3</b> Exercises</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#multicollinearity"><i class="fa fa-check"></i><b>5.2.1</b> Multicollinearity</a></li>
+<li class="chapter" data-level="5.2.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#serial-correlation-and-omitted-variables"><i class="fa fa-check"></i><b>5.2.2</b> Serial correlation and omitted variables</a></li>
+<li class="chapter" data-level="5.2.3" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html#selection-criteria"><i class="fa fa-check"></i><b>5.2.3</b> Selection criteria</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="time-series-decomposition-and-regression-with-time-series-data.html"><a href="time-series-decomposition-and-regression-with-time-series-data.html"><i class="fa fa-check"></i><b>6</b> Time-Series Decomposition and Regression with Time-Series Data</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="time-series-and-their-components-hw.html"><a href="time-series-and-their-components-hw.html"><i class="fa fa-check"></i><b>6.1</b> Time Series and Their Components (HW)</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="time-series-and-their-components-hw.html"><a href="time-series-and-their-components-hw.html#additional-on-trend"><i class="fa fa-check"></i><b>6.1.1</b> Additional on trend</a></li>
+<li class="chapter" data-level="6.1.2" data-path="time-series-and-their-components-hw.html"><a href="time-series-and-their-components-hw.html#additional-on-seasonal-pattern"><i class="fa fa-check"></i><b>6.1.2</b> Additional on seasonal pattern</a></li>
+<li class="chapter" data-level="6.1.3" data-path="time-series-and-their-components-hw.html"><a href="time-series-and-their-components-hw.html#cyclical-and-irregular-variations"><i class="fa fa-check"></i><b>6.1.3</b> Cyclical and Irregular Variations</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="regression-with-time-series-data.html"><a href="regression-with-time-series-data.html"><i class="fa fa-check"></i><b>6.2</b> Regression with time series data</a></li>
+<li class="chapter" data-level="6.3" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html"><i class="fa fa-check"></i><b>6.3</b> The success criteria and process</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#success-criteria"><i class="fa fa-check"></i><b>6.3.1</b> Success Criteria</a></li>
+<li class="chapter" data-level="6.3.2" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#DecomposingWithMA"><i class="fa fa-check"></i><b>6.3.2</b> The Process</a></li>
+<li class="chapter" data-level="6.3.3" data-path="the-success-criteria-and-process.html"><a href="the-success-criteria-and-process.html#Autocorellation"><i class="fa fa-check"></i><b>6.3.3</b> Autocorellation</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>6.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="exercises-2.html"><a href="exercises-2.html#alomega-food-stores-case-6-p.-166-case-7-p.-348"><i class="fa fa-check"></i><b>6.4.1</b> Alomega Food Stores, case 6 p. 166 + case 7 p. 348</a></li>
+<li class="chapter" data-level="6.4.2" data-path="exercises-2.html"><a href="exercises-2.html#ex:MonthlySalesData"><i class="fa fa-check"></i><b>6.4.2</b> Monthly Sales Data</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="ARIMA.html"><a href="ARIMA.html"><i class="fa fa-check"></i><b>7</b> ARIMA Models + ADL and Box-Jenkins Methodology</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="ARIMAΗ2.html"><a href="ARIMAΗ2.html"><i class="fa fa-check"></i><b>7.1</b> ARIMA</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="ARIMAΗ2.html"><a href="ARIMAΗ2.html#elaborating-on-ar-models"><i class="fa fa-check"></i><b>7.1.1</b> Elaborating on AR models</a></li>
+<li class="chapter" data-level="7.1.2" data-path="ARIMAΗ2.html"><a href="ARIMAΗ2.html#elaborating-on-ma-models"><i class="fa fa-check"></i><b>7.1.2</b> Elaborating on MA models</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="model-building-process.html"><a href="model-building-process.html"><i class="fa fa-check"></i><b>7.2</b> Model Building Process</a></li>
+<li class="chapter" data-level="7.3" data-path="advantages-and-disadvantages-for-arima-models.html"><a href="advantages-and-disadvantages-for-arima-models.html"><i class="fa fa-check"></i><b>7.3</b> Advantages and disadvantages for ARIMA models</a></li>
+<li class="chapter" data-level="7.4" data-path="adl.html"><a href="adl.html"><i class="fa fa-check"></i><b>7.4</b> ADL</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="adl.html"><a href="adl.html#vector-autoregressive-var"><i class="fa fa-check"></i><b>7.4.1</b> Vector autoregressive (VAR)</a></li>
+</ul></li>
+<li class="chapter" data-level="7.5" data-path="exercises-arima.html"><a href="exercises-arima.html"><i class="fa fa-check"></i><b>7.5</b> Exercises - ARIMA</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="exercises-arima.html"><a href="exercises-arima.html#ibm-stock-problem-12-p-405"><i class="fa fa-check"></i><b>7.5.1</b> IBM stock, problem 12 p 405</a></li>
+<li class="chapter" data-level="7.5.2" data-path="exercises-arima.html"><a href="exercises-arima.html#demand-data-problem-7-p-403"><i class="fa fa-check"></i><b>7.5.2</b> Demand data, problem 7 p 403</a></li>
+<li class="chapter" data-level="7.5.3" data-path="exercises-arima.html"><a href="exercises-arima.html#closing-stock-quotations-problem-13-p-409"><i class="fa fa-check"></i><b>7.5.3</b> Closing stock quotations, problem 13 p 409</a></li>
+<li class="chapter" data-level="7.5.4" data-path="exercises-arima.html"><a href="exercises-arima.html#hw-case-1-page-413-414-q1-3"><i class="fa fa-check"></i><b>7.5.4</b> HW: Case 1 page 413-414 (q1-3)</a></li>
+<li class="chapter" data-level="7.5.5" data-path="exercises-arima.html"><a href="exercises-arima.html#hw-case-4-page-417-419"><i class="fa fa-check"></i><b>7.5.5</b> HW: Case 4 page 417-419</a></li>
+<li class="chapter" data-level="7.5.6" data-path="exercises-arima.html"><a href="exercises-arima.html#sales-data-seasonal"><i class="fa fa-check"></i><b>7.5.6</b> Sales data seasonal</a></li>
+<li class="chapter" data-level="7.5.7" data-path="exercises-arima.html"><a href="exercises-arima.html#in-class-assignment"><i class="fa fa-check"></i><b>7.5.7</b> In class assignment</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="exercises-adl.html"><a href="exercises-adl.html"><i class="fa fa-check"></i><b>7.6</b> Exercises - ADL</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="exercises-adl.html"><a href="exercises-adl.html#gdp-and-co2-levels"><i class="fa fa-check"></i><b>7.6.1</b> GDP and CO2 levels</a></li>
+<li class="chapter" data-level="7.6.2" data-path="exercises-adl.html"><a href="exercises-adl.html#short--and-long-term-interest-rates-exchange-rates"><i class="fa fa-check"></i><b>7.6.2</b> Short- and long-term interest rates, exchange rates</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="communicating-technical-findings.html"><a href="communicating-technical-findings.html"><i class="fa fa-check"></i><b>8</b> Communicating Technical Findings</a></li>
+<li class="chapter" data-level="9" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>9</b> Methods and Performance Measurement</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html"><i class="fa fa-check"></i><b>9.1</b> Forecasting Methods</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html#using-averages"><i class="fa fa-check"></i><b>9.1.1</b> Using Averages</a></li>
+<li class="chapter" data-level="9.1.2" data-path="ForecastMethods.html"><a href="ForecastMethods.html#linear-regressions"><i class="fa fa-check"></i><b>9.1.2</b> Linear regressions</a></li>
+<li class="chapter" data-level="9.1.3" data-path="ForecastMethods.html"><a href="ForecastMethods.html#non-linear-regressions"><i class="fa fa-check"></i><b>9.1.3</b> Non linear regressions</a></li>
+<li class="chapter" data-level="9.1.4" data-path="ForecastMethods.html"><a href="ForecastMethods.html#smoothing-methods"><i class="fa fa-check"></i><b>9.1.4</b> Smoothing methods</a></li>
+<li class="chapter" data-level="9.1.5" data-path="ForecastMethods.html"><a href="ForecastMethods.html#arima"><i class="fa fa-check"></i><b>9.1.5</b> ARIMA</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html"><i class="fa fa-check"></i><b>9.2</b> Performance Measurements</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#error-terms"><i class="fa fa-check"></i><b>9.2.1</b> Error terms</a></li>
+<li class="chapter" data-level="9.2.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#multicollinearity-1"><i class="fa fa-check"></i><b>9.2.2</b> Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>9.3</b> Formulas</a></li>
+<li class="chapter" data-level="9.4" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>9.4</b> Loops!!!!</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="loops.html"><a href="loops.html#holtwinters-smoothing---finding-optimal-frequency"><i class="fa fa-check"></i><b>9.4.1</b> HoltWinters Smoothing - finding optimal frequency</a></li>
+<li class="chapter" data-level="9.4.2" data-path="loops.html"><a href="loops.html#arima---it-is-not-really-that-useful-does-not-have-all-combinations"><i class="fa fa-check"></i><b>9.4.2</b> ARIMA - it is not really that useful, does not have all combinations</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Business Forecasting</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="exercises---adl" class="section level2" number="7.6">
+<h2><span class="header-section-number">7.6</span> Exercises - ADL</h2>
+<div id="gdp-and-co2-levels" class="section level3" number="7.6.1">
+<h3><span class="header-section-number">7.6.1</span> GDP and CO2 levels</h3>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="exercises-adl.html#cb114-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week48/GDP_CO2.xls&quot;</span>)</span>
+<span id="cb114-2"><a href="exercises-adl.html#cb114-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span>co2</span>
+<span id="cb114-3"><a href="exercises-adl.html#cb114-3" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> df<span class="sc">$</span>gdp</span></code></pre></div>
+<p>Now the data is loaded and we have defined the y and x variable, being CO2 levels and GDP.</p>
+<p>Now we can make the ADL with the following:</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="exercises-adl.html#cb115-1" aria-hidden="true" tabindex="-1"></a>adl.mod <span class="ot">&lt;-</span> <span class="fu">auto_ardl</span>(y <span class="sc">~</span> x</span>
+<span id="cb115-2"><a href="exercises-adl.html#cb115-2" aria-hidden="true" tabindex="-1"></a>                     ,<span class="at">data =</span> <span class="fu">cbind</span>(x, y) <span class="co">#We want to combine the variables into 1 df</span></span>
+<span id="cb115-3"><a href="exercises-adl.html#cb115-3" aria-hidden="true" tabindex="-1"></a>                     ,<span class="at">max_order =</span> <span class="dv">10</span> <span class="co">#Mandatory, could be other orders as well</span></span>
+<span id="cb115-4"><a href="exercises-adl.html#cb115-4" aria-hidden="true" tabindex="-1"></a>                     ,<span class="at">selection =</span> <span class="st">&quot;AIC&quot;</span></span>
+<span id="cb115-5"><a href="exercises-adl.html#cb115-5" aria-hidden="true" tabindex="-1"></a>                     )</span>
+<span id="cb115-6"><a href="exercises-adl.html#cb115-6" aria-hidden="true" tabindex="-1"></a>adl.mod <span class="ot">&lt;-</span> adl.mod<span class="sc">$</span>best_model</span>
+<span id="cb115-7"><a href="exercises-adl.html#cb115-7" aria-hidden="true" tabindex="-1"></a>adl.mod<span class="sc">$</span>order</span></code></pre></div>
+<pre><code>## [1]  1 10</code></pre>
+<p>We see that according to AIC, using up to 10 lags, the optimal constellation is with 1 lag for the y variable and including 10 lags from the x variable (the additional explanatory variable)</p>
+<p>We can assess the model that we achieved, by calling the summary.</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="exercises-adl.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(adl.mod)</span></code></pre></div>
+<pre><code>## 
+## Time series regression with &quot;ts&quot; data:
+## Start = 11, End = 196
+## 
+## Call:
+## dynlm::dynlm(formula = full_formula, data = data, start = start, 
+##     end = end)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -11.4432  -0.8233  -0.2912   0.9513  14.4389 
+## 
+## Coefficients:
+##             Estimate Std. Error t value             Pr(&gt;|t|)    
+## (Intercept)  0.20914    0.32287   0.648              0.51800    
+## L(y, 1)      0.82598    0.03581  23.063 &lt; 0.0000000000000002 ***
+## x            0.35123    0.06799   5.166          0.000000653 ***
+## L(x, 1)     -0.24174    0.12054  -2.005              0.04648 *  
+## L(x, 2)     -0.05738    0.12814  -0.448              0.65486    
+## L(x, 3)     -0.08188    0.13565  -0.604              0.54690    
+## L(x, 4)      0.35590    0.13428   2.650              0.00879 ** 
+## L(x, 5)     -0.30012    0.13519  -2.220              0.02771 *  
+## L(x, 6)      0.08400    0.13591   0.618              0.53733    
+## L(x, 7)      0.20019    0.13657   1.466              0.14449    
+## L(x, 8)     -0.42832    0.13544  -3.162              0.00185 ** 
+## L(x, 9)      0.38239    0.13279   2.880              0.00448 ** 
+## L(x, 10)    -0.26598    0.08769  -3.033              0.00279 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.302 on 173 degrees of freedom
+## Multiple R-squared:  0.9831, Adjusted R-squared:  0.9819 
+## F-statistic: 836.7 on 12 and 173 DF,  p-value: &lt; 0.00000000000000022</code></pre>
+<p>We see that some of the lags appaer not to be statistically significant, although, the model is estimated to be optimized to low risk, thus we assume that the model is sufficient.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="exercises-adl.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+</div>
+<div id="short--and-long-term-interest-rates-exchange-rates" class="section level3" number="7.6.2">
+<h3><span class="header-section-number">7.6.2</span> Short- and long-term interest rates, exchange rates</h3>
+<div id="loading-data-combining-time-series-and-assessment-of-stationarity" class="section level4" number="7.6.2.1">
+<h4><span class="header-section-number">7.6.2.1</span> Loading data, combining time series and assessment of stationarity</h4>
+<p>First the data is loaded, we are interested in the following&gt;</p>
+<ol style="list-style-type: decimal">
+<li>Short term interest rates</li>
+<li>Long term interest rates</li>
+<li>Exchange rates</li>
+</ol>
+<p>The data is quarterly</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="exercises-adl.html#cb120-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week48/EuroMacroData.xlsx&quot;</span>)</span>
+<span id="cb120-2"><a href="exercises-adl.html#cb120-2" aria-hidden="true" tabindex="-1"></a>stn <span class="ot">&lt;-</span> df<span class="sc">$</span>STN <span class="sc">%&gt;%</span> <span class="fu">log</span>() <span class="sc">%&gt;%</span> <span class="fu">ts</span>(<span class="at">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb120-3"><a href="exercises-adl.html#cb120-3" aria-hidden="true" tabindex="-1"></a>ltn <span class="ot">&lt;-</span> df<span class="sc">$</span>LTN <span class="sc">%&gt;%</span> <span class="fu">log</span>() <span class="sc">%&gt;%</span> <span class="fu">ts</span>(<span class="at">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb120-4"><a href="exercises-adl.html#cb120-4" aria-hidden="true" tabindex="-1"></a>een <span class="ot">&lt;-</span> df<span class="sc">$</span>EEN <span class="sc">%&gt;%</span> <span class="fu">log</span>() <span class="sc">%&gt;%</span> <span class="fu">ts</span>(<span class="at">frequency =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>Now we can present the acf and pacf for each variable along with the time series for each variable.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="exercises-adl.html#cb121-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb121-2"><a href="exercises-adl.html#cb121-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tsdisplay</span>(stn)</span>
+<span id="cb121-3"><a href="exercises-adl.html#cb121-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tsdisplay</span>(ltn)</span>
+<span id="cb121-4"><a href="exercises-adl.html#cb121-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tsdisplay</span>(een)</span>
+<span id="cb121-5"><a href="exercises-adl.html#cb121-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93-1"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-93-1.png" alt="Time-Series Display" width="480" />
+<p class="caption">
+Figure 7.11: Time-Series Display
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93-2"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-93-2.png" alt="Time-Series Display" width="480" />
+<p class="caption">
+Figure 7.12: Time-Series Display
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-93-3"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-93-3.png" alt="Time-Series Display" width="480" />
+<p class="caption">
+Figure 7.13: Time-Series Display
+</p>
+</div>
+<p>Now we are able to group the variables in one time series frame, lets denote it with z</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="exercises-adl.html#cb122-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">cbind</span>(stn,ltn,een), <span class="at">frequency =</span> <span class="dv">4</span>)</span></code></pre></div>
+<p>As we observed trend in the time series (hence non stationary data), we can make first order differencing to attempt to get rid of that and get stationary data.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="exercises-adl.html#cb123-1" aria-hidden="true" tabindex="-1"></a>dz <span class="ot">&lt;-</span> <span class="fu">diff</span>(z)</span></code></pre></div>
+<p>We can now plot the data to see the following result.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="exercises-adl.html#cb124-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dz)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-96"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-96-1.png" alt="Data with 1st order differencing" width="480" />
+<p class="caption">
+Figure 7.14: Data with 1st order differencing
+</p>
+</div>
+<p>Versus the raw data:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="exercises-adl.html#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(z)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-97"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-97-1.png" alt="Raw data" width="480" />
+<p class="caption">
+Figure 7.15: Raw data
+</p>
+</div>
+<p>Where we see that the changes in the observations show stationarity, where the raw data is clearly not stationary.</p>
+</div>
+<div id="vector-autoregressive-model-var" class="section level4" number="7.6.2.2">
+<h4><span class="header-section-number">7.6.2.2</span> Vector AutoRegressive Model (VAR)</h4>
+<div id="determine-order-of-lags-to-be-included-model-estimation" class="section level5" number="7.6.2.2.1">
+<h5><span class="header-section-number">7.6.2.2.1</span> 1. Determine order of lags to be included + model estimation</h5>
+<p>We apply <code>VARselect()</code>, which returns the following:</p>
+<ul>
+<li>selection: Vector with the optimal lag number according to each criterium.</li>
+<li>criteria: A matrix containing the values of the criteria up to lag.max.</li>
+</ul>
+<p>We are only interested in finding the optimal amount of lags, p for the VAR. Hence we apply [[“selection”]]</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="exercises-adl.html#cb126-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VARselect</span>(<span class="at">y =</span> dz</span>
+<span id="cb126-2"><a href="exercises-adl.html#cb126-2" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">lag.max =</span> <span class="dv">10</span></span>
+<span id="cb126-3"><a href="exercises-adl.html#cb126-3" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">type =</span> <span class="st">&quot;const&quot;</span>)[[<span class="st">&quot;selection&quot;</span>]]</span></code></pre></div>
+<pre><code>## AIC(n)  HQ(n)  SC(n) FPE(n) 
+##      1      1      1      1</code></pre>
+<p>We see that the optimal amount fo lags to be included are 1. Fortunately this goes for all of the information criteria.</p>
+<p>Hence, we have the following setting <span class="math inline">\(VAR(1)\)</span></p>
+<p>Now can estimate the model, using the lag order, that we just found.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="exercises-adl.html#cb128-1" aria-hidden="true" tabindex="-1"></a>var1 <span class="ot">&lt;-</span> <span class="fu">VAR</span>(<span class="at">y =</span> dz</span>
+<span id="cb128-2"><a href="exercises-adl.html#cb128-2" aria-hidden="true" tabindex="-1"></a>            ,<span class="at">p =</span> <span class="dv">1</span> <span class="co">#How many lags to be included in the models, e.g., if p = 3,</span></span>
+<span id="cb128-3"><a href="exercises-adl.html#cb128-3" aria-hidden="true" tabindex="-1"></a>                   <span class="co"># then three lags of each variable is included.</span></span>
+<span id="cb128-4"><a href="exercises-adl.html#cb128-4" aria-hidden="true" tabindex="-1"></a>            ,<span class="at">type =</span> <span class="st">&quot;const&quot;</span>)</span>
+<span id="cb128-5"><a href="exercises-adl.html#cb128-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(var1)</span></code></pre></div>
+<pre><code>## 
+## VAR Estimation Results:
+## ========================= 
+## Endogenous variables: stn, ltn, een 
+## Deterministic variables: const 
+## Sample size: 114 
+## Log Likelihood: 609.086 
+## Roots of the characteristic polynomial:
+## 0.4441 0.4441 0.2423
+## Call:
+## VAR(y = dz, p = 1, type = &quot;const&quot;)
+## 
+## 
+## Estimation results for equation stn: 
+## ==================================== 
+## stn = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## stn.l1  0.395558   0.099033   3.994 0.000118 ***
+## ltn.l1  0.293962   0.169757   1.732 0.086137 .  
+## een.l1  0.328754   0.266664   1.233 0.220264    
+## const  -0.002934   0.006924  -0.424 0.672604    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.07358 on 110 degrees of freedom
+## Multiple R-Squared: 0.2626,  Adjusted R-squared: 0.2425 
+## F-statistic: 13.06 on 3 and 110 DF,  p-value: 0.000000234 
+## 
+## 
+## Estimation results for equation ltn: 
+## ==================================== 
+## ltn = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## stn.l1  0.055456   0.060338   0.919 0.360056    
+## ltn.l1  0.386815   0.103428   3.740 0.000294 ***
+## een.l1  0.241711   0.162471   1.488 0.139686    
+## const  -0.003082   0.004219  -0.730 0.466653    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.04483 on 110 degrees of freedom
+## Multiple R-Squared: 0.2046,  Adjusted R-squared: 0.1829 
+## F-statistic: 9.429 on 3 and 110 DF,  p-value: 0.00001345 
+## 
+## 
+## Estimation results for equation een: 
+## ==================================== 
+## een = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## stn.l1 -0.037006   0.033134  -1.117  0.26650    
+## ltn.l1 -0.021367   0.056797  -0.376  0.70750    
+## een.l1  0.322242   0.089221   3.612  0.00046 ***
+## const  -0.001004   0.002317  -0.434  0.66549    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.02462 on 110 degrees of freedom
+## Multiple R-Squared: 0.1313,  Adjusted R-squared: 0.1077 
+## F-statistic: 5.544 on 3 and 110 DF,  p-value: 0.001396 
+## 
+## 
+## 
+## Covariance matrix of residuals:
+##             stn         ltn         een
+## stn  0.00541405  0.00156222 -0.00001442
+## ltn  0.00156222  0.00200975 -0.00003693
+## een -0.00001442 -0.00003693  0.00060607
+## 
+## Correlation matrix of residuals:
+##           stn      ltn       een
+## stn  1.000000  0.47360 -0.007963
+## ltn  0.473599  1.00000 -0.033461
+## een -0.007963 -0.03346  1.000000</code></pre>
+<p>We see that we get a model for each of the time-series and concludingly a covariance- and correlation matrixt of the residuals for the different models.</p>
+<p>Looking at the different model estimations, we see that that e.g., lag 1 of ltn is significant for explaining ltn, where lag 1 of the other variables are not significant and so on.</p>
+<p>As written in the code, if one was to insert p = 3 instead of 1, then we would merely have three lagged variables for each model, although it will still reflect the same signifances for the different variables.</p>
+<p><strong>Conclusion:</strong></p>
+<p>We are not able to explain anything with the other models, since there is statistical evidence for relationship between other lagged variables and the stn, ltn and een. Hence, we may be just as fine, just by doing an AR approach to each of the models, perhaps even just an AR(p=1)</p>
+<p><br />
+</p>
+</div>
+<div id="model-diagnostics" class="section level5" number="7.6.2.2.2">
+<h5><span class="header-section-number">7.6.2.2.2</span> 2. Model diagnostics</h5>
+<p>Now we can make model diagnostics to check for autocorrelation (serial correlation).</p>
+<p>This executes a Portmanteau test for correlation in the errors (i.e., autocorrelation, i.e., serial correlation). The null hypothesis is that there are no autocorrelation</p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="exercises-adl.html#cb130-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(var1</span>
+<span id="cb130-2"><a href="exercises-adl.html#cb130-2" aria-hidden="true" tabindex="-1"></a>            ,<span class="at">lags.pt =</span> <span class="dv">10</span> <span class="co">#It is chosen to be 10, could be anything else, perhaps one could plot it</span></span>
+<span id="cb130-3"><a href="exercises-adl.html#cb130-3" aria-hidden="true" tabindex="-1"></a>            ,<span class="at">type =</span> <span class="st">&quot;PT.asymptotic&quot;</span></span>
+<span id="cb130-4"><a href="exercises-adl.html#cb130-4" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<pre><code>## 
+##  Portmanteau Test (asymptotic)
+## 
+## data:  Residuals of VAR object var1
+## Chi-squared = 67.353, df = 81, p-value = 0.8612</code></pre>
+<p>As the p-value is far above the significane level, 5%, we cannot reject the null hypothesis, hence it is fair to assume, that the residuals are not serial correlated.</p>
+</div>
+<div id="response-to-shocks-in-the-variables" class="section level5" number="7.6.2.2.3">
+<h5><span class="header-section-number">7.6.2.2.3</span> 3. Response to shocks in the variables</h5>
+<p>With the following, we are able to deduce how the different variables react (respond) from shocks in the variables.</p>
+<p>The y-axis expres the changes where the x-axis express the n steps ahead. Hence in this example it is quarters ahead.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="exercises-adl.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">irf</span>(var1,<span class="at">boot =</span> <span class="cn">TRUE</span>, <span class="at">ci=</span><span class="fl">0.95</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101-1"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-101-1.png" alt="Resonses from shocks" width="480" />
+<p class="caption">
+Figure 7.16: Resonses from shocks
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101-2"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-101-2.png" alt="Resonses from shocks" width="480" />
+<p class="caption">
+Figure 7.17: Resonses from shocks
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101-3"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-101-3.png" alt="Resonses from shocks" width="480" />
+<p class="caption">
+Figure 7.18: Resonses from shocks
+</p>
+</div>
+<p>First of all, we always see that shocks in the variables always show direct positive (same direction) response in period 0 on its own variable, that makes sens and it expected. As the illustrations above is based on models that contain one lagged period on the model, we don’t include all available information (also, it is likely that other variable explain the relationship).</p>
+<p>E.g., looking at shocks in stn (the first figure), we see that ltn immediately tend to move in the same direction, where the effect decays over time and after some periods, it will practically be 0.</p>
+<p>Notice, that some response have confidence intervals that are below and above 0, hence we are not really able to say how the reaction will be, same or the opposite direction.</p>
+<div id="exogenious-vs.-endogenious" class="section level6" number="7.6.2.2.3.1">
+<h6><span class="header-section-number">7.6.2.2.3.1</span> Exogenious vs. endogenious</h6>
+<p>Terms:</p>
+<ul>
+<li>Exogenious: if a variable is extremely exogenious, it is not explain or determined by other variables</li>
+<li>Endogenious: if a variable is extremely endogenoius, it is explianed or determined by one or more variables.</li>
+</ul>
+<p>This can be used to rank variables based on how much they are affected by other variables, with the most exogenious variable first (<strong>This is called Cholesky ordering</strong>), hence we rank based on the following principle:</p>
+<p><em>lets say, that we have four variables, we want to order according to Cholesky ordering</em></p>
+<ol style="list-style-type: decimal">
+<li>Most exogenious</li>
+<li>Less exogenious than 1 more than 3. Hence, more endogenious than 1. but less than 3.</li>
+<li>Less exogenious than 2 more than 4. Hence, more endogenious than 2. but less than 4.</li>
+<li>Most endogenious</li>
+</ol>
+<p><strong>Importance!</strong></p>
+<p>This is important, as it matter</p>
+</div>
+</div>
+<div id="forecasting-with-adl" class="section level5" number="7.6.2.2.4">
+<h5><span class="header-section-number">7.6.2.2.4</span> 4. Forecasting with ADL</h5>
+<p>This has the following steps:</p>
+<ol style="list-style-type: decimal">
+<li>Data partition</li>
+<li>Select the order of VAR</li>
+<li>Fit the model + check residuals</li>
+<li>Make the forecast</li>
+<li>Assessing accuracy</li>
+</ol>
+<div id="step-1---data-partition" class="section level6" number="7.6.2.2.4.1">
+<h6><span class="header-section-number">7.6.2.2.4.1</span> Step 1 - Data partition</h6>
+<p>We apply the differenced data from the exercise. The first 90 obersvations as train data and the rest test data.</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="exercises-adl.html#cb133-1" aria-hidden="true" tabindex="-1"></a>insampdz <span class="ot">&lt;-</span> <span class="fu">ts</span>(dz[<span class="dv">1</span><span class="sc">:</span><span class="dv">90</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>], <span class="at">frequency =</span> <span class="dv">4</span>)</span>
+<span id="cb133-2"><a href="exercises-adl.html#cb133-2" aria-hidden="true" tabindex="-1"></a>outsampdz <span class="ot">&lt;-</span> dz[<span class="dv">91</span><span class="sc">:</span><span class="dv">115</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span></code></pre></div>
+</div>
+<div id="step-2---select-the-order-of-var" class="section level6" number="7.6.2.2.4.2">
+<h6><span class="header-section-number">7.6.2.2.4.2</span> Step 2 - Select the order of VAR</h6>
+<p>We find the optimal order for p (recall VAR(p))</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="exercises-adl.html#cb134-1" aria-hidden="true" tabindex="-1"></a><span class="fu">VARselect</span>(insampdz</span>
+<span id="cb134-2"><a href="exercises-adl.html#cb134-2" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">lag.max =</span> <span class="dv">10</span></span>
+<span id="cb134-3"><a href="exercises-adl.html#cb134-3" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">type=</span><span class="st">&quot;const&quot;</span>)[[<span class="st">&quot;selection&quot;</span>]]</span></code></pre></div>
+<pre><code>## AIC(n)  HQ(n)  SC(n) FPE(n) 
+##      1      1      1      1</code></pre>
+<p>We see that the optimal order is 1.</p>
+</div>
+<div id="step-3---fit-the-model-check-residuals" class="section level6" number="7.6.2.2.4.3">
+<h6><span class="header-section-number">7.6.2.2.4.3</span> Step 3 - Fit the model + check residuals</h6>
+<p>The data is fitted and we call the summary.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb136-1"><a href="exercises-adl.html#cb136-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">VAR</span>(<span class="at">y =</span> insampdz <span class="co">#The train data</span></span>
+<span id="cb136-2"><a href="exercises-adl.html#cb136-2" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">p =</span> <span class="dv">1</span> <span class="co">#Found in step 2</span></span>
+<span id="cb136-3"><a href="exercises-adl.html#cb136-3" aria-hidden="true" tabindex="-1"></a>           ,<span class="at">type=</span><span class="st">&quot;const&quot;</span>)</span>
+<span id="cb136-4"><a href="exercises-adl.html#cb136-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## VAR Estimation Results:
+## ========================= 
+## Endogenous variables: stn, ltn, een 
+## Deterministic variables: const 
+## Sample size: 89 
+## Log Likelihood: 480.864 
+## Roots of the characteristic polynomial:
+## 0.4301 0.4301 0.07976
+## Call:
+## VAR(y = insampdz, p = 1, type = &quot;const&quot;)
+## 
+## 
+## Estimation results for equation stn: 
+## ==================================== 
+## stn = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##        Estimate Std. Error t value Pr(&gt;|t|)    
+## stn.l1 0.424194   0.120074   3.533 0.000668 ***
+## ltn.l1 0.098362   0.246167   0.400 0.690471    
+## een.l1 0.330675   0.322101   1.027 0.307513    
+## const  0.003247   0.008455   0.384 0.701865    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.07931 on 85 degrees of freedom
+## Multiple R-Squared: 0.2173,  Adjusted R-squared: 0.1896 
+## F-statistic: 7.865 on 3 and 85 DF,  p-value: 0.0001082 
+## 
+## 
+## Estimation results for equation ltn: 
+## ==================================== 
+## ltn = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##        Estimate Std. Error t value Pr(&gt;|t|)  
+## stn.l1 0.127202   0.061310   2.075    0.041 *
+## ltn.l1 0.114150   0.125692   0.908    0.366  
+## een.l1 0.217023   0.164464   1.320    0.191  
+## const  0.002846   0.004317   0.659    0.512  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.0405 on 85 degrees of freedom
+## Multiple R-Squared: 0.1384,  Adjusted R-squared: 0.108 
+## F-statistic: 4.552 on 3 and 85 DF,  p-value: 0.005238 
+## 
+## 
+## Estimation results for equation een: 
+## ==================================== 
+## een = stn.l1 + ltn.l1 + een.l1 + const 
+## 
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## stn.l1 -0.038702   0.038097  -1.016 0.312572    
+## ltn.l1 -0.017703   0.078103  -0.227 0.821230    
+## een.l1  0.368552   0.102195   3.606 0.000523 ***
+## const  -0.001251   0.002682  -0.466 0.642070    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## 
+## Residual standard error: 0.02516 on 85 degrees of freedom
+## Multiple R-Squared: 0.1488,  Adjusted R-squared: 0.1187 
+## F-statistic: 4.952 on 3 and 85 DF,  p-value: 0.003233 
+## 
+## 
+## 
+## Covariance matrix of residuals:
+##            stn        ltn        een
+## stn 0.00629028 0.00169606 0.00007265
+## ltn 0.00169606 0.00163993 0.00009076
+## een 0.00007265 0.00009076 0.00063321
+## 
+## Correlation matrix of residuals:
+##        stn     ltn     een
+## stn 1.0000 0.52807 0.03640
+## ltn 0.5281 1.00000 0.08907
+## een 0.0364 0.08907 1.00000</code></pre>
+<p>We see that there is not really any significant relationship between the different variables and only the lagged values of its own variable appear to be significant.</p>
+<p>Now we can check the residuals for independency (not having serial correlation, i.e., autocorrelation). The null hypothesis is, that there is no autocorrelation.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb138-1"><a href="exercises-adl.html#cb138-1" aria-hidden="true" tabindex="-1"></a><span class="fu">serial.test</span>(fit, <span class="at">lags.pt=</span><span class="dv">10</span>, <span class="at">type=</span><span class="st">&quot;PT.asymptotic&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Portmanteau Test (asymptotic)
+## 
+## data:  Residuals of VAR object fit
+## Chi-squared = 78.356, df = 81, p-value = 0.5626</code></pre>
+<p>We see the p-value being insignificant, hence we cannot reject H0 and it is fair to asume no autocorrelation.</p>
+</div>
+<div id="step-4---make-the-forecast" class="section level6" number="7.6.2.2.4.4">
+<h6><span class="header-section-number">7.6.2.2.4.4</span> Step 4 - Make the forecast</h6>
+<p>We apply the <code>forecast()</code> function to forecast the coming periods</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb140-1"><a href="exercises-adl.html#cb140-1" aria-hidden="true" tabindex="-1"></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(<span class="at">object =</span> fit</span>
+<span id="cb140-2"><a href="exercises-adl.html#cb140-2" aria-hidden="true" tabindex="-1"></a>                  ,<span class="at">h =</span> <span class="dv">25</span>) <span class="co">#Forecasting 25 quarters</span></span>
+<span id="cb140-3"><a href="exercises-adl.html#cb140-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(fcast)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-106-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We see the forecast having a very wide confidence interval and barely any movements after a couple of periods.</p>
+<p>This indicates that it is a bit random how it moves. If we had more seasonality, trends and cycles, then it would be easier to forecast coming periods.</p>
+</div>
+<div id="step-5---assessing-accuracy" class="section level6" number="7.6.2.2.4.5">
+<h6><span class="header-section-number">7.6.2.2.4.5</span> Step 5 - Assessing accuracy</h6>
+<p>Now we can assess accuracy of the forecasts</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb141-1"><a href="exercises-adl.html#cb141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast<span class="sc">$</span>forecast<span class="sc">$</span>stn</span>
+<span id="cb141-2"><a href="exercises-adl.html#cb141-2" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">x =</span> outsampdz[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,<span class="dv">1</span>]) <span class="co">#1 for stn</span></span></code></pre></div>
+<pre><code>##                                       ME       RMSE        MAE       MPE
+## Training set  0.000000000000000001407026 0.07750849 0.05654433  39.17323
+## Test set     -0.053153958986903539207791 0.07534233 0.06293134 123.55935
+##                  MAPE      MASE       ACF1
+## Training set 174.2171 0.8031345 0.03369461
+## Test set     127.4491 0.8938532         NA</code></pre>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb143-1"><a href="exercises-adl.html#cb143-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast<span class="sc">$</span>forecast<span class="sc">$</span>ltn</span>
+<span id="cb143-2"><a href="exercises-adl.html#cb143-2" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">x =</span> outsampdz[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,<span class="dv">2</span>])</span></code></pre></div>
+<pre><code>##                                       ME       RMSE        MAE      MPE
+## Training set -0.000000000000000001562976 0.03957558 0.02879253 76.29913
+## Test set     -0.038925425000674265807454 0.07048620 0.06082491 98.73445
+##                   MAPE      MASE        ACF1
+## Training set 155.66489 0.7635219 -0.03261785
+## Test set      98.73445 1.6129583          NA</code></pre>
+<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb145-1"><a href="exercises-adl.html#cb145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast<span class="sc">$</span>forecast<span class="sc">$</span>een</span>
+<span id="cb145-2"><a href="exercises-adl.html#cb145-2" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">x =</span> outsampdz[<span class="dv">1</span><span class="sc">:</span><span class="dv">25</span>,<span class="dv">3</span>])</span></code></pre></div>
+<pre><code>##                                        ME       RMSE        MAE      MPE
+## Training set -0.0000000000000000006126428 0.02459171 0.01934306 111.6867
+## Test set      0.0064823603697087804620391 0.02516587 0.02148333 127.4315
+##                  MAPE      MASE       ACF1
+## Training set 221.2635 0.8012928 0.03654264
+## Test set     127.4315 0.8899542         NA</code></pre>
+<p>We see that the MAPE is close 100% or more than 100% on average. Hence the models are not performing well. That is also expected as we see the forecasts confidence intervals are very wide and not moving much.</p>
+<p>Even though all models are bad, it appears as if we are best at estimating ltn</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="exercises-arima.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="communicating-technical-findings.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

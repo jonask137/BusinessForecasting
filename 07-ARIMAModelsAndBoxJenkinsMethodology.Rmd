@@ -6,10 +6,13 @@ editor_options:
 
 ```{r librariesARIMA,include=FALSE}
 library(readxl)
+library(ARDL)
+library(vars)
+library(dynlm)
 ```
 
 
-# ARIMA Models and Box-Jenkins Methodology {#ARIMA}
+# ARIMA Models + ADL and Box-Jenkins Methodology {#ARIMA}
 
 *Explanation here*
 
@@ -19,6 +22,23 @@ library(readxl)
 
 + HW: The Box-Jenkins (ARIMA) Methodology
 
++ ADL: [https://www.econometrics-with-r.org/14-5-apatadlm.html
+
++ Additional on ADL: http://faculty.washington.edu/ezivot/econ584/stck_watson_var.pdf
+  + Note, just the intuitions behind are important, not the over-technical
+details or derivations.
+
+
+***go ARIMA or ADL or VAR??***
+
+ARIMA does univariate assessment (only one variable) --> $ARIMA_{(p,d,q)}$
+
+ADL does multivariate assessment while also doing AR on the dependent variable, hence we are able to assess effects from another lagged variables. *Note, this only takes on one other variable* --> $ADL_{(p)}$
+
+So, what to do if we have more variables we want to include? Then we do VAR (Vector AuroRegressive mdoel) with 
+
+With VAR, we are able to see relationship between several variables, and do forecast for each of the variables with p order lags, both from the other variables and also the variable itself --> $VAR_{(p)}$
+
 
 ## ARIMA {#ARIMAΗ2}
 
@@ -27,7 +47,13 @@ Basically it is a framework for adding AR and or MA into the regression model, w
 - AR: A time-series is predicted using its own history, can be explained by: $Y_t=β_0+β_1Y_{t-1}+ε_1$ 
 - MA: Model predicts based on current and past shocks to the series. An MA(q) model: $Y_t=\mu+\epsilon_t-\omega_1\ \epsilon_{e-1}-...-\omega_q\ \epsilon_{e-q}$
 
-**It is important to notice, that it is not by default an advantage of including both methods, but one should select the appropriate method depending on the looks corellogram**
+**It is important to notice, that it is not by default an advantage of including both methods, but one should select the appropriate method depending on the looks correlogram**
+
+ARIMA is specifically good for short term forecasts as it utilize previous observations to forecast future values.
+
+It is able to represent both stationary and nonstationary data.
+
+Often, one encounter difficulties making correct model specifications, meaning meeting the assumptions. This is crucial for predicting reliable forecasts
 
 __Key concepts__
 
@@ -39,13 +65,17 @@ ARMA that is the approach to stationary data. If the data is nonstationary, one 
 
 The notations for ARIMA are:
 
-$$ARIMA_{(p,d,q)}$$
+\begin{equation}
+ARIMA_{(p,d,q)}
+(\#eq:ARIMApdq)
+\end{equation}
 
 *Where:*
 
 + p = the order of AR
  
 + d = the order of differencing (NOTE: if this is 0, then the model is reduced to an ARMA model)
+  + if we only have differencing, then we call this a random walk
 
 + q = the order of MA, hence if q = 2, then MA for $t_{-1}$ and $t_{-2}$ is included in the regression model.
 
@@ -90,8 +120,8 @@ ___IMPORTANT NOTE: this has nothing to do with regular Moving Average, as with u
 This approach applies use residuals (between actual values and fitted values/or forecasted values) multiplied with a coefficient to forecast the coming period. As with AR, we are able to include x amount of previous periods. Thus, we are able to describe MA with:
 
 \begain{equation}
-$Y_t=\mu+\epsilon_t-\omega_1\epsilon_{t-1}-\omega_2\epsilon_{t-2}-...-\omega_q\epsilon_{t-q}$
-(\#eq:MA(q))
+Y_t=\mu+\epsilon_t-\omega_1\epsilon_{t-1}-\omega_2\epsilon_{t-2}-...-\omega_q\epsilon_{t-q}
+(\#eq:MAq)
 \end{equation}
 
 where:
@@ -158,25 +188,25 @@ Disadvantages:
 
 
 
-
-
-
-
-\
-
 ## ADL 
 
-Basically ADL is doing and Autoregressive (AR) model and then we add another variable, that is lagged. Notice that we can model with the order of lagged variables to be included in the model.
+Basically ADL is doing and Autoregressive (AR) model and then we add another variable (this could be anything) which is lagged. Notice that we can model with the order of lagged variables to be included in the model.
+
+As the model is based on AR models, we must have stationarity in the data, just as in normal AR models.
 
 Hence we have the following equation:
 
-$$ADL_{(p,q)}$$
+\begin{equation}
+ADL_{(p,q)}
+(\#eq:ADLpq)
+\end{equation}
+
 
 Where
 
 + p = the order of AR
 
-+ q = the number of variables included with the lagged added timeseries
++ q = the number of lags for the added variable
 
 
 Procedure:
@@ -198,12 +228,33 @@ Example of how it may look:
 #                      ,start = c(1962, 1), end = c(2012, 4))
 ```
 
+*L() = lag(), if number of lags are not *
+
 ```{r}
 #TB3MS <- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)["1960::2012"]
 ```
 
 
-## Exercises
+### Vector autoregressive (VAR)
+
+In the approach in ADL we only work with one other variable. Although with VAR models, we are able to include multiple independent variables. This can be written as:
+
+\begin{equation}
+VAR(p)
+(\#eq:VARp)
+\end{equation}
+
+Where:
+
++ p = p lags of the variable
+
+#### Selection criteria
+
+One may use AIC, BIC or make out of sample assessment to select the best model, hence identifying what lags to be included in the model.
+
+
+
+## Exercises - ARIMA
 
 
 ### IBM stock, problem 12 p 405
@@ -482,6 +533,10 @@ accuracy(arima.fh5$mean,x = y.test)
 We see that the accuracy is 2.5 MAE where the MAPE is 1.8
 
 
+```{r}
+rm(list = ls())
+```
+
 
 ### HW: Case 1 page 413-414 (q1-3)
 
@@ -496,11 +551,301 @@ Not done
 Not done
 
 ```{r}
-Arima(y = y,model = )
+#Arima(y = y,model = #<insert fitted arima model here, to preserve coefficients>#)
 ```
 
 
+### In class assignment
 
+It is done somewhere. Otherwise, do it again
+
+
+
+## Exercises - ADL
+
+
+### GDP and CO2 levels
+
+```{r}
+df <- read_excel("Data/Week48/GDP_CO2.xls")
+y <- df$co2
+x <- df$gdp
+```
+
+Now the data is loaded and we have defined the y and x variable, being CO2 levels and GDP.
+
+Now we can make the ADL with the following:
+
+```{r}
+adl.mod <- auto_ardl(y ~ x
+                     ,data = cbind(x, y) #We want to combine the variables into 1 df
+                     ,max_order = 10 #Mandatory, could be other orders as well
+                     ,selection = "AIC"
+                     )
+adl.mod <- adl.mod$best_model
+adl.mod$order
+```
+
+We see that according to AIC, using up to 10 lags, the optimal constellation is with 1 lag for the y variable and including 10 lags from the x variable (the additional explanatory variable)
+
+We can assess the model that we achieved, by calling the summary.
+
+```{r}
+summary(adl.mod)
+```
+
+We see that some of the lags appaer not to be statistically significant, although, the model is estimated to be optimized to low risk, thus we assume that the model is sufficient.
+
+
+```{r}
+rm(list = ls())
+```
+
+
+### Short- and long-term interest rates, exchange rates
+
+#### Loading data, combining time series and assessment of stationarity
+
+First the data is loaded, we are interested in the following>
+
+1. Short term interest rates
+2. Long term interest rates
+3. Exchange rates
+
+The data is quarterly
+
+```{r}
+df <- read_excel("Data/Week48/EuroMacroData.xlsx")
+stn <- df$STN %>% log() %>% ts(frequency = 4)
+ltn <- df$LTN %>% log() %>% ts(frequency = 4)
+een <- df$EEN %>% log() %>% ts(frequency = 4)
+```
+
+Now we can present the acf and pacf for each variable along with the time series for each variable.
+
+```{r,fig.cap="Time-Series Display"}
+{
+  tsdisplay(stn)
+  tsdisplay(ltn)
+  tsdisplay(een)
+}
+```
+
+Now we are able to group the variables in one time series frame, lets denote it with z
+
+```{r}
+z <- ts(cbind(stn,ltn,een), frequency = 4)
+```
+
+As we observed trend in the time series (hence non stationary data), we can make first order differencing to attempt to get rid of that and get stationary data.
+
+```{r}
+dz <- diff(z)
+```
+
+We can now plot the data to see the following result.
+
+```{r,fig.cap="Data with 1st order differencing"}
+plot(dz)
+```
+
+Versus the raw data:
+
+```{r,fig.cap="Raw data"}
+plot(z)
+```
+
+Where we see that the changes in the observations show stationarity, where the raw data is clearly not stationary.
+
+
+#### Vector AutoRegressive Model (VAR)
+
+##### 1. Determine order of lags to be included + model estimation
+
+We apply `VARselect()`, which returns the following:
+
++ selection: Vector with the optimal lag number according to each criterium.
++ criteria: A matrix containing the values of the criteria up to lag.max.
+
+We are only interested in finding the optimal amount of lags, p for the VAR. Hence we apply [["selection"]]
+
+```{r}
+VARselect(y = dz
+          ,lag.max = 10
+          ,type = "const")[["selection"]]
+```
+
+We see that the optimal amount fo lags to be included are 1. Fortunately this goes for all of the information criteria.
+
+Hence, we have the following setting $VAR(1)$
+
+Now can estimate the model, using the lag order, that we just found.
+
+```{r}
+var1 <- VAR(y = dz
+            ,p = 1 #How many lags to be included in the models, e.g., if p = 3,
+                   # then three lags of each variable is included.
+            ,type = "const")
+summary(var1)
+```
+
+We see that we get a model for each of the time-series and concludingly a covariance- and correlation matrixt of the residuals for the different models.
+
+Looking at the different model estimations, we see that that e.g., lag 1 of ltn is significant for explaining ltn, where lag 1 of the other variables are not significant and so on.
+
+As written in the code, if one was to insert p = 3 instead of 1, then we would merely have three lagged variables for each model, although it will still reflect the same signifances for the different variables.
+
+__Conclusion:__
+
+We are not able to explain anything with the other models, since there is statistical evidence for relationship between other lagged variables and the stn, ltn and een. Hence, we may be just as fine, just by doing an AR approach to each of the models, perhaps even just an AR(p=1)
+
+\
+
+##### 2. Model diagnostics
+
+Now we can make model diagnostics to check for autocorrelation (serial correlation).
+
+This executes a Portmanteau test for correlation in the errors (i.e., autocorrelation, i.e., serial correlation). The null hypothesis is that there are no autocorrelation
+
+```{r}
+serial.test(var1
+            ,lags.pt = 10 #It is chosen to be 10, could be anything else, perhaps one could plot it
+            ,type = "PT.asymptotic"
+            )
+```
+
+As the p-value is far above the significane level, 5%, we cannot reject the null hypothesis, hence it is fair to assume, that the residuals are not serial correlated.
+
+
+##### 3. Response to shocks in the variables
+
+With the following, we are able to deduce how the different variables react (respond) from shocks in the variables.
+
+The y-axis expres the changes where the x-axis express the n steps ahead. Hence in this example it is quarters ahead.
+
+```{r,fig.cap="Resonses from shocks"}
+plot(irf(var1,boot = TRUE, ci=0.95))
+```
+
+First of all, we always see that shocks in the variables always show direct positive (same direction) response in period 0 on its own variable, that makes sens and it expected. As the illustrations above is based on models that contain one lagged period on the model, we don't include all available information (also, it is likely that other variable explain the relationship).
+
+E.g., looking at shocks in stn (the first figure), we see that ltn immediately tend to move in the same direction, where the effect decays over time and after some periods, it will practically be 0.
+
+Notice, that some response have confidence intervals that are below and above 0, hence we are not really able to say how the reaction will be, same or the opposite direction.
+
+
+###### Exogenious vs. endogenious
+
+Terms:
+
+- Exogenious: if a variable is extremely exogenious, it is not explain or determined by other variables
+- Endogenious: if a variable is extremely endogenoius, it is explianed or determined by one or more variables.
+
+This can be used to rank variables based on how much they are affected by other variables, with the most exogenious variable first (**This is called Cholesky ordering**), hence we rank based on the following principle:
+
+*lets say, that we have four variables, we want to order according to Cholesky ordering*
+
+1. Most exogenious
+2. Less exogenious than 1 more than 3. Hence, more endogenious than 1. but less than 3.
+3. Less exogenious than 2 more than 4. Hence, more endogenious than 2. but less than 4.
+4. Most endogenious
+
+**Importance!**
+
+This is important, as it matter
+
+
+##### 4. Forecasting with ADL
+
+This has the following steps:
+
+1. Data partition
+2. Select the order of VAR
+3. Fit the model + check residuals
+4. Make the forecast
+5. Assessing accuracy
+
+
+###### Step 1 - Data partition
+
+We apply the differenced data from the exercise. The first 90 obersvations as train data and the rest test data.
+
+```{r}
+insampdz <- ts(dz[1:90, 1:3], frequency = 4)
+outsampdz <- dz[91:115, 1:3]
+```
+
+###### Step 2 - Select the order of VAR
+
+We find the optimal order for p (recall VAR(p))
+
+```{r}
+VARselect(insampdz
+          ,lag.max = 10
+          ,type="const")[["selection"]]
+```
+
+We see that the optimal order is 1.
+
+###### Step 3 - Fit the model + check residuals
+
+The data is fitted and we call the summary.
+
+```{r}
+fit <- VAR(y = insampdz #The train data
+           ,p = 1 #Found in step 2
+           ,type="const")
+summary(fit)
+```
+
+We see that there is not really any significant relationship between the different variables and only the lagged values of its own variable appear to be significant. 
+
+Now we can check the residuals for independency (not having serial correlation, i.e., autocorrelation). The null hypothesis is, that there is no autocorrelation.
+
+```{r}
+serial.test(fit, lags.pt=10, type="PT.asymptotic")
+```
+
+We see the p-value being insignificant, hence we cannot reject H0 and it is fair to asume no autocorrelation.
+
+###### Step 4 - Make the forecast
+
+We apply the `forecast()` function to forecast the coming periods
+
+```{r}
+fcast <- forecast(object = fit
+                  ,h = 25) #Forecasting 25 quarters
+plot(fcast)
+```
+
+We see the forecast having a very wide confidence interval and barely any movements after a couple of periods.
+
+This indicates that it is a bit random how it moves. If we had more seasonality, trends and cycles, then it would be easier to forecast coming periods.
+
+
+###### Step 5 - Assessing accuracy
+
+Now we can assess accuracy of the forecasts
+
+```{r}
+accuracy(object = fcast$forecast$stn
+         ,x = outsampdz[1:25,1]) #1 for stn
+```
+
+```{r}
+accuracy(object = fcast$forecast$ltn
+         ,x = outsampdz[1:25,2])
+```
+
+```{r}
+accuracy(object = fcast$forecast$een
+         ,x = outsampdz[1:25,3])
+```
+
+
+We see that the MAPE is close 100% or more than 100% on average. Hence the models are not performing well. That is also expected as we see the forecasts confidence intervals are very wide and not moving much.
+
+Even though all models are bad, it appears as if we are best at estimating ltn
 
 
 
