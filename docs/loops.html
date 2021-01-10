@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Business Forecasting</title>
-  <meta name="description" content="Business Forecasting" />
+  <title>9.4 Loops!!!! | Business Forecasting</title>
+  <meta name="description" content="9.4 Loops!!!! | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Business Forecasting" />
+  <meta property="og:title" content="9.4 Loops!!!! | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Business Forecasting" />
+  <meta name="twitter:title" content="9.4 Loops!!!! | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
+<link rel="prev" href="formulas.html"/>
 
-<link rel="next" href="introduction.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,36 +255,82 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Business Forecasting</h1>
+<div id="loops" class="section level2" number="9.4">
+<h2><span class="header-section-number">9.4</span> Loops!!!!</h2>
+<div id="holtwinters-smoothing---finding-optimal-frequency" class="section level3" number="9.4.1">
+<h3><span class="header-section-number">9.4.1</span> HoltWinters Smoothing - finding optimal frequency</h3>
+<p>This is develop by anton</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="loops.html#cb114-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;prob8p92HW.xlsx&quot;)</span></span>
+<span id="cb114-2"><a href="loops.html#cb114-2" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *set up list of different possible seasonality components*</span></span>
+<span id="cb114-3"><a href="loops.html#cb114-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         m &lt;- list()</span></span>
+<span id="cb114-4"><a href="loops.html#cb114-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[1]] &lt;- 2</span></span>
+<span id="cb114-5"><a href="loops.html#cb114-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[2]] &lt;- 4</span></span>
+<span id="cb114-6"><a href="loops.html#cb114-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *run loop calculating RMSE for winters exponential smoothing with different frequencies*</span></span>
+<span id="cb114-7"><a href="loops.html#cb114-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             RMSE &lt;- matrix(0,length(m),1)</span></span>
+<span id="cb114-8"><a href="loops.html#cb114-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                 for (i in seq(length(m)))</span></span>
+<span id="cb114-9"><a href="loops.html#cb114-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                 {</span></span>
+<span id="cb114-10"><a href="loops.html#cb114-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                         yt &lt;- ts(y, frequency = m[[i]])</span></span>
+<span id="cb114-11"><a href="loops.html#cb114-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                         fit &lt;- HoltWinters(yt</span></span>
+<span id="cb114-12"><a href="loops.html#cb114-12" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,alpha=0.6 #setting alpha</span></span>
+<span id="cb114-13"><a href="loops.html#cb114-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,beta=TRUE #trend</span></span>
+<span id="cb114-14"><a href="loops.html#cb114-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,gamma=TRUE) #seasonality</span></span>
+<span id="cb114-15"><a href="loops.html#cb114-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                         for.fit &lt;- forecast(fit)</span></span>
+<span id="cb114-16"><a href="loops.html#cb114-16" aria-hidden="true" tabindex="-1"></a><span class="co">#                         acc.fit &lt;- accuracy(for.fit)</span></span>
+<span id="cb114-17"><a href="loops.html#cb114-17" aria-hidden="true" tabindex="-1"></a><span class="co">#                         RMSE[i,1] &lt;- acc.fit [1,2] #putting RMSE for different frequencies in matrix</span></span>
+<span id="cb114-18"><a href="loops.html#cb114-18" aria-hidden="true" tabindex="-1"></a><span class="co">#                 }</span></span>
+<span id="cb114-19"><a href="loops.html#cb114-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *finding frequency with smallest RMSE*</span></span>
+<span id="cb114-20"><a href="loops.html#cb114-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- which.min(RMSE)</span></span>
+<span id="cb114-21"><a href="loops.html#cb114-21" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- m[best.freq]</span></span>
+<span id="cb114-22"><a href="loops.html#cb114-22" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq</span></span></code></pre></div>
 </div>
-<div id="setup" class="section level1 unnumbered">
-<h1>setup</h1>
-<p>All the output formatting is done in the _output.yml file while all bookdown rendering options is done in the _bookdown.yml file.§</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bookdown)</span></code></pre></div>
-<p><strong>Tips and tricks</strong></p>
-<p><em>Referencing</em></p>
-<p>This is making a figure with a caption and where we center the figure and set the size. Notice, that the figure is automatically numbered according to the chapter number.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pressure,<span class="at">type =</span> <span class="st">&#39;b&#39;</span>,<span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/nice-fig-1.png" alt="A fig" width="80%" />
-<p class="caption">
-Figure 0.1: A fig
-</p>
-</div>
-<p>Now we are able to make a reference to the chunk.</p>
-<p>Refer to a chunk: <a href="index.html#fig:nice-fig">0.1</a></p>
-<p><em>Options</em></p>
-<p><a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf?_ga=2.47682403.59925266.1608407175-330761457.1608407175">RMarkdown Reference Guide</a></p>
+<div id="arima---it-is-not-really-that-useful-does-not-have-all-combinations" class="section level3" number="9.4.2">
+<h3><span class="header-section-number">9.4.2</span> ARIMA - it is not really that useful, does not have all combinations</h3>
+<p>Testing different orders</p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="loops.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #Insert data as timeseries</span></span>
+<span id="cb115-2"><a href="loops.html#cb115-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;Data/Week47/IBMstock.xls&quot;) %&gt;% ts(frequency = 52</span></span>
+<span id="cb115-3"><a href="loops.html#cb115-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    #,start =</span></span>
+<span id="cb115-4"><a href="loops.html#cb115-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    )</span></span>
+<span id="cb115-5"><a href="loops.html#cb115-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Import matrix of differencing combinations</span></span>
+<span id="cb115-6"><a href="loops.html#cb115-6" aria-hidden="true" tabindex="-1"></a><span class="co"># OrderMatrix &lt;- read_excel(&quot;Data/Week47/OrdersMatrix.xlsx&quot;)</span></span>
+<span id="cb115-7"><a href="loops.html#cb115-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-8"><a href="loops.html#cb115-8" aria-hidden="true" tabindex="-1"></a><span class="co"># {</span></span>
+<span id="cb115-9"><a href="loops.html#cb115-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   RMSE &lt;- as.matrix(0)</span></span>
+<span id="cb115-10"><a href="loops.html#cb115-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   boxtest &lt;- as.matrix(0)</span></span>
+<span id="cb115-11"><a href="loops.html#cb115-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-12"><a href="loops.html#cb115-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   for (i in seq(from = 1,to = nrow(OrderMatrix),by = 1)) {</span></span>
+<span id="cb115-13"><a href="loops.html#cb115-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-14"><a href="loops.html#cb115-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     print(i)</span></span>
+<span id="cb115-15"><a href="loops.html#cb115-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     p &lt;- as.numeric(OrderMatrix[i,1]) #AR order</span></span>
+<span id="cb115-16"><a href="loops.html#cb115-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     d &lt;- as.numeric(OrderMatrix[i,2]) #Differencing order</span></span>
+<span id="cb115-17"><a href="loops.html#cb115-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     q &lt;- as.numeric(OrderMatrix[i,3]) #MA order</span></span>
+<span id="cb115-18"><a href="loops.html#cb115-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     order &lt;- c(p,d,q)</span></span>
+<span id="cb115-19"><a href="loops.html#cb115-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-20"><a href="loops.html#cb115-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     ARIMAmod &lt;- arima(x = y #The time-series</span></span>
+<span id="cb115-21"><a href="loops.html#cb115-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                       ,order = order</span></span>
+<span id="cb115-22"><a href="loops.html#cb115-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                       )</span></span>
+<span id="cb115-23"><a href="loops.html#cb115-23" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-24"><a href="loops.html#cb115-24" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Assessing in-samp accuracy RMSE</span></span>
+<span id="cb115-25"><a href="loops.html#cb115-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     RMSE[i] &lt;- accuracy(object = fitted(ARIMAmod),x = y)[2] #2 for RMSE</span></span>
+<span id="cb115-26"><a href="loops.html#cb115-26" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-27"><a href="loops.html#cb115-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Storing hypothesis test of independence</span></span>
+<span id="cb115-28"><a href="loops.html#cb115-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     boxtest[i] &lt;- Box.test(ARIMAmod$residuals</span></span>
+<span id="cb115-29"><a href="loops.html#cb115-29" aria-hidden="true" tabindex="-1"></a><span class="co">#                            ,fitdf = p+q)$p.value #Because it is applied to and ARIMA model</span></span>
+<span id="cb115-30"><a href="loops.html#cb115-30" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb115-31"><a href="loops.html#cb115-31" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb115-32"><a href="loops.html#cb115-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   #The optimal combination based on the highest Box-Pierce test (similar to Ljung-Box)</span></span>
+<span id="cb115-33"><a href="loops.html#cb115-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   OrderMatrix[which.max(boxtest),]</span></span>
+<span id="cb115-34"><a href="loops.html#cb115-34" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
 
 </div>
+</div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
+<a href="formulas.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

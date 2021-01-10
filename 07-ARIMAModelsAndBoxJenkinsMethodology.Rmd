@@ -339,22 +339,165 @@ rm(list = ls())
 
 ### Demand data, problem 7 p 403
 
+Loading the data
+
 ```{r}
 df <- read_excel("Data/Week47/Demand.xls")
+y <- ts(data = df,frequency = 52)
+```
+
+**Qa**
+
+Plotting acf
+
+```{r,fig.cap="acf Demand"}
+acf(y,lag.max = 52)
+```
+
+We see that there is clearly a trend and it appears as if we have seasons, although looking at it does not appear as if we have seasons.
+
+We can support this with a pacf
+
+```{r}
+pacf(y)
+```
+
+We are able to use an autoregressive approach as acf tends towards 0 and pacf quickly drops to 0.
+
+Lastly we can check for stationarity.
+
+```{r,fig.cap="Demand time-series"}
+ts.plot(y)
+```
+
+We observe non stationary data, hence we should apply differencing as well.
+
+
+**Qb**
+
+***Manually doing ARIMA***
+
+```{r,fig.cap="Residuals ARIMA"}
+p = 1
+d = 1
+q = 0
+order <- c(p,d,q)
+ARIMAmod <- arima(x = y
+                  ,order = order)
+plot(ARIMAmod$residuals)
+```
+
+***Auto ARIMA***
+
+We are also able to apply `auto.arima()` to find the most optimal combination based on the sample data.
+
+```{r}
+# Making the model
+ts.arima <- auto.arima(y = y)
+summary(ts.arima)
+```
+
+We see that the this suggest a full ARIMA model with 2 order AR, 1 order differencing and 1 order MA.
+
+Now we can display the residuals to check for independence within the error terms.
+
+```{r,fig.cap="Residuals time-series demand"}
+tsdisplay(ts.arima$residuals)
+```
+
+It appears as if with have independence in the residuals and also none significant spikes in the correlograms.
+
+We can make a statistical check for this as well, using the Box-Pierce test
+
+```{r}
+Box.test(ts.arima$residuals)
+```
+
+We see that we cannot reject the null hypothesis, hence it is fair to assume that the observations are independent of each other.
+
+
+**Qc**
+
+equation for forecast:
+
+Cant find the constant, but one can call the coefficients with the following: 
+
+```{r}
+ts.arima[["coef"]]
 ```
 
 
+**Qd**
+
+Forecasting demand for the coming four periods. That can be done using `forecast()` where h = 4
+
+```{r}
+arima.fh4 <- forecast(ts.arima
+                       ,h = 4 #Forecast horizon
+                       ,level = 0.95 #Confidence interval
+                       )
+knitr::kable(arima.fh4,caption = "Forecast with confidence intervals")
+```
+
+```{r}
+plot(arima.fh4,xlim = c(1.8,2.2))
+grid(col = "lightgrey")
+```
 
 
+```{r}
+rm(list = ls())
+```
 
-### Closing stock quotations, problem 13 p 403
+
+### Closing stock quotations, problem 13 p 409
+
+```{r,fig.cap="Diagnostics for ARIMA"}
+df <- read_excel("Data/Week47/ClosingStockQuatations.xls")
+y <- ts(df,frequency = 365)
+y.train <- y[1:145]
+y.test <- y[146:150]
+
+ts.arima <- auto.arima(y.train)
+tsdiag(ts.arima)
+```
+
+We see that the residuals appear to be randomly distributed around a fixed point. Also there does not appear to be residuals that spikes, indicating autocorrelation in the residuals. Assessing the Ljung-Box statistic, we see that there are no values that go beyond the critical level of 5%. Hence it is fair to assume that the residuals are independent of each other.
+
+```{r}
+arima.fh5 <- forecast(ts.arima,h = 5,level = 0.95)
+knitr::kable(arima.fh5,caption = "Forecast with confidence level")
+```
+
+
+```{r,fig.cap="Forecast Stock Quotations"}
+plot(arima.fh5,xlim = c(100,157))
+grid(col = "lightgrey")
+```
+
+```{r}
+accuracy(arima.fh5$mean,x = y.test)
+```
+
+We see that the accuracy is 2.5 MAE where the MAPE is 1.8
+
+
 
 ### HW: Case 1 page 413-414 (q1-3)
 
+Not done
+
 ### HW: Case 4 page 417-419
+
+Not done
 
 ### Sales data seasonal
 
+Not done
+
+```{r}
+Arima(y = y,model = )
+```
 
 
 

@@ -281,6 +281,14 @@ Thus, we see that Rsquare is obtained from regression each IDV against the remai
 If one gets an indication of multicollinearity, then one should drop one of the correlated variables.
 
 
+## Formulas
+
+- `auto.arima()` from forecast package, automize the orders and drift. With possibility to select ic and selection method (stepwise vs. non stepwise)
+- `tsdisplay()` from forecast package, does acf, pacf and residuals, if the timeseries$residuals are made as input
+- `diff()` does desired order of differencing
+- `Arima()`, practically does the same. Although we are able to call another model, hence other coefficients, thus the coefficients will not be estimated again **That is pretty useful!!!**
+
+
 ## Loops!!!!
 
 ### HoltWinters Smoothing - finding optimal frequency
@@ -288,28 +296,28 @@ If one gets an indication of multicollinearity, then one should drop one of the 
 This is develop by anton
 
 ```{r}
-y <- read_excel("prob8p92HW.xlsx")
-        #' *set up list of different possible seasonality components*
-        m <- list()
-            m[[1]] <- 2
-            m[[2]] <- 4
-        #' *run loop calculating RMSE for winters exponential smoothing with different frequencies*
-            RMSE <- matrix(0,length(m),1)
-                for (i in seq(length(m)))
-                {
-                        yt <- ts(y, frequency = m[[i]])
-                        fit <- HoltWinters(yt
-                                            ,alpha=0.6 #setting alpha
-                                            ,beta=TRUE #trend
-                                            ,gamma=TRUE) #seasonality
-                        for.fit <- forecast(fit)
-                        acc.fit <- accuracy(for.fit)
-                        RMSE[i,1] <- acc.fit [1,2] #putting RMSE for different frequencies in matrix
-                }
-        #' *finding frequency with smallest RMSE*
-            best.freq <- which.min(RMSE)
-            best.freq <- m[best.freq]
-            best.freq
+# y <- read_excel("prob8p92HW.xlsx")
+#         #' *set up list of different possible seasonality components*
+#         m <- list()
+#             m[[1]] <- 2
+#             m[[2]] <- 4
+#         #' *run loop calculating RMSE for winters exponential smoothing with different frequencies*
+#             RMSE <- matrix(0,length(m),1)
+#                 for (i in seq(length(m)))
+#                 {
+#                         yt <- ts(y, frequency = m[[i]])
+#                         fit <- HoltWinters(yt
+#                                             ,alpha=0.6 #setting alpha
+#                                             ,beta=TRUE #trend
+#                                             ,gamma=TRUE) #seasonality
+#                         for.fit <- forecast(fit)
+#                         acc.fit <- accuracy(for.fit)
+#                         RMSE[i,1] <- acc.fit [1,2] #putting RMSE for different frequencies in matrix
+#                 }
+#         #' *finding frequency with smallest RMSE*
+#             best.freq <- which.min(RMSE)
+#             best.freq <- m[best.freq]
+#             best.freq
 ```
 
 
@@ -321,40 +329,40 @@ y <- read_excel("prob8p92HW.xlsx")
 Testing different orders
 
 ```{r}
-#Insert data as timeseries
-y <- read_excel("Data/Week47/IBMstock.xls") %>% ts(frequency = 52
-                                                   #,start = 
-                                                   )
-#Import matrix of differencing combinations
-OrderMatrix <- read_excel("Data/Week47/OrdersMatrix.xlsx")
-
-{
-  RMSE <- as.matrix(0)
-  boxtest <- as.matrix(0)
-
-  for (i in seq(from = 1,to = nrow(OrderMatrix),by = 1)) {
-  
-    print(i)
-    p <- as.numeric(OrderMatrix[i,1]) #AR order
-    d <- as.numeric(OrderMatrix[i,2]) #Differencing order
-    q <- as.numeric(OrderMatrix[i,3]) #MA order
-    order <- c(p,d,q)
-    
-    ARIMAmod <- arima(x = y #The time-series
-                      ,order = order
-                      )
-    
-    #Assessing in-samp accuracy RMSE
-    RMSE[i] <- accuracy(object = fitted(ARIMAmod),x = y)[2] #2 for RMSE
-    
-    #Storing hypothesis test of independence
-    boxtest[i] <- Box.test(ARIMAmod$residuals
-                           ,fitdf = p+q)$p.value #Because it is applied to and ARIMA model
-}
-  
-  #The optimal combination based on the highest Box-Pierce test (similar to Ljung-Box)
-  OrderMatrix[which.max(boxtest),]
-}
+# #Insert data as timeseries
+# y <- read_excel("Data/Week47/IBMstock.xls") %>% ts(frequency = 52
+#                                                    #,start =
+#                                                    )
+# #Import matrix of differencing combinations
+# OrderMatrix <- read_excel("Data/Week47/OrdersMatrix.xlsx")
+# 
+# {
+#   RMSE <- as.matrix(0)
+#   boxtest <- as.matrix(0)
+# 
+#   for (i in seq(from = 1,to = nrow(OrderMatrix),by = 1)) {
+# 
+#     print(i)
+#     p <- as.numeric(OrderMatrix[i,1]) #AR order
+#     d <- as.numeric(OrderMatrix[i,2]) #Differencing order
+#     q <- as.numeric(OrderMatrix[i,3]) #MA order
+#     order <- c(p,d,q)
+# 
+#     ARIMAmod <- arima(x = y #The time-series
+#                       ,order = order
+#                       )
+# 
+#     #Assessing in-samp accuracy RMSE
+#     RMSE[i] <- accuracy(object = fitted(ARIMAmod),x = y)[2] #2 for RMSE
+# 
+#     #Storing hypothesis test of independence
+#     boxtest[i] <- Box.test(ARIMAmod$residuals
+#                            ,fitdf = p+q)$p.value #Because it is applied to and ARIMA model
+# }
+# 
+#   #The optimal combination based on the highest Box-Pierce test (similar to Ljung-Box)
+#   OrderMatrix[which.max(boxtest),]
+# }
 
 ```
 

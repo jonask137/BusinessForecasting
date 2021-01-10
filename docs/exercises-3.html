@@ -209,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="7.5.1" data-path="exercises-3.html"><a href="exercises-3.html#ibm-stock-problem-12-p-405"><i class="fa fa-check"></i><b>7.5.1</b> IBM stock, problem 12 p 405</a></li>
 <li class="chapter" data-level="7.5.2" data-path="exercises-3.html"><a href="exercises-3.html#demand-data-problem-7-p-403"><i class="fa fa-check"></i><b>7.5.2</b> Demand data, problem 7 p 403</a></li>
-<li class="chapter" data-level="7.5.3" data-path="exercises-3.html"><a href="exercises-3.html#closing-stock-quotations-problem-13-p-403"><i class="fa fa-check"></i><b>7.5.3</b> Closing stock quotations, problem 13 p 403</a></li>
+<li class="chapter" data-level="7.5.3" data-path="exercises-3.html"><a href="exercises-3.html#closing-stock-quotations-problem-13-p-409"><i class="fa fa-check"></i><b>7.5.3</b> Closing stock quotations, problem 13 p 409</a></li>
 <li class="chapter" data-level="7.5.4" data-path="exercises-3.html"><a href="exercises-3.html#hw-case-1-page-413-414-q1-3"><i class="fa fa-check"></i><b>7.5.4</b> HW: Case 1 page 413-414 (q1-3)</a></li>
 <li class="chapter" data-level="7.5.5" data-path="exercises-3.html"><a href="exercises-3.html#hw-case-4-page-417-419"><i class="fa fa-check"></i><b>7.5.5</b> HW: Case 4 page 417-419</a></li>
 <li class="chapter" data-level="7.5.6" data-path="exercises-3.html"><a href="exercises-3.html#sales-data-seasonal"><i class="fa fa-check"></i><b>7.5.6</b> Sales data seasonal</a></li>
@@ -230,6 +230,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="9.2.1" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#error-terms"><i class="fa fa-check"></i><b>9.2.1</b> Error terms</a></li>
 <li class="chapter" data-level="9.2.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#multicollinearity-1"><i class="fa fa-check"></i><b>9.2.2</b> Multicollinearity</a></li>
+</ul></li>
+<li class="chapter" data-level="9.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>9.3</b> Formulas</a></li>
+<li class="chapter" data-level="9.4" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>9.4</b> Loops!!!!</a>
+<ul>
+<li class="chapter" data-level="9.4.1" data-path="loops.html"><a href="loops.html#holtwinters-smoothing---finding-optimal-frequency"><i class="fa fa-check"></i><b>9.4.1</b> HoltWinters Smoothing - finding optimal frequency</a></li>
+<li class="chapter" data-level="9.4.2" data-path="loops.html"><a href="loops.html#arima---it-is-not-really-that-useful-does-not-have-all-combinations"><i class="fa fa-check"></i><b>9.4.2</b> ARIMA - it is not really that useful, does not have all combinations</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -295,7 +301,7 @@ Figure 7.3: Correlogram (pacf) IBM Stock prices
 <p>It therefore suggests that we move into ARIMA, where we apply d order differencing.</p>
 <p><strong>Qc</strong></p>
 <p>We apply AR and d, where we first try with first order, to assess if it is sufficient.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="exercises-3.html#cb83-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co">#AR order</span></span>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="exercises-3.html#cb83-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#AR order</span></span>
 <span id="cb83-2"><a href="exercises-3.html#cb83-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co">#Differencing order</span></span>
 <span id="cb83-3"><a href="exercises-3.html#cb83-3" aria-hidden="true" tabindex="-1"></a>q <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co">#MA order</span></span>
 <span id="cb83-4"><a href="exercises-3.html#cb83-4" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(p,d,q)</span>
@@ -307,8 +313,8 @@ Figure 7.3: Correlogram (pacf) IBM Stock prices
 <span id="cb83-10"><a href="exercises-3.html#cb83-10" aria-hidden="true" tabindex="-1"></a><span class="co">#Assessing in-samp accuracy</span></span>
 <span id="cb83-11"><a href="exercises-3.html#cb83-11" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> <span class="fu">fitted</span>(ARIMAmod)</span>
 <span id="cb83-12"><a href="exercises-3.html#cb83-12" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">x =</span> y)</span></code></pre></div>
-<pre><code>##                 ME     RMSE      MAE      MPE     MAPE        ACF1 Theil&#39;s U
-## Test set 0.5961454 5.735696 4.454714 0.196228 1.633997 -0.00263891 0.9392682</code></pre>
+<pre><code>##                 ME     RMSE      MAE       MPE     MAPE      ACF1 Theil&#39;s U
+## Test set 0.7166731 6.090774 4.793596 0.2270925 1.759575 0.2971583         1</code></pre>
 <p>We see an mean percentage error of 1,64%. That is quite low. But also expected as it is in sample.</p>
 <div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="exercises-3.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ARIMAmod<span class="sc">$</span>residuals,<span class="at">ylab =</span> <span class="st">&quot;Residuals&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-65"></span>
@@ -320,23 +326,272 @@ Figure 7.4: Residuals plot IBM stock ARIMA 1,1,0
 <p>The changes appear to be randomly distributed around 0.</p>
 <p><strong>Qd</strong></p>
 <p>Perform diagnostic checks to determine the adequacy of your fitted model</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="exercises-3.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ARIMAmod)</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-66-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p><em>Residuals to be random</em></p>
+<p>We see from the residuals plot above. It was difficult to get rid of heteroskedasticity</p>
+<p><em>Note, it was tested with only differencing, and appear to have a more constant variance with this</em></p>
+<p><em>but we still see something indicating that the variance is not entirely constant</em></p>
+<p><strong>Constant variance</strong></p>
+<p>This can also be checked using a Ljung-Box test, where the null hypothesis is that there is no relationship between the observations.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="exercises-3.html#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(ARIMAmod<span class="sc">$</span>residuals</span>
+<span id="cb86-2"><a href="exercises-3.html#cb86-2" aria-hidden="true" tabindex="-1"></a>         ,<span class="at">fitdf =</span> p<span class="sc">+</span>q) <span class="co">#Because it is applied to and ARIMA model</span></span></code></pre></div>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  ARIMAmod$residuals
+## X-squared = 4.5918, df = 1, p-value = 0.03213</code></pre>
+<p>We see that the p-value is below the p-value (5%), hence the model is under misspecification. Although we are close to the threshold, let us assume that it is sufficient.</p>
+<p><strong>Autocorrelation in residuals</strong></p>
+<p>We see that the errors appear not to show autocorrelation. Although there is one period, that does appear to have a spike + the first lagged period, but it is close to the recommended threshold.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="exercises-3.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(ARIMAmod<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-67-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Then one could test other models and see if they perform better. I have been playing around with the orders, but it does not appear to help with the residuals.</p>
+<p><strong>Qd</strong></p>
+<p>Make forecast for the stock price in week 1.</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="exercises-3.html#cb89-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb89-2"><a href="exercises-3.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">forecast</span>(<span class="at">object =</span> ARIMAmod,<span class="at">h =</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span>
+<span id="cb89-3"><a href="exercises-3.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  y[<span class="fu">nrow</span>(y),]  <span class="sc">%&gt;%</span> <span class="fu">print</span>()</span>
+<span id="cb89-4"><a href="exercises-3.html#cb89-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<pre><code>##   Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+## 2            304 296.1184 311.8816 291.9461 316.0539
+## IBM 
+## 304</code></pre>
+<p>We see that the forecast is 311,73 where the naive forecast (the most recent period) would just say 304.</p>
+<p><em>Although one must be very precautions, as it was found that the model is under misspecification</em></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="exercises-3.html#cb91-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
 </div>
 <div id="demand-data-problem-7-p-403" class="section level3" number="7.5.2">
 <h3><span class="header-section-number">7.5.2</span> Demand data, problem 7 p 403</h3>
+<p>Loading the data</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="exercises-3.html#cb92-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week47/Demand.xls&quot;</span>)</span>
+<span id="cb92-2"><a href="exercises-3.html#cb92-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="at">data =</span> df,<span class="at">frequency =</span> <span class="dv">52</span>)</span></code></pre></div>
+<p><strong>Qa</strong></p>
+<p>Plotting acf</p>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="exercises-3.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(y,<span class="at">lag.max =</span> <span class="dv">52</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-71"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-71-1.png" alt="acf Demand" width="480" />
+<p class="caption">
+Figure 7.5: acf Demand
+</p>
 </div>
-<div id="closing-stock-quotations-problem-13-p-403" class="section level3" number="7.5.3">
-<h3><span class="header-section-number">7.5.3</span> Closing stock quotations, problem 13 p 403</h3>
+<p>We see that there is clearly a trend and it appears as if we have seasons, although looking at it does not appear as if we have seasons.</p>
+<p>We can support this with a pacf</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="exercises-3.html#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pacf</span>(y)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-72-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We are able to use an autoregressive approach as acf tends towards 0 and pacf quickly drops to 0.</p>
+<p>Lastly we can check for stationarity.</p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="exercises-3.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ts.plot</span>(y)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-73"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-73-1.png" alt="Demand time-series" width="480" />
+<p class="caption">
+Figure 7.6: Demand time-series
+</p>
+</div>
+<p>We observe non stationary data, hence we should apply differencing as well.</p>
+<p><strong>Qb</strong></p>
+<p><strong><em>Manually doing ARIMA</em></strong></p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="exercises-3.html#cb96-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb96-2"><a href="exercises-3.html#cb96-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb96-3"><a href="exercises-3.html#cb96-3" aria-hidden="true" tabindex="-1"></a>q <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb96-4"><a href="exercises-3.html#cb96-4" aria-hidden="true" tabindex="-1"></a>order <span class="ot">&lt;-</span> <span class="fu">c</span>(p,d,q)</span>
+<span id="cb96-5"><a href="exercises-3.html#cb96-5" aria-hidden="true" tabindex="-1"></a>ARIMAmod <span class="ot">&lt;-</span> <span class="fu">arima</span>(<span class="at">x =</span> y</span>
+<span id="cb96-6"><a href="exercises-3.html#cb96-6" aria-hidden="true" tabindex="-1"></a>                  ,<span class="at">order =</span> order)</span>
+<span id="cb96-7"><a href="exercises-3.html#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ARIMAmod<span class="sc">$</span>residuals)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-74"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-74-1.png" alt="Residuals ARIMA" width="480" />
+<p class="caption">
+Figure 7.7: Residuals ARIMA
+</p>
+</div>
+<p><strong><em>Auto ARIMA</em></strong></p>
+<p>We are also able to apply <code>auto.arima()</code> to find the most optimal combination based on the sample data.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="exercises-3.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Making the model</span></span>
+<span id="cb97-2"><a href="exercises-3.html#cb97-2" aria-hidden="true" tabindex="-1"></a>ts.arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(<span class="at">y =</span> y)</span>
+<span id="cb97-3"><a href="exercises-3.html#cb97-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(ts.arima)</span></code></pre></div>
+<pre><code>## Series: y 
+## ARIMA(2,1,1) with drift 
+## 
+## Coefficients:
+##           ar1      ar2      ma1   drift
+##       -0.3531  -0.4859  -0.8662  0.7106
+## s.e.   0.1461   0.1399   0.1214  0.0101
+## 
+## sigma^2 estimated as 0.7302:  log likelihood=-63.77
+## AIC=137.54   AICc=138.87   BIC=147.2
+## 
+## Training set error measures:
+##                       ME      RMSE       MAE        MPE     MAPE MASE
+## Training set -0.04310129 0.8124002 0.6510066 -0.2215986 1.820533  NaN
+##                     ACF1
+## Training set 0.005108341</code></pre>
+<p>We see that the this suggest a full ARIMA model with 2 order AR, 1 order differencing and 1 order MA.</p>
+<p>Now we can display the residuals to check for independence within the error terms.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="exercises-3.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(ts.arima<span class="sc">$</span>residuals)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-76"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-76-1.png" alt="Residuals time-series demand" width="480" />
+<p class="caption">
+Figure 7.8: Residuals time-series demand
+</p>
+</div>
+<p>It appears as if with have independence in the residuals and also none significant spikes in the correlograms.</p>
+<p>We can make a statistical check for this as well, using the Box-Pierce test</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="exercises-3.html#cb100-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(ts.arima<span class="sc">$</span>residuals)</span></code></pre></div>
+<pre><code>## 
+##  Box-Pierce test
+## 
+## data:  ts.arima$residuals
+## X-squared = 0.0013569, df = 1, p-value = 0.9706</code></pre>
+<p>We see that we cannot reject the null hypothesis, hence it is fair to assume that the observations are independent of each other.</p>
+<p><strong>Qc</strong></p>
+<p>equation for forecast:</p>
+<p>Cant find the constant, but one can call the coefficients with the following:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="exercises-3.html#cb102-1" aria-hidden="true" tabindex="-1"></a>ts.arima[[<span class="st">&quot;coef&quot;</span>]]</span></code></pre></div>
+<pre><code>##        ar1        ar2        ma1      drift 
+## -0.3530653 -0.4859323 -0.8662332  0.7105675</code></pre>
+<p><strong>Qd</strong></p>
+<p>Forecasting demand for the coming four periods. That can be done using <code>forecast()</code> where h = 4</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="exercises-3.html#cb104-1" aria-hidden="true" tabindex="-1"></a>arima.fh4 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(ts.arima</span>
+<span id="cb104-2"><a href="exercises-3.html#cb104-2" aria-hidden="true" tabindex="-1"></a>                       ,<span class="at">h =</span> <span class="dv">4</span> <span class="co">#Forecast horizon</span></span>
+<span id="cb104-3"><a href="exercises-3.html#cb104-3" aria-hidden="true" tabindex="-1"></a>                       ,<span class="at">level =</span> <span class="fl">0.95</span> <span class="co">#Confidence interval</span></span>
+<span id="cb104-4"><a href="exercises-3.html#cb104-4" aria-hidden="true" tabindex="-1"></a>                       )</span>
+<span id="cb104-5"><a href="exercises-3.html#cb104-5" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(arima.fh4,<span class="at">caption =</span> <span class="st">&quot;Forecast with confidence intervals&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-79">Table 7.1: </span>Forecast with confidence intervals</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Point Forecast</th>
+<th align="right">Lo 95</th>
+<th align="right">Hi 95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">2.000000</td>
+<td align="right">57.13051</td>
+<td align="right">55.45568</td>
+<td align="right">58.80534</td>
+</tr>
+<tr class="even">
+<td align="left">2.019231</td>
+<td align="right">57.94525</td>
+<td align="right">56.23062</td>
+<td align="right">59.65988</td>
+</tr>
+<tr class="odd">
+<td align="left">2.038462</td>
+<td align="right">59.16331</td>
+<td align="right">57.38801</td>
+<td align="right">60.93861</td>
+</tr>
+<tr class="even">
+<td align="left">2.057692</td>
+<td align="right">59.64408</td>
+<td align="right">57.78105</td>
+<td align="right">61.50711</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="exercises-3.html#cb105-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arima.fh4,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">1.8</span>,<span class="fl">2.2</span>))</span>
+<span id="cb105-2"><a href="exercises-3.html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-80-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb106-1"><a href="exercises-3.html#cb106-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span></code></pre></div>
+</div>
+<div id="closing-stock-quotations-problem-13-p-409" class="section level3" number="7.5.3">
+<h3><span class="header-section-number">7.5.3</span> Closing stock quotations, problem 13 p 409</h3>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="exercises-3.html#cb107-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week47/ClosingStockQuatations.xls&quot;</span>)</span>
+<span id="cb107-2"><a href="exercises-3.html#cb107-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(df,<span class="at">frequency =</span> <span class="dv">365</span>)</span>
+<span id="cb107-3"><a href="exercises-3.html#cb107-3" aria-hidden="true" tabindex="-1"></a>y.train <span class="ot">&lt;-</span> y[<span class="dv">1</span><span class="sc">:</span><span class="dv">145</span>]</span>
+<span id="cb107-4"><a href="exercises-3.html#cb107-4" aria-hidden="true" tabindex="-1"></a>y.test <span class="ot">&lt;-</span> y[<span class="dv">146</span><span class="sc">:</span><span class="dv">150</span>]</span>
+<span id="cb107-5"><a href="exercises-3.html#cb107-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-6"><a href="exercises-3.html#cb107-6" aria-hidden="true" tabindex="-1"></a>ts.arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(y.train)</span>
+<span id="cb107-7"><a href="exercises-3.html#cb107-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdiag</span>(ts.arima)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-82"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-82-1.png" alt="Diagnostics for ARIMA" width="480" />
+<p class="caption">
+Figure 7.9: Diagnostics for ARIMA
+</p>
+</div>
+<p>We see that the residuals appear to be randomly distributed around a fixed point. Also there does not appear to be residuals that spikes, indicating autocorrelation in the residuals. Assessing the Ljung-Box statistic, we see that there are no values that go beyond the critical level of 5%. Hence it is fair to assume that the residuals are independent of each other.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="exercises-3.html#cb108-1" aria-hidden="true" tabindex="-1"></a>arima.fh5 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(ts.arima,<span class="at">h =</span> <span class="dv">5</span>,<span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb108-2"><a href="exercises-3.html#cb108-2" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(arima.fh5,<span class="at">caption =</span> <span class="st">&quot;Forecast with confidence level&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-83">Table 7.2: </span>Forecast with confidence level</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="right">Point Forecast</th>
+<th align="right">Lo 95</th>
+<th align="right">Hi 95</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">146</td>
+<td align="right">133.8119</td>
+<td align="right">128.8361</td>
+<td align="right">138.7878</td>
+</tr>
+<tr class="even">
+<td align="left">147</td>
+<td align="right">133.8119</td>
+<td align="right">128.6346</td>
+<td align="right">138.9893</td>
+</tr>
+<tr class="odd">
+<td align="left">148</td>
+<td align="right">133.8119</td>
+<td align="right">128.4407</td>
+<td align="right">139.1832</td>
+</tr>
+<tr class="even">
+<td align="left">149</td>
+<td align="right">133.8119</td>
+<td align="right">128.2535</td>
+<td align="right">139.3704</td>
+</tr>
+<tr class="odd">
+<td align="left">150</td>
+<td align="right">133.8119</td>
+<td align="right">128.0724</td>
+<td align="right">139.5515</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="exercises-3.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(arima.fh5,<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">157</span>))</span>
+<span id="cb109-2"><a href="exercises-3.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;lightgrey&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-84"></span>
+<img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-84-1.png" alt="Forecast Stock Quotations" width="480" />
+<p class="caption">
+Figure 7.10: Forecast Stock Quotations
+</p>
+</div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="exercises-3.html#cb110-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(arima.fh5<span class="sc">$</span>mean,<span class="at">x =</span> y.test)</span></code></pre></div>
+<pre><code>##                ME     RMSE      MAE     MPE    MAPE
+## Test set 2.508054 3.000656 2.508054 1.82561 1.82561</code></pre>
+<p>We see that the accuracy is 2.5 MAE where the MAPE is 1.8</p>
 </div>
 <div id="hw-case-1-page-413-414-q1-3" class="section level3" number="7.5.4">
 <h3><span class="header-section-number">7.5.4</span> HW: Case 1 page 413-414 (q1-3)</h3>
+<p>Not done</p>
 </div>
 <div id="hw-case-4-page-417-419" class="section level3" number="7.5.5">
 <h3><span class="header-section-number">7.5.5</span> HW: Case 4 page 417-419</h3>
+<p>Not done</p>
 </div>
 <div id="sales-data-seasonal" class="section level3" number="7.5.6">
 <h3><span class="header-section-number">7.5.6</span> Sales data seasonal</h3>
+<p>Not done</p>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb112-1"><a href="exercises-3.html#cb112-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Arima</span>(<span class="at">y =</span> y,<span class="at">model =</span> )</span></code></pre></div>
+<pre><code>## Series: y 
+## ARIMA(0,0,0) with non-zero mean 
+## 
+## Coefficients:
+##           mean
+##       135.9627
+## s.e.    0.2571
+## 
+## sigma^2 estimated as 9.985:  log likelihood=-384.92
+## AIC=773.84   AICc=773.93   BIC=779.86</code></pre>
 
 </div>
 </div>

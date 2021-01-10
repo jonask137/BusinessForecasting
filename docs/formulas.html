@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Business Forecasting</title>
-  <meta name="description" content="Business Forecasting" />
+  <title>9.3 Formulas | Business Forecasting</title>
+  <meta name="description" content="9.3 Formulas | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Business Forecasting" />
+  <meta property="og:title" content="9.3 Formulas | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Business Forecasting" />
+  <meta name="twitter:title" content="9.3 Formulas | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="introduction.html"/>
+<link rel="prev" href="PerformanceMeasurements.html"/>
+<link rel="next" href="loops.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -255,36 +255,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Business Forecasting</h1>
-</div>
-<div id="setup" class="section level1 unnumbered">
-<h1>setup</h1>
-<p>All the output formatting is done in the _output.yml file while all bookdown rendering options is done in the _bookdown.yml file.§</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="index.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bookdown)</span></code></pre></div>
-<p><strong>Tips and tricks</strong></p>
-<p><em>Referencing</em></p>
-<p>This is making a figure with a caption and where we center the figure and set the size. Notice, that the figure is automatically numbered according to the chapter number.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="index.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pressure,<span class="at">type =</span> <span class="st">&#39;b&#39;</span>,<span class="at">pch =</span> <span class="dv">19</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:nice-fig"></span>
-<img src="Business-Forecasting-Notebook_files/figure-html/nice-fig-1.png" alt="A fig" width="80%" />
-<p class="caption">
-Figure 0.1: A fig
-</p>
-</div>
-<p>Now we are able to make a reference to the chunk.</p>
-<p>Refer to a chunk: <a href="index.html#fig:nice-fig">0.1</a></p>
-<p><em>Options</em></p>
-<p><a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf?_ga=2.47682403.59925266.1608407175-330761457.1608407175">RMarkdown Reference Guide</a></p>
-
+<div id="formulas" class="section level2" number="9.3">
+<h2><span class="header-section-number">9.3</span> Formulas</h2>
+<ul>
+<li><code>auto.arima()</code> from forecast package, automize the orders and drift. With possibility to select ic and selection method (stepwise vs. non stepwise)</li>
+<li><code>tsdisplay()</code> from forecast package, does acf, pacf and residuals, if the timeseries$residuals are made as input</li>
+<li><code>diff()</code> does desired order of differencing</li>
+<li><code>Arima()</code>, practically does the same. Although we are able to call another model, hence other coefficients, thus the coefficients will not be estimated again <strong>That is pretty useful!!!</strong></li>
+</ul>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="PerformanceMeasurements.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="loops.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
