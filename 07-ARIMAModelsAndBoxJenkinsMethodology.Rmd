@@ -1,3 +1,8 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
 
 ```{r librariesARIMA,include=FALSE}
 library(readxl)
@@ -251,7 +256,7 @@ It therefore suggests that we move into ARIMA, where we apply d order differenci
 We apply AR and d, where we first try with first order, to assess if it is sufficient.
 
 ```{r}
-p <- 1 #AR order
+p <- 0 #AR order
 d <- 1 #Differencing order
 q <- 0 #MA order
 order <- c(p,d,q)
@@ -277,15 +282,70 @@ The changes appear to be randomly distributed around 0.
 
 Perform diagnostic checks to determine the adequacy of your fitted model
 
+_Residuals to be random_
+
+We see from the residuals plot above. It was difficult to get rid of heteroskedasticity
+
+*Note, it was tested with only differencing, and appear to have a more constant variance with this*
+
+*but we still see something indicating that the variance is not entirely constant*
+
+**Constant variance**
+
+This can also be checked using a Ljung-Box test, where the null hypothesis is that there is no relationship between the observations.
+
 ```{r}
-plot(ARIMAmod)
+Box.test(ARIMAmod$residuals
+         ,fitdf = p+q) #Because it is applied to and ARIMA model
+```
+
+We see that the p-value is below the p-value (5%), hence the model is under misspecification. Although we are close to the threshold, let us assume that it is sufficient.
+
+
+**Autocorrelation in residuals**
+
+We see that the errors appear not to show autocorrelation. Although there is one period, that does appear to have a spike + the first lagged period, but it is close to the recommended threshold.
+
+```{r}
+acf(ARIMAmod$residuals)
+```
+
+Then one could test other models and see if they perform better. I have been playing around with the orders, but it does not appear to help with the residuals.
+
+
+
+**Qd**
+
+Make forecast for the stock price in week 1.
+
+```{r}
+{
+  forecast(object = ARIMAmod,h = 1) %>% print()
+  y[nrow(y),]  %>% print()
+}
+```
+
+We see that the forecast is 311,73 where the naive forecast (the most recent period) would just say 304.
+
+
+*Although one must be very precautions, as it was found that the model is under misspecification*
+
+
+```{r}
+rm(list = ls())
+```
+
+
+
+### Demand data, problem 7 p 403
+
+```{r}
+df <- read_excel("Data/Week47/Demand.xls")
 ```
 
 
 
 
-
-### Demand data, problem 7 p 403
 
 ### Closing stock quotations, problem 13 p 403
 
