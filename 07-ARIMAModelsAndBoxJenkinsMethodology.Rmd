@@ -14,8 +14,6 @@ library(dynlm)
 
 # ARIMA Models + ADL and Box-Jenkins Methodology {#ARIMA}
 
-*Explanation here*
-
 *Considering a single time series $Y_t$, the interest is in determining the relationship between $Y_t$ and its past.*
 
 **Literature**
@@ -57,10 +55,15 @@ Often, one encounter difficulties making correct model specifications, meaning m
 
 __Key concepts__
 
-ARMA that is the approach to stationary data. If the data is nonstationary, one must make the data stationary by differencing. leading to ARIMA. Hence:
++ ARMA vs. ARIMA: ARMA is an approach to stationary data. If the data is nonstationary, one must make the data stationary by differencing. leading to ARIMA. Hence:
+      1. ARMA: When we have stationarity
+      2. ARIMA: When we have non-stationarity
+    
++ Random walk: this is merely when you have an 0,1,0 ARIMA, hence only differencing. Thus no AR and MA
 
-1. ARMA: When we have stationarity
-2. ARIMA: When we have non-stationarity
++ Drift: that is a constant that can be added to the equation. It will make the model tend upwards or downwards. Imagine having an ARIMA 0,1,0 with a drift. Then you will only have the most recent $y_{t-1}$ and then you will have the constant, which will force the forecast upwards if positive and vise verca.
+
+
 
 
 The notations for ARIMA are:
@@ -74,8 +77,9 @@ ARIMA_{(p,d,q)}
 
 + p = the order of AR
  
-+ d = the order of differencing (NOTE: if this is 0, then the model is reduced to an ARMA model)
++ d = the order of differencing (integration) (NOTE: if this is 0, then the model is reduced to an ARMA model)
   + if we only have differencing, then we call this a random walk
+  + this is I, as it is also called Integration order
 
 + q = the order of MA, hence if q = 2, then MA for $t_{-1}$ and $t_{-2}$ is included in the regression model.
 
@@ -752,7 +756,7 @@ This can be used to rank variables based on how much they are affected by other 
 
 **Importance!**
 
-This is important, as it matter
+This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.
 
 
 ##### 4. Forecasting with ADL
@@ -845,10 +849,7 @@ accuracy(object = fcast$forecast$een
 
 We see that the MAPE is close 100% or more than 100% on average. Hence the models are not performing well. That is also expected as we see the forecasts confidence intervals are very wide and not moving much.
 
-Even though all models are bad, it appears as if we are best at estimating ltn
-
-
-
+Even though all models are bad, it appears as if we are best at estimating ltn.
 
 
 

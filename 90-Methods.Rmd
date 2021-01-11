@@ -284,6 +284,7 @@ If one gets an indication of multicollinearity, then one should drop one of the 
 ## Formulas
 
 - `auto.arima()` from forecast package, automize the orders and drift. With possibility to select ic and selection method (stepwise vs. non stepwise)
+  - This may yield an ARIMA(0,0,0)(0,1,0)[12] saying that ARIMA is 0,0,0 order, but the seasonality is of differencing order 1. We see that the frequency is 12, meaning that each period is subtracted with the previous period (found the difference).
 - `tsdisplay()` from forecast package, does acf, pacf and residuals, if the timeseries$residuals are made as input
 - `diff()` does desired order of differencing
 - `Arima()`, practically does the same. Although we are able to call another model, hence other coefficients, thus the coefficients will not be estimated again **That is pretty useful!!!**

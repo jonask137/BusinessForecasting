@@ -118,7 +118,7 @@ multicollinearity
 serial-correlation-and-omitted-variables
 selection-criteria
 time-series-decomposition-and-regression-with-time-series-data
-time-series-and-their-components-hw
+TSComponents
 additional-on-trend
 additional-on-seasonal-pattern
 cyclical-and-irregular-variations
@@ -168,6 +168,8 @@ step-2---select-the-order-of-var
 step-3---fit-the-model-check-residuals
 step-4---make-the-forecast
 step-5---assessing-accuracy
+non-stationary-time-series
+unit-roots
 communicating-technical-findings
 Methods
 ForecastMethods

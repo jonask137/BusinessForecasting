@@ -18,7 +18,7 @@ library(readxl)
 
 
 
-## Time Series and Their Components (HW)
+## Time Series and Their Components (HW) {#TSComponents}
 
 Basically a Time Series is variables that are collected over time. The variables are highly likely to have autocorrelation 
 
@@ -33,6 +33,8 @@ One approach to assessing time series is by decomposing the patterns by finding 
 3. Seasonal(S)
 
 4. Irregular(random)(I)
+
+*These are also called deterministic variables*
 
 
 **The purpose** of decomposing the time series data, can be either for exploration or prediction. Hence you can estimate the coefficients of the components by breaking down the data.

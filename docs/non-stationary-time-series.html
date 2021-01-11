@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.3 Formulas | Business Forecasting</title>
-  <meta name="description" content="10.3 Formulas | Business Forecasting" />
+  <title>8 Non Stationary Time-series | Business Forecasting</title>
+  <meta name="description" content="8 Non Stationary Time-series | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.3 Formulas | Business Forecasting" />
+  <meta property="og:title" content="8 Non Stationary Time-series | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.3 Formulas | Business Forecasting" />
+  <meta name="twitter:title" content="8 Non Stationary Time-series | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="PerformanceMeasurements.html"/>
-<link rel="next" href="loops.html"/>
+<link rel="prev" href="exercises-adl.html"/>
+<link rel="next" href="unit-roots.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,25 +268,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="formulas" class="section level2" number="10.3">
-<h2><span class="header-section-number">10.3</span> Formulas</h2>
+<div id="non-stationary-time-series" class="section level1" number="8">
+<h1><span class="header-section-number">8</span> Non Stationary Time-series</h1>
+<p><em>This section explicitly identifies how to check for non stationarity and how to deal with it</em></p>
+<p><em>Hence:</em></p>
+<ol style="list-style-type: decimal">
+<li>Unit roots</li>
+<li>Spurious Regression</li>
+<li>Cointegration</li>
+</ol>
+<p><strong>Literature</strong></p>
 <ul>
-<li><code>auto.arima()</code> from forecast package, automize the orders and drift. With possibility to select ic and selection method (stepwise vs. non stepwise)
-<ul>
-<li>This may yield an ARIMA(0,0,0)(0,1,0)[12] saying that ARIMA is 0,0,0 order, but the seasonality is of differencing order 1. We see that the frequency is 12, meaning that each period is subtracted with the previous period (found the difference).</li>
-</ul></li>
-<li><code>tsdisplay()</code> from forecast package, does acf, pacf and residuals, if the timeseries$residuals are made as input</li>
-<li><code>diff()</code> does desired order of differencing</li>
-<li><code>Arima()</code>, practically does the same. Although we are able to call another model, hence other coefficients, thus the coefficients will not be estimated again <strong>That is pretty useful!!!</strong></li>
+<li>HW: Judgmental Forecasting and Forecast Adjustments (Combining forecasts)</li>
+<li>HW: Managing the Forecast Process</li>
+<li>Discussion on Diebold-Mariano test: <a href="http://www.phdeconomics.sssup.it/documents/Lesson19.pdf" class="uri">http://www.phdeconomics.sssup.it/documents/Lesson19.pdf</a></li>
 </ul>
+<p>Suggestions from the slides
++ HW: pp. 321-323 (cointegration)
++ Unit roots: <a href="http://faculty.washington.edu/ezivot/econ584/notes/unitroot.pdf" class="uri">http://faculty.washington.edu/ezivot/econ584/notes/unitroot.pdf</a>
++ Cointegration: notes I &amp; notes II: Where notes I = <a href="http://www2.hawaii.edu/%7Ebonham/664/materials/New_Lectures3.pdf" class="uri">http://www2.hawaii.edu/%7Ebonham/664/materials/New_Lectures3.pdf</a>, notes II is not to be found</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="PerformanceMeasurements.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="loops.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="exercises-adl.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="unit-roots.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
