@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>10.2 Performance Measurements | Business Forecasting</title>
-  <meta name="description" content="10.2 Performance Measurements | Business Forecasting" />
+  <title>8.2 Spurious Regression | Business Forecasting</title>
+  <meta name="description" content="8.2 Spurious Regression | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="10.2 Performance Measurements | Business Forecasting" />
+  <meta property="og:title" content="8.2 Spurious Regression | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="10.2 Performance Measurements | Business Forecasting" />
+  <meta name="twitter:title" content="8.2 Spurious Regression | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="ForecastMethods.html"/>
-<link rel="next" href="formulas.html"/>
+<link rel="prev" href="unit-roots.html"/>
+<link rel="next" href="cointegration.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -281,76 +281,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="PerformanceMeasurements" class="section level2" number="10.2">
-<h2><span class="header-section-number">10.2</span> Performance Measurements</h2>
-<div id="error-terms" class="section level3" number="10.2.1">
-<h3><span class="header-section-number">10.2.1</span> Error terms</h3>
-<ul>
-<li>Mean error (ME):</li>
-</ul>
-<p><span class="math display" id="eq:ME">\[\begin{equation}
-ME=\frac{1}{n}\sum_{ }^{ }\left(Y_t-\hat{Y}_t\right)$
-\tag{10.14}
-\end{equation}\]</span></p>
-<ul>
-<li>Mean Absolute Deviation (error):</li>
-</ul>
-<p><span class="math display" id="eq:MAD">\[\begin{equation}
-MAD\left(i.e.\ MAE\right)\ =\ \frac{1}{n}\cdot\sum_{ }^{ }\left|Y_t-\hat{Y}_t\right|
-\tag{10.15}
-\end{equation}\]</span></p>
-<ul>
-<li>Mean Percentage Error (MPE):</li>
-</ul>
-<p><span class="math display" id="eq:MPE">\[\begin{equation}
-MPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{\left(Y_t-\hat{Y}_t\right)}{Y_t}
-\tag{10.16}
-\end{equation}\]</span></p>
-<ul>
-<li>Mean Absolute Percentage Error (MAPE):</li>
-</ul>
-<p><span class="math display" id="eq:MAPE">\[\begin{equation}
-MAPE\ =\ \frac{1}{n}\ \sum_{ }^{ }\frac{|\left(Y_t-\hat{Y}_t\right)|}{|Y_t|}
-\tag{10.17}
-\end{equation}\]</span></p>
-<ul>
-<li>Mean-Squared Error (MSE):</li>
-</ul>
-<p><span class="math display" id="eq:MSE">\[\begin{equation}
-MSE=\frac{1}{n}\sum_{ }^{ }(Y_t-\hat{Y}_t)^2
-\tag{10.18}
-\end{equation}\]</span></p>
-<ul>
-<li>Root Mean-Squared Error:</li>
-</ul>
-<p><span class="math display" id="eq:MSE">\[\begin{equation}
-RMSE=\sqrt{MSE}
-\tag{10.18}
-\end{equation}\]</span></p>
-</div>
-<div id="multicollinearity-1" class="section level3" number="10.2.2">
-<h3><span class="header-section-number">10.2.2</span> Multicollinearity</h3>
-<p><strong>VIF</strong></p>
-<p><span class="math display" id="eq:VIF">\[\begin{equation}
-VIF_j=\frac{1}{1-R_j^2}
-\tag{5.7}
-\end{equation}\]</span></p>
-<p>Where <span class="math inline">\(j = 1,...,k\)</span></p>
-<p>Thus, we see that Rsquare is obtained from regression each IDV against the remaining variables. We can then have the following outputs:</p>
-<ul>
-<li>VIF = 1, no milticollinearity</li>
-<li>VIF &gt; 10, indicates multicollinearity</li>
-</ul>
-<p>If one gets an indication of multicollinearity, then one should drop one of the correlated variables.</p>
-</div>
+<div id="spurious-regression" class="section level2" number="8.2">
+<h2><span class="header-section-number">8.2</span> Spurious Regression</h2>
+<p>This is about having nonstationary data, where the nonstationarity is able to prove a relationship between a dependent variable and independent variable(s).</p>
+<p>Running a regression on this, will not make any sense, as it is an effect that is not included in the model, that is actually proving the relationship. Meaning that you don’t know if the relationship is actually true or not, but you are apparantly with a statistical test able to prove it. Hence we get a spurious regression if:</p>
+<ol style="list-style-type: decimal">
+<li>The variables have another variable in common, but it is not included in the model.</li>
+<li>It is a coincidence</li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="ForecastMethods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="formulas.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="unit-roots.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="cointegration.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

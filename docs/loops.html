@@ -226,7 +226,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="non-stationary-time-series.html"><a href="non-stationary-time-series.html"><i class="fa fa-check"></i><b>8</b> Non Stationary Time-series</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="unit-roots.html"><a href="unit-roots.html"><i class="fa fa-check"></i><b>8.1</b> Unit Roots</a></li>
+<li class="chapter" data-level="8.1" data-path="unit-roots.html"><a href="unit-roots.html"><i class="fa fa-check"></i><b>8.1</b> Unit Roots</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="unit-roots.html"><a href="unit-roots.html#augmented-dickey-fuller-adf-test"><i class="fa fa-check"></i><b>8.1.1</b> Augmented Dickey-Fuller (ADF) test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="spurious-regression.html"><a href="spurious-regression.html"><i class="fa fa-check"></i><b>8.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="cointegration.html"><a href="cointegration.html"><i class="fa fa-check"></i><b>8.3</b> Cointegration</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="cointegration.html"><a href="cointegration.html#checking-for-cointegration"><i class="fa fa-check"></i><b>8.3.1</b> Checking for cointegration</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i><b>8.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="exercises-3.html"><a href="exercises-3.html#DairyData"><i class="fa fa-check"></i><b>8.4.1</b> Dairy Data</a></li>
+<li class="chapter" data-level="8.4.2" data-path="exercises-3.html"><a href="exercises-3.html#airpassengers"><i class="fa fa-check"></i><b>8.4.2</b> Airpassengers</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="communicating-technical-findings.html"><a href="communicating-technical-findings.html"><i class="fa fa-check"></i><b>9</b> Communicating Technical Findings</a></li>
 <li class="chapter" data-level="10" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>10</b> Methods and Performance Measurement</a>
@@ -273,66 +286,66 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="holtwinters-smoothing---finding-optimal-frequency" class="section level3" number="10.4.1">
 <h3><span class="header-section-number">10.4.1</span> HoltWinters Smoothing - finding optimal frequency</h3>
 <p>This is develop by anton</p>
-<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb148-1"><a href="loops.html#cb148-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;prob8p92HW.xlsx&quot;)</span></span>
-<span id="cb148-2"><a href="loops.html#cb148-2" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *set up list of different possible seasonality components*</span></span>
-<span id="cb148-3"><a href="loops.html#cb148-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         m &lt;- list()</span></span>
-<span id="cb148-4"><a href="loops.html#cb148-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[1]] &lt;- 2</span></span>
-<span id="cb148-5"><a href="loops.html#cb148-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[2]] &lt;- 4</span></span>
-<span id="cb148-6"><a href="loops.html#cb148-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *run loop calculating RMSE for winters exponential smoothing with different frequencies*</span></span>
-<span id="cb148-7"><a href="loops.html#cb148-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             RMSE &lt;- matrix(0,length(m),1)</span></span>
-<span id="cb148-8"><a href="loops.html#cb148-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                 for (i in seq(length(m)))</span></span>
-<span id="cb148-9"><a href="loops.html#cb148-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                 {</span></span>
-<span id="cb148-10"><a href="loops.html#cb148-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                         yt &lt;- ts(y, frequency = m[[i]])</span></span>
-<span id="cb148-11"><a href="loops.html#cb148-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                         fit &lt;- HoltWinters(yt</span></span>
-<span id="cb148-12"><a href="loops.html#cb148-12" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,alpha=0.6 #setting alpha</span></span>
-<span id="cb148-13"><a href="loops.html#cb148-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,beta=TRUE #trend</span></span>
-<span id="cb148-14"><a href="loops.html#cb148-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,gamma=TRUE) #seasonality</span></span>
-<span id="cb148-15"><a href="loops.html#cb148-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                         for.fit &lt;- forecast(fit)</span></span>
-<span id="cb148-16"><a href="loops.html#cb148-16" aria-hidden="true" tabindex="-1"></a><span class="co">#                         acc.fit &lt;- accuracy(for.fit)</span></span>
-<span id="cb148-17"><a href="loops.html#cb148-17" aria-hidden="true" tabindex="-1"></a><span class="co">#                         RMSE[i,1] &lt;- acc.fit [1,2] #putting RMSE for different frequencies in matrix</span></span>
-<span id="cb148-18"><a href="loops.html#cb148-18" aria-hidden="true" tabindex="-1"></a><span class="co">#                 }</span></span>
-<span id="cb148-19"><a href="loops.html#cb148-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *finding frequency with smallest RMSE*</span></span>
-<span id="cb148-20"><a href="loops.html#cb148-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- which.min(RMSE)</span></span>
-<span id="cb148-21"><a href="loops.html#cb148-21" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- m[best.freq]</span></span>
-<span id="cb148-22"><a href="loops.html#cb148-22" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq</span></span></code></pre></div>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="loops.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;prob8p92HW.xlsx&quot;)</span></span>
+<span id="cb167-2"><a href="loops.html#cb167-2" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *set up list of different possible seasonality components*</span></span>
+<span id="cb167-3"><a href="loops.html#cb167-3" aria-hidden="true" tabindex="-1"></a><span class="co">#         m &lt;- list()</span></span>
+<span id="cb167-4"><a href="loops.html#cb167-4" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[1]] &lt;- 2</span></span>
+<span id="cb167-5"><a href="loops.html#cb167-5" aria-hidden="true" tabindex="-1"></a><span class="co">#             m[[2]] &lt;- 4</span></span>
+<span id="cb167-6"><a href="loops.html#cb167-6" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *run loop calculating RMSE for winters exponential smoothing with different frequencies*</span></span>
+<span id="cb167-7"><a href="loops.html#cb167-7" aria-hidden="true" tabindex="-1"></a><span class="co">#             RMSE &lt;- matrix(0,length(m),1)</span></span>
+<span id="cb167-8"><a href="loops.html#cb167-8" aria-hidden="true" tabindex="-1"></a><span class="co">#                 for (i in seq(length(m)))</span></span>
+<span id="cb167-9"><a href="loops.html#cb167-9" aria-hidden="true" tabindex="-1"></a><span class="co">#                 {</span></span>
+<span id="cb167-10"><a href="loops.html#cb167-10" aria-hidden="true" tabindex="-1"></a><span class="co">#                         yt &lt;- ts(y, frequency = m[[i]])</span></span>
+<span id="cb167-11"><a href="loops.html#cb167-11" aria-hidden="true" tabindex="-1"></a><span class="co">#                         fit &lt;- HoltWinters(yt</span></span>
+<span id="cb167-12"><a href="loops.html#cb167-12" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,alpha=0.6 #setting alpha</span></span>
+<span id="cb167-13"><a href="loops.html#cb167-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,beta=TRUE #trend</span></span>
+<span id="cb167-14"><a href="loops.html#cb167-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                             ,gamma=TRUE) #seasonality</span></span>
+<span id="cb167-15"><a href="loops.html#cb167-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                         for.fit &lt;- forecast(fit)</span></span>
+<span id="cb167-16"><a href="loops.html#cb167-16" aria-hidden="true" tabindex="-1"></a><span class="co">#                         acc.fit &lt;- accuracy(for.fit)</span></span>
+<span id="cb167-17"><a href="loops.html#cb167-17" aria-hidden="true" tabindex="-1"></a><span class="co">#                         RMSE[i,1] &lt;- acc.fit [1,2] #putting RMSE for different frequencies in matrix</span></span>
+<span id="cb167-18"><a href="loops.html#cb167-18" aria-hidden="true" tabindex="-1"></a><span class="co">#                 }</span></span>
+<span id="cb167-19"><a href="loops.html#cb167-19" aria-hidden="true" tabindex="-1"></a><span class="co">#         #&#39; *finding frequency with smallest RMSE*</span></span>
+<span id="cb167-20"><a href="loops.html#cb167-20" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- which.min(RMSE)</span></span>
+<span id="cb167-21"><a href="loops.html#cb167-21" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq &lt;- m[best.freq]</span></span>
+<span id="cb167-22"><a href="loops.html#cb167-22" aria-hidden="true" tabindex="-1"></a><span class="co">#             best.freq</span></span></code></pre></div>
 </div>
 <div id="arima---it-is-not-really-that-useful-does-not-have-all-combinations" class="section level3" number="10.4.2">
 <h3><span class="header-section-number">10.4.2</span> ARIMA - it is not really that useful, does not have all combinations</h3>
 <p>Testing different orders</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb149-1"><a href="loops.html#cb149-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #Insert data as timeseries</span></span>
-<span id="cb149-2"><a href="loops.html#cb149-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;Data/Week47/IBMstock.xls&quot;) %&gt;% ts(frequency = 52</span></span>
-<span id="cb149-3"><a href="loops.html#cb149-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    #,start =</span></span>
-<span id="cb149-4"><a href="loops.html#cb149-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    )</span></span>
-<span id="cb149-5"><a href="loops.html#cb149-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Import matrix of differencing combinations</span></span>
-<span id="cb149-6"><a href="loops.html#cb149-6" aria-hidden="true" tabindex="-1"></a><span class="co"># OrderMatrix &lt;- read_excel(&quot;Data/Week47/OrdersMatrix.xlsx&quot;)</span></span>
-<span id="cb149-7"><a href="loops.html#cb149-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-8"><a href="loops.html#cb149-8" aria-hidden="true" tabindex="-1"></a><span class="co"># {</span></span>
-<span id="cb149-9"><a href="loops.html#cb149-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   RMSE &lt;- as.matrix(0)</span></span>
-<span id="cb149-10"><a href="loops.html#cb149-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   boxtest &lt;- as.matrix(0)</span></span>
-<span id="cb149-11"><a href="loops.html#cb149-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-12"><a href="loops.html#cb149-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   for (i in seq(from = 1,to = nrow(OrderMatrix),by = 1)) {</span></span>
-<span id="cb149-13"><a href="loops.html#cb149-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-14"><a href="loops.html#cb149-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     print(i)</span></span>
-<span id="cb149-15"><a href="loops.html#cb149-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     p &lt;- as.numeric(OrderMatrix[i,1]) #AR order</span></span>
-<span id="cb149-16"><a href="loops.html#cb149-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     d &lt;- as.numeric(OrderMatrix[i,2]) #Differencing order</span></span>
-<span id="cb149-17"><a href="loops.html#cb149-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     q &lt;- as.numeric(OrderMatrix[i,3]) #MA order</span></span>
-<span id="cb149-18"><a href="loops.html#cb149-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     order &lt;- c(p,d,q)</span></span>
-<span id="cb149-19"><a href="loops.html#cb149-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-20"><a href="loops.html#cb149-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     ARIMAmod &lt;- arima(x = y #The time-series</span></span>
-<span id="cb149-21"><a href="loops.html#cb149-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                       ,order = order</span></span>
-<span id="cb149-22"><a href="loops.html#cb149-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                       )</span></span>
-<span id="cb149-23"><a href="loops.html#cb149-23" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-24"><a href="loops.html#cb149-24" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Assessing in-samp accuracy RMSE</span></span>
-<span id="cb149-25"><a href="loops.html#cb149-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     RMSE[i] &lt;- accuracy(object = fitted(ARIMAmod),x = y)[2] #2 for RMSE</span></span>
-<span id="cb149-26"><a href="loops.html#cb149-26" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-27"><a href="loops.html#cb149-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Storing hypothesis test of independence</span></span>
-<span id="cb149-28"><a href="loops.html#cb149-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     boxtest[i] &lt;- Box.test(ARIMAmod$residuals</span></span>
-<span id="cb149-29"><a href="loops.html#cb149-29" aria-hidden="true" tabindex="-1"></a><span class="co">#                            ,fitdf = p+q)$p.value #Because it is applied to and ARIMA model</span></span>
-<span id="cb149-30"><a href="loops.html#cb149-30" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
-<span id="cb149-31"><a href="loops.html#cb149-31" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb149-32"><a href="loops.html#cb149-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   #The optimal combination based on the highest Box-Pierce test (similar to Ljung-Box)</span></span>
-<span id="cb149-33"><a href="loops.html#cb149-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   OrderMatrix[which.max(boxtest),]</span></span>
-<span id="cb149-34"><a href="loops.html#cb149-34" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="loops.html#cb168-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #Insert data as timeseries</span></span>
+<span id="cb168-2"><a href="loops.html#cb168-2" aria-hidden="true" tabindex="-1"></a><span class="co"># y &lt;- read_excel(&quot;Data/Week47/IBMstock.xls&quot;) %&gt;% ts(frequency = 52</span></span>
+<span id="cb168-3"><a href="loops.html#cb168-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    #,start =</span></span>
+<span id="cb168-4"><a href="loops.html#cb168-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                                                    )</span></span>
+<span id="cb168-5"><a href="loops.html#cb168-5" aria-hidden="true" tabindex="-1"></a><span class="co"># #Import matrix of differencing combinations</span></span>
+<span id="cb168-6"><a href="loops.html#cb168-6" aria-hidden="true" tabindex="-1"></a><span class="co"># OrderMatrix &lt;- read_excel(&quot;Data/Week47/OrdersMatrix.xlsx&quot;)</span></span>
+<span id="cb168-7"><a href="loops.html#cb168-7" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-8"><a href="loops.html#cb168-8" aria-hidden="true" tabindex="-1"></a><span class="co"># {</span></span>
+<span id="cb168-9"><a href="loops.html#cb168-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   RMSE &lt;- as.matrix(0)</span></span>
+<span id="cb168-10"><a href="loops.html#cb168-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   boxtest &lt;- as.matrix(0)</span></span>
+<span id="cb168-11"><a href="loops.html#cb168-11" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-12"><a href="loops.html#cb168-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   for (i in seq(from = 1,to = nrow(OrderMatrix),by = 1)) {</span></span>
+<span id="cb168-13"><a href="loops.html#cb168-13" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-14"><a href="loops.html#cb168-14" aria-hidden="true" tabindex="-1"></a><span class="co">#     print(i)</span></span>
+<span id="cb168-15"><a href="loops.html#cb168-15" aria-hidden="true" tabindex="-1"></a><span class="co">#     p &lt;- as.numeric(OrderMatrix[i,1]) #AR order</span></span>
+<span id="cb168-16"><a href="loops.html#cb168-16" aria-hidden="true" tabindex="-1"></a><span class="co">#     d &lt;- as.numeric(OrderMatrix[i,2]) #Differencing order</span></span>
+<span id="cb168-17"><a href="loops.html#cb168-17" aria-hidden="true" tabindex="-1"></a><span class="co">#     q &lt;- as.numeric(OrderMatrix[i,3]) #MA order</span></span>
+<span id="cb168-18"><a href="loops.html#cb168-18" aria-hidden="true" tabindex="-1"></a><span class="co">#     order &lt;- c(p,d,q)</span></span>
+<span id="cb168-19"><a href="loops.html#cb168-19" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-20"><a href="loops.html#cb168-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     ARIMAmod &lt;- arima(x = y #The time-series</span></span>
+<span id="cb168-21"><a href="loops.html#cb168-21" aria-hidden="true" tabindex="-1"></a><span class="co">#                       ,order = order</span></span>
+<span id="cb168-22"><a href="loops.html#cb168-22" aria-hidden="true" tabindex="-1"></a><span class="co">#                       )</span></span>
+<span id="cb168-23"><a href="loops.html#cb168-23" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-24"><a href="loops.html#cb168-24" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Assessing in-samp accuracy RMSE</span></span>
+<span id="cb168-25"><a href="loops.html#cb168-25" aria-hidden="true" tabindex="-1"></a><span class="co">#     RMSE[i] &lt;- accuracy(object = fitted(ARIMAmod),x = y)[2] #2 for RMSE</span></span>
+<span id="cb168-26"><a href="loops.html#cb168-26" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-27"><a href="loops.html#cb168-27" aria-hidden="true" tabindex="-1"></a><span class="co">#     #Storing hypothesis test of independence</span></span>
+<span id="cb168-28"><a href="loops.html#cb168-28" aria-hidden="true" tabindex="-1"></a><span class="co">#     boxtest[i] &lt;- Box.test(ARIMAmod$residuals</span></span>
+<span id="cb168-29"><a href="loops.html#cb168-29" aria-hidden="true" tabindex="-1"></a><span class="co">#                            ,fitdf = p+q)$p.value #Because it is applied to and ARIMA model</span></span>
+<span id="cb168-30"><a href="loops.html#cb168-30" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span>
+<span id="cb168-31"><a href="loops.html#cb168-31" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb168-32"><a href="loops.html#cb168-32" aria-hidden="true" tabindex="-1"></a><span class="co">#   #The optimal combination based on the highest Box-Pierce test (similar to Ljung-Box)</span></span>
+<span id="cb168-33"><a href="loops.html#cb168-33" aria-hidden="true" tabindex="-1"></a><span class="co">#   OrderMatrix[which.max(boxtest),]</span></span>
+<span id="cb168-34"><a href="loops.html#cb168-34" aria-hidden="true" tabindex="-1"></a><span class="co"># }</span></span></code></pre></div>
 
 </div>
 </div>

@@ -1,0 +1,254 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r ,echo=FALSE,message=FALSE, warning=FALSE}
+library(readxl)
+library(forecast)
+library(tseries)
+```
+
+
+# Non Stationary Time-series
+
+*This section explicitly identifies how to check for non stationarity and how to deal with it*
+
+*Hence:*
+
+1. Unit roots
+2. Spurious Regression
+3. Cointegration
+
+**Literature**
+
++ HW: Judgmental Forecasting and Forecast Adjustments (Combining forecasts)
++ HW: Managing the Forecast Process
++ Discussion on Diebold-Mariano test: http://www.phdeconomics.sssup.it/documents/Lesson19.pdf
+
+Suggestions from the slides
++ HW: pp. 321-323 (cointegration)
++ Unit roots: http://faculty.washington.edu/ezivot/econ584/notes/unitroot.pdf
++ Cointegration: notes I & notes II: Where notes I = http://www2.hawaii.edu/%7Ebonham/664/materials/New_Lectures3.pdf, notes II is not to be found
+
+
+## Unit Roots
+
+Recall from section \@ref(TSComponents), TS consist of four elements: T,S,C,I. 
+
+T,S and C are what is called determistic components. Where the rest, I, is irregular, although this might contain some properties as well. These properties are called *stochastic or random properties*
+
+*Definition on stochastic: having a random probability distribution or pattern that may be analyzed statistically but may not be predicted precisely.*
+
+In this chapter, we explore how a time-series that visually does not reflect nonstationary data, can in fact be non stationary.
+
+One may observe, that even though the irregular component is often random (being stationary), it may have show nonstationarity.
+
+In general, one can do unit root tests, to test if the data is stationary or non stationary. In general, it can be said:
+
+    Unit Root = Non Stationarity
+    
+    Hence; I have found unit roots in the data = i have found non stationarity
+    in the data
+
+The following will explore how **Augmented Dickey-Fuller test (ADF)** can make an assessment of unit roots.
+
+
+### Augmented Dickey-Fuller (ADF) test
+
+This is basically a test for nonstationarity.
+
+Null hypothesis = x has a unit root (i.e. is non stationary)
+Alternate hypothesis = x has not unit root (i.e. is stationary)
+
+See the equation for the ADF in the slides from L11.
+
+See exercise \@ref(ADFexercise) with the Dairy Data.
+
+## Spurious Regression
+
+This is about having nonstationary data, where the nonstationarity is able to prove a relationship between a dependent variable and independent variable(s).
+
+Running a regression on this, will not make any sense, as it is an effect that is not included in the model, that is actually proving the relationship. Meaning that you don't know if the relationship is actually true or not, but you are apparantly with a statistical test able to prove it. Hence we get a spurious regression if:
+
+1. The variables have another variable in common, but it is not included in the model.
+2. It is a coincidence
+
+
+## Cointegration
+
+Although variables that follow each other, may in fact be cointegrated, meaning that they are not just following each other by coincidence, but they actually have a relationship.
+
+To check if both series (y and x) are nonstationary and the regression between these are non stationary. Then we can predict based on this relationship.
+
+One can also say, that series are cointegrated if they move with each other, e.g., have the same trend. See the following link with an example: https://www.wallstreetmojo.com/cointegration/.
+
+    Rule of thumb, when the difference between variables is the same, 
+    then they are cointegrated
+
+This implies, that we don't have to be differencing as the relationship between the variables are stationary, implying:
+
+\begin{equation}
+y_t-\beta x_t=\epsilon_{t\ }
+(\#eq:cointegration)
+\end{equation}
+
+show stationarity. The intuition is that y less x times a constant value, you will be left with the error terms, that show stationarity, as subtracting the series' with each other, will take out the unit roots.
+
+### Checking for cointegration
+
+The process:
+
+*There are basically two options for testing for this. The second option is the better process*
+
+**Option 1**
+
+1. Check if the series have unit roots (are nonstationary)
+2. Their linear combination $y_t-\beta x_t$, does not have a unit root (= is stationary)
+
+
+**Option 2**
+
+This can be done with an Engle-Granger (EG) test. The procedure sets forth the following:
+
+1. Testing if $y_t$ and $x_t$ are non stationary using an ADF test.
+2. Regress $y_t$ ib $x_t$ and test if the residuals ($e_t$) show stationarity, that can be done with and ADF (augmented Dickey-Fuller test, but also a good idea to plot)
+
+See an example of this procedure in the exercise with Dairy Data, see section \@ref(Cointegration) 
+
+
+
+## Exercises
+
+### Dairy Data {#DairyData}
+
+Loading the data. We have yearly data and select employment data.
+
+```{r,fig.cap="Visual interptration"}
+df <- read_xls("Data/Week49/dairydata.xls")
+y <- df$emp %>% log() %>% ts() #Frequency is by default 1, that is applied, as we have yearly data
+tsdisplay(y)
+```
+
+Notice that we take log, that is done to smooth out extreme values, and make the data more normal.
+
+Based on the figure, we are able to deduce:
+
++ The ts does not appear to show stationarity, that is to be further inspected in \@ref(ADFexercise)
++ That there is clearly a trend
++ The acf does not imply, that the data show autocorrelation
+
+#### Unit Root testing - Augmented Dickey-Fuller (ADF) {#ADFexercise}
+
+We aim to find out if there is statistical evidence for unit roots (nonstationarity), that is done with the adf.
+
+First we make ADF on the time series, hence $y_t$
+
+```{r}
+adf.test(y)
+```
+
+*Note, the null hypothesis is that the data show nonstationarity*
+
+Based on the ADF on the log of the data, we are not able to reject the null hypothesis, hence the time series does not show stationarity, that is as expected, as we saw from the ts plot.
+
+We can take the first order difference to see if we can get rid of the nonstationarity.
+
+```{r}
+dy <- diff(y,lag = 1) #lag 1 is default, but shown for explanatory reasons
+adf.test(dy) #Rejecting the null, so can claim stationarity of the differenced series
+```
+
+Now we are able to reject the null hypothesis. We can then look at this visually.
+
+```{r,fig.cap="tsdisplay dy"}
+tsdisplay(dy)
+```
+
+This just confirms the hypothesis test.
+
+**Conclusion**
+
+With ADF, we are able to make a statistical test for stationarity, hence it is able to support the visual interpretation.
+
+#### Cointegration {#Cointegration}
+
+Now we extend the data and introduce another variable, production worker hours, hence $x_t$.
+
+As with the y variable, the data is annually and we take the log of the data. As with y, we must check for stationarity, hence:
+
+```{r}
+x <- ts(log(df$prodh)) #production worker hours
+plot(x)
+```
+
+The data does not look stationary, lets do an ADF, to make a statistical test for this.
+
+```{r}
+adf.test(x)
+```
+
+We are not able to reject the null hypothesis, hence x being non stationarity (i.e. non stationary in levels). Lets do first order differencing and check ADF for that:
+
+```{r warning=FALSE}
+adf.test(diff(x))
+```
+
+We see that we are able to reject H0.
+
+##### Graphical inspection of the data
+
+To show this graphically, we can represent the following.
+
+```{r,fig.cap="Representation of cointegration"}
+plot(y,col = 1,ylim = c(-0.5,2.5),main = "Cointegration",xlab = "Years",ylab = "Values") + 
+  lines(x,col = 2) + 
+  lines(residuals(lm(y~x)),col = 6,lty = 3) +
+  grid(col = "grey",nx = 10,ny = 20)
+legend(x = "topleft",legend = c("y=emp","x=prodh","residuals"),lty = c(1,1,3),col = c(1,2,6),cex = 0.7)
+```
+
+We see that the time-series' (which are not difference) are not stationary and the perfectly fits each other. Let us assume, that these are not spurously related, then they are in fact cointegrated.
+
+When a regression is run on the two variables, we see that the residuals show stationarity, hence that is a good indication of cointegration.
+
+This can be further explored with the following two procedures:
+
+##### Test for cointegration {#CointegrationTest}
+
+1. Statistical test - Phillips-Ouliaris test (2-step EG test), whith H0: no cointegration **This is supposed to be the better option, as it uses the correct distributions, that was just briefly mentioned during class**
+2. Manual process, consisting of:
+    i. Fitting y on x
+    ii. Checking the residuals for unit roots (stationarity) using ADF.
+  
+The following does both:
+
+**Option 1 - Phillips-Ouliaris test**
+
+```{r}
+# Combining the two vectors x and y 
+z <- ts(cbind(x,y))
+
+po.test(z) #Note, this is the 2-step EG test
+```
+
+We have H0: no cointegration. We are able to reject the null, hence it is fair to assume that there is cointegration between the two variables.
+
+**Option 2 - Manual process**
+
+```{r}
+fit <- lm(y~x) #Running an OLS of y on x
+adf.test(x = resid(fit)) #Testing if the residuals from the estimated model contain a unit root.
+```
+
+*ADF H0: x = non stationary*
+
+We see that this does in fact not show stationarity, which contradicts with the PO test.
+
+Although the adf.test is not always applying the correct distributions, hence it may not align with the PO test, which is what we see in this.
+
+
+### Airpassengers
+
+

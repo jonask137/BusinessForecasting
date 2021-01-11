@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="non-stationary-time-series.html"/>
-<link rel="next" href="communicating-technical-findings.html"/>
+<link rel="next" href="spurious-regression.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -226,7 +226,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="non-stationary-time-series.html"><a href="non-stationary-time-series.html"><i class="fa fa-check"></i><b>8</b> Non Stationary Time-series</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="unit-roots.html"><a href="unit-roots.html"><i class="fa fa-check"></i><b>8.1</b> Unit Roots</a></li>
+<li class="chapter" data-level="8.1" data-path="unit-roots.html"><a href="unit-roots.html"><i class="fa fa-check"></i><b>8.1</b> Unit Roots</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="unit-roots.html"><a href="unit-roots.html#augmented-dickey-fuller-adf-test"><i class="fa fa-check"></i><b>8.1.1</b> Augmented Dickey-Fuller (ADF) test</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="spurious-regression.html"><a href="spurious-regression.html"><i class="fa fa-check"></i><b>8.2</b> Spurious Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="cointegration.html"><a href="cointegration.html"><i class="fa fa-check"></i><b>8.3</b> Cointegration</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="cointegration.html"><a href="cointegration.html#checking-for-cointegration"><i class="fa fa-check"></i><b>8.3.1</b> Checking for cointegration</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="exercises-3.html"><a href="exercises-3.html"><i class="fa fa-check"></i><b>8.4</b> Exercises</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="exercises-3.html"><a href="exercises-3.html#DairyData"><i class="fa fa-check"></i><b>8.4.1</b> Dairy Data</a></li>
+<li class="chapter" data-level="8.4.2" data-path="exercises-3.html"><a href="exercises-3.html#airpassengers"><i class="fa fa-check"></i><b>8.4.2</b> Airpassengers</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="9" data-path="communicating-technical-findings.html"><a href="communicating-technical-findings.html"><i class="fa fa-check"></i><b>9</b> Communicating Technical Findings</a></li>
 <li class="chapter" data-level="10" data-path="Methods.html"><a href="Methods.html"><i class="fa fa-check"></i><b>10</b> Methods and Performance Measurement</a>
@@ -276,17 +289,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>In this chapter, we explore how a time-series that visually does not reflect nonstationary data, can in fact be non stationary.</p>
 <p>One may observe, that even though the irregular component is often random (being stationary), it may have show nonstationarity.</p>
 <p>In general, one can do unit root tests, to test if the data is stationary or non stationary. In general, it can be said:</p>
-<pre><code>Unit Root = Non stationarity in the data</code></pre>
+<pre><code>Unit Root = Non Stationarity
 
+Hence; I have found unit roots in the data = i have found non stationarity
+in the data</code></pre>
+<p>The following will explore how <strong>Augmented Dickey-Fuller test (ADF)</strong> can make an assessment of unit roots.</p>
+<div id="augmented-dickey-fuller-adf-test" class="section level3" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Augmented Dickey-Fuller (ADF) test</h3>
+<p>This is basically a test for nonstationarity.</p>
+<p>Null hypothesis = x has a unit root (i.e. is non stationary)
+Alternate hypothesis = x has not unit root (i.e. is stationary)</p>
+<p>See the equation for the ADF in the slides from L11.</p>
+<p>See exercise <a href="exercises-3.html#ADFexercise">8.4.1.1</a> with the Dairy Data.</p>
 </div>
-<!-- </div> -->
+</div>
             </section>
 
           </div>
         </div>
       </div>
 <a href="non-stationary-time-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="communicating-technical-findings.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="spurious-regression.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
