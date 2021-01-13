@@ -32,7 +32,7 @@ One approach to assessing time series is by decomposing the patterns by finding 
 
 3. Seasonal(S)
 
-4. Irregular(random)(I)
+4. Irregular(random)(I) - ***Notice! We dont want to use this for assembling the model, as it is random***
 
 *These are also called deterministic variables*
 
@@ -260,7 +260,322 @@ If our residuals have autocorelation, it means that there is some relationship i
 
 ## Exercises
 
-### Alomega Food Stores, case 6 p. 166 + case 7 p. 348
+The section contain several exercises covering:
+
++ Decomposing and forecasting without cycles
++ Decomposing and forecasting with cycles
++ Time Series regression with other variables
++ Fitting trend variable
++ Decomposing using OLS, decompose and CMA
+
+
+
+### Decomposition + Forecast Exercise
+
+We use the Alomega Foodstore sales data to show the following:
+
+a. How to make a decomposition of a time series, using `decompose()`
+b. How to use `decompose()` to retrieve the different components and store these
+c. How to inteprete the components
+d. How to forecast using the components
+
+```{r}
+y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
+y <- y$Sales
+y <- ts(data = y #The data
+        ,frequency = 12 #Data is monthly
+        ,end = c(2006,12)
+        )
+options(scipen = 999)
+tsdisplay(y)
+```
+
+It appears as if we have seasonality, but a trend is dificult to say.
+
+It appears as if the data is additive, as the variance appear to be more or less the same over time.
+
+#### a. Decomposing the time series
+
+Now we can decompose the elements using `decompose()`, where moving averages are applied to deseasonalize the data.
+
+But just for the sake of it, the multuplicative decomposition is made as well.
+
+```{r}
+y.decom.add <- decompose(x = y #The ts
+                         ,type = "additive" #The composition
+                         )
+y.decom.mult <- decompose(x = y #The ts
+                         ,type = "multiplicative" #The composition
+                         )
+plot(y.decom.add)
+```
+
+
+
+#### b. Retrieving components
+
+Recall that we have the following components:
+
+1. Trend (T), Tr in this example, as t is the transpose function
+2. Seasons(S)
+3. Irregular(I) - **NOTICE: We don't want to use this for forecasting, as it is random, hence it can be left out from the assembly yhat**
+
+We see no cycles, and assume that they are not there.
+
+```{r}
+Tr <- y.decom.add$trend
+S <- y.decom.add$seasonal
+I <- y.decom.add$random
+```
+
+#### c. Interpreting the resutls
+
+For the sake of it, the additive and multiplicative decompositions are plotted.
+
+```{r}
+plot(y.decom.add)
+plot(y.decom.mult)
+```
+
+We see that the decomposition finds a trend and also it appears as there are some reoccurring patterns in the seasons.
+
+But notice that the seasonal component is different, now it is a factor, which is relative to the trend.
+
+#### d. Forecasting using the components
+
+##### Fitting the model
+
+We see that we are able to construct the in sample data 1:1 if the composition is created with all three components.
+
+Let us forecast only using the trend and season component.
+
+We see that we area able to plot the following:
+
+```{r}
+yhat<-Tr+S #Notice, that I is left out, as it is a random component
+plot(y, type="l")
+lines(Tr,col="green")
+lines(yhat,col="red")
+```
+
+We can assess the accuracy of the composition of the trend and seasons.
+
+```{r}
+accuracy(yhat,y)
+```
+
+We see that the mean percentage error is -2,78 percent, hence it appears as there is a tendency for the model to be underestimating y.
+
+##### Forecasting using the composition
+
+Now we can apply the model in a forecasting setting to forecast h horizons.
+
+```{r}
+forecast.decom.add <- forecast(object = yhat,h = 18)
+t(t(forecast.decom.add$mean))
+```
+
+18 months are chosen, as the function forecast from the middle of 2006, where it is was not able to fit the components, as it applies CMA on the months.
+
+Using 18 months, we get forecasts for the last half a year and there after a whole year
+
+We can also plot the forecast
+
+```{r}
+plot(forecast.decom.add)
+```
+
+We can assess the accuracy of the first 6 forecasted periods, as they are known
+
+```{r}
+y.test <- y[(length(y)-5):length(y)]
+accuracy(object = forecast.decom.add$mean[1:6],x = y.test)
+```
+
+We see that the accuracy of these periods are 3.56% (MPE).
+
+
+
+```{r}
+rm(list = ls())
+```
+
+
+
+### Decomposition with cycles + Forecasting
+
+Process:
+
+1. 
+2. 
+3. 
+
+```{r}
+y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
+y <- y$Sales
+y <- ts(data = y #The data
+        ,frequency = 12 #Data is monthly
+        ,end = c(2006,12)
+        )
+```
+
+
+#### 1. Finding CMA (deseasonalizing)
+
+```{r}
+CMA <- ma(x = y #The data
+          ,order = 12 #When the same period occurs
+          ,centre = TRUE) #As we have an even period
+```
+
+We have now deseasonalized the data, as the moving average has removed the effect of the seasons.
+
+#### 2. Finding SF
+
+That is, identifying whether we are above or below the deseasonalized data.
+
+```{r}
+SF<-y/CMA
+plot(SF, type="l")
+abline(h = 1 #Plotted, as when one is on 1, then you are neither above or below
+       ,col = "red")
+```
+
+#### 3. Identifying Trend
+
+We introduce a trend variable to take out the effect of the trend
+
+```{r}
+trend <- seq(1:length(y)) #Making counter
+linmod <- lm(CMA ~ trend
+             ,na.action = "na.exclude")
+```
+
+Notice that we don't care about the model, we just need the fitted values for identifying the cycle factor.
+
+#### 4. Finding detrended and deseasonalized data
+
+In step 1 we deseasonalized the data, based on the fitted model, we have detrended the 
+
+```{r}
+CMAT <- linmod$fitted.values
+```
+
+#### 5. Cycle identifying factor
+
+We the deseasonalized and detrended data, we are able to idenitify if the deseasonalized data is above or below the seasons.
+
+```{r,fig.cap="Cycle Factor"}
+CF <- na.exclude(CMA) / CMAT
+ts.plot(CF)
+abline(h = 1,col = "red")
+```
+
+We want to look for wavelike patterns. We don't see any, hence it is fair to assume, that we don't have any cycles.
+
+If we had, what to do?
+
+- When multiplicative: One can apply the cycle factor in the regression
+- When additive: One can apply the difference (between CMA and CMAT) in the regression.
+
+
+End of exercise:
+
+```{r}
+rm(list = ls())
+```
+
+
+
+### Time series regression {#TimeSeriesRegression}
+
+This example show how one can apply other variables in a regression
+
+```{r}
+Alomegasales <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
+y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
+y <- y$Sales
+y <- ts(data = y #The data
+        ,frequency = 12 #Data is monthly
+        ,end = c(2006,12)
+        )
+
+#fetch explanatory variables
+paper<-ts(Alomegasales$Paper, frequency=12)
+tv<-ts(Alomegasales$TV, frequency=12)
+month <- seasonaldummy(y) #creates seasonal dummies, if such not available in the data
+#Regression model for sales
+reg <-lm(y~paper+tv+month)
+summary(reg)
+```
+
+We see the model summary above. Now we can make the regression
+
+```{r}
+#obtain residuals from the model to perform model quality checks
+res<-reg$residuals
+plot(res)
+```
+
+We see that the residuals appear homoskedastic.
+
+We can check them for normality
+
+```{r}
+#check for normality
+hist(res)
+```
+
+By visual inspection, they appear to be normally distributed.
+
+```{r}
+library(tseries)
+jarque.bera.test(res) #Jarque-Bera test the null of normality
+```
+
+H0: Normality
+
+Cannot reject.
+
+Now we can check for multicollinearity
+
+```{r}
+#testing for multicollinearity
+library(car)
+vif(reg)
+```
+
+We see that they are all ≈ 2 or less, hence no problem
+
+We can check the residuals for autocorrelation (serial correlation). We dont want this
+
+```{r}
+#serial correlation
+#acf(res)
+plot(acf(res,plot=F)[1:20])#alternative command if you want to skip the 0 lag
+```
+
+Despite a few significant spikes, it appears as if it is not autocorrelated. This can be tested with the Durbin Watson test.
+
+```{r}
+#Durbin-Watson serial correlation test
+library(lmtest)
+dwtest(reg)
+```
+
+H0: No autocorrelation
+
+We cannot reject on the five percent level
+
+
+
+
+
+\
+
+\
+
+### Alomega Food Stores, case 6 p. 166 + case 7 p. 348 (Another example)
 
 ```{r}
 y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")

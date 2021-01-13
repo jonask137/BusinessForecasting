@@ -210,6 +210,58 @@ One could also apply growth rates are log differencing instead.
 Learn more about the methods in section \@ref(ForecastMethods), where a collection of performance measures can be found in section \@ref(PerformanceMeasurements)
 
 
+The book (page 30 - 35) suggest the following application:
+
++ Stationary date
+  + Naive method
+  + Simple Moving Averages
+  + Moving averages
+  + ARMA
+
++ Data with a trend
+  + Moving Averages
+  + Holt's exponential smoothing
+  + Simple regression
+  + ARIMA
+
++ Seasonal data
+  + Classical decomposition
+  + Winter's exponential smoothing
+  + Multiple regression
+  + ARIMA
+
++ Data with Cycle factors
+  + Classical decomposition
+  + Mutliple regression
+  + ARIMA
+
+
+### Forecast Methods and Horizons
+
++ Short term
+  + Regression
+  + Means
+  + Moving Averages
+  + Classical decomposition
+  + Trend projection
+  + ARIMA
+
++ Intermediate term
+  + Regression
+  + Means
+  + Moving Averages
+  + Classical decomposition
+  + Trend projection
+  + ARIMA
+  
++ Long term
+  + Regression
+  + Classical decomposition
+
+Notice, that only regression in this constellation is an appropriate model for long term forecasts. The reasoning is that you are going to predict something in the future, and e.g., models based on stationary data, will tend towards the mean, that the data is centered around. Also if the forecast is based on other lagged variables, then you will need to forecast those variables, to be able to execute the forecasting model. Hence one must make sure that all of the models used for forecasting meets the assumptions and requirements, as they are prone to no be very accurate.
+
+Although one may apply long term predictions to construct an idea of how it may look, and then as you get close to what have previously been long term predictions, then you must constant iterate the model, hence throughout the intermediate and short term periods to capture the immediate variance.
+
 ## Exercises
 
 *This section contain exercises, hence the methods applied on data*
