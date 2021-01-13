@@ -92,6 +92,23 @@ One can often rule out (or at least smooth out) irregularities by taking the mov
 
 \
 
+## Methods of decomposing
+
+There are three approaches to decomposing (probably more).
+
+1. Decomposing, with the following approach:
+    a. Deseasonalizing using seasonal dummies
+    b. Detrending using a trend variable
+
+2. Decomposing with the following:
+    a. Deseasonalizing using MA (moving averages not ARMA). Where you apply the season, e.g., quarterly, then 4 periods
+    b.Detrending using a trend variable
+    
+3. Using `decompose()`
+    *a. Note: this use moverages, see the documentation*
+
+
+
 ## Regression with time series data
 
 
@@ -109,12 +126,12 @@ One of the assumptions for regression models, is that the errors are independent
 1. Do we have trend?
 2. Do we have cyclical movements?
 3. Do we have seasons?
-4. Do we have autocorellation (elaborated in section \@ref(Autocorellation))? If yes:
+4. Do we have autocorellation (elaborated in section \@ref(Autocorrelation))? If yes:
     a. If RHO = 1, then we can take first differences
     b. If RHO <> 1, then we can do the generalized differences., thus implies the following:
         1. Do an OLS and get the residuals
-        2. Use the residuals in the following equation $e_t=\rho e_{t-1}+ \sigma_t$, using OLS as estimated rho ($\hat{\rho}$)
-            a. If rho = 0, then 0 autocorellation
+        2. Use the residuals in the following equation $e_t=\rho e_{t-1}+\sigma_t$, using OLS as estimated rho ($\hat{\rho}$)
+            a. If rho = 0, then 0 autocorrelation
 
 
 ### The Process {#DecomposingWithMA}

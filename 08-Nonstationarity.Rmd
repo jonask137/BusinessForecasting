@@ -17,9 +17,9 @@ library(tseries)
 
 *Hence:*
 
-1. Unit roots
-2. Spurious Regression
-3. Cointegration
+*1. Unit roots*
+*2. Spurious Regression*
+*3. Cointegration*
 
 **Literature**
 
@@ -28,6 +28,7 @@ library(tseries)
 + Discussion on Diebold-Mariano test: http://www.phdeconomics.sssup.it/documents/Lesson19.pdf
 
 Suggestions from the slides
+
 + HW: pp. 321-323 (cointegration)
 + Unit roots: http://faculty.washington.edu/ezivot/econ584/notes/unitroot.pdf
 + Cointegration: notes I & notes II: Where notes I = http://www2.hawaii.edu/%7Ebonham/664/materials/New_Lectures3.pdf, notes II is not to be found
@@ -62,6 +63,11 @@ This is basically a test for nonstationarity.
 Null hypothesis = x has a unit root (i.e. is non stationary)
 Alternate hypothesis = x has not unit root (i.e. is stationary)
 
+**Be careful, this test may contradict with the Durbin-Watson test, if the variables actually do appear to be cointegrated**
+
+***Side note: but the variables may not be stationary, but if they are not spuriously related, hence cointegrated, then it is in fact OK for the variables to have stationarity***
+
+
 See the equation for the ADF in the slides from L11.
 
 See exercise \@ref(ADFexercise) with the Dairy Data.
@@ -70,7 +76,7 @@ See exercise \@ref(ADFexercise) with the Dairy Data.
 
 This is about having nonstationary data, where the nonstationarity is able to prove a relationship between a dependent variable and independent variable(s).
 
-Running a regression on this, will not make any sense, as it is an effect that is not included in the model, that is actually proving the relationship. Meaning that you don't know if the relationship is actually true or not, but you are apparantly with a statistical test able to prove it. Hence we get a spurious regression if:
+Running a regression on this, will not make any sense, as it is an effect that is not included in the model, that is actually proving the relationship. Meaning that you don't know if the relationship is actually true or not, but you are apparently with a statistical test able to prove it. Hence we get a spurious regression if:
 
 1. The variables have another variable in common, but it is not included in the model.
 2. It is a coincidence
@@ -78,7 +84,7 @@ Running a regression on this, will not make any sense, as it is an effect that i
 
 ## Cointegration
 
-Although variables that follow each other, may in fact be cointegrated, meaning that they are not just following each other by coincidence, but they actually have a relationship.
+Although variables that follow each other, may in fact be cointegrated, meaning that they are not just following each other by coincidence, but they actually have a Orelationship.
 
 To check if both series (y and x) are nonstationary and the regression between these are non stationary. Then we can predict based on this relationship.
 
@@ -247,8 +253,4 @@ adf.test(x = resid(fit)) #Testing if the residuals from the estimated model cont
 We see that this does in fact not show stationarity, which contradicts with the PO test.
 
 Although the adf.test is not always applying the correct distributions, hence it may not align with the PO test, which is what we see in this.
-
-
-### Airpassengers
-
 

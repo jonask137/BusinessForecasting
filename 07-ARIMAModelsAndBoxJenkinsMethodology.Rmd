@@ -150,7 +150,38 @@ Then how do we select an apporpriate number of lags to be included?
 1. The autocorrelation function (ACF): selection criteria: the ACF should decline to zero exponentially fast
 2. The partial autocorelation function (PACF)
 
+### Elaborating on Integration models
 
+This corresponds with the I in the ARIMA.
+
+If we have a model that only contain I and not AR and MA, then we have a random walk. Meaning that we are left with:
+
+\begin{equation}
+y_t=y_{t-1}+\ \epsilon_t
+(\#eq:RandomWalk)
+\end{equation}
+
+We see that $y_t$ can be defined by the previous observation, hence $y_{t-1}$ + some randomness, which is explained by the $e_t$, for period t.
+
+Naturally we are able to have a drift and a trend in the random walk, that would generate the following:
+
+RW with a drift:
+
+\begin{equation}
+y_t= \beta_0+y_{t-1}+\ \epsilon_t
+(\#eq:RWDrift)
+\end{equation}
+
+Hence we see that the drift is added with a constant, that can be compared with the interception in a normal regression. Hence, if $y_{t-1}$ is 0 and the error is 0, then you will have the constant, which will always be there.
+
+And the RW with a drift and a trend:
+
+\begin{equation}
+y_t= \beta_0+\beta_1t+y_{t-1}+\ \epsilon_t
+(\#eq:RWDriftTrend)
+\end{equation}
+
+Hence we add a coefficient that as multiplied with the time period.
 
 \
 
@@ -250,7 +281,9 @@ VAR(p)
 
 Where:
 
-+ p = p lags of the variable
++ p = p lags of the variable, one can apply `VARselection()`, this will yield p lags, notice, that it will be the same for all variables.
+
+See an example in section \@ref(VarExercise)
 
 #### Selection criteria
 
@@ -662,7 +695,7 @@ plot(z)
 Where we see that the changes in the observations show stationarity, where the raw data is clearly not stationary.
 
 
-#### Vector AutoRegressive Model (VAR)
+#### Vector AutoRegressive Model (VAR) {#VarExercise}
 
 ##### 1. Determine order of lags to be included + model estimation
 

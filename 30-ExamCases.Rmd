@@ -1,0 +1,720 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(readr)
+library(readxl)
+library(forecast)
+library(tseries)
+library(knitr)
+library(stats)
+library(car)
+```
+
+
+# Exam cases
+
+## Exam 2018
+
+
+
+
+
+```{r}
+df1 <- read_excel("Data/Exams/Exam2018Case1.xlsx") #Case 1 material
+df2 <- read_excel("Data/Exams/Exam2018Case2.xlsx") #Case 2 material
+```
+
+
+### Case 1
+
+Loading the data as a time series. The series are yearly starting from 1960 and ending in 2000
+
+```{r}
+ts <- ts(df1,frequency = 1,start = 1960)
+```
+
+
+#### Q1
+
+**1. Determine the key dynamic properties of each of the series.**
+
+```{r,fig.cap="ts display of the time series"}
+{tsdisplay(ts[,1],main = "Short rates") #Short term rates
+tsdisplay(ts[,2],main = "Medium rates") #Medium rates
+tsdisplay(ts[,3],main = "Long rates")} #Long rates
+```
+
+We see that all series are non stationary, hence unit roots. Also it appears as if there is a trend, an clearly if one is looking at the first 20 years, then it is quite linear.
+
+
+#### Q2
+
+**2. Justify a model specification for Long Rates (LR) and study post-regression residuals. Obtain forecasts for LR for the period 1991-2000 based on the in-sample period 1960-1990. How does your forecast compare to a simple moving average method? Finally, obtain a forecast also for the next 18 years (2001-2018) based on 1960-2000 data.**
+
+A time series if the long term rates are is made and the the data is partitioned.
+
+```{r,fig.cap="ltn inspection"}
+y.ltn.train <- ts[c(1:31),3] %>% ts(frequency = 1,start = 1960)
+y.ltn.test <- ts[c(32:41),3]
+tsdisplay(diff(y.ltn.train,1))
+```
+
+We see no significant spikes, hence implying a random walk.
+
+We saw earlier that the data was not stationary, hence we took first order difference. The data now look stationary, but has some extraordinary variance in the last years. Hence we can test this with an ADF, where H0: non stationarity.
+
+```{r}
+adf.test(diff(y.ltn.train,1))
+```
+
+Based on the 5% level we are not able to reject H0, but it is very close to the significance level. It was found, that H0 can be rejected with d = 2, where p value would be ≈ 0,036, hence rejecting H0 on the five percent level. Although it would make the data more abstract from the actual data.
+
+Hence it is chosen to select the first order difference, well in mind, that it is not significant on the 5% level. But, that is also the probability of taking the wrong decision.
+
+So seeing that we have a random walk. We can assess the men of the data, and see where it lies.
+
+```{r}
+mean(diff(y.ltn.train))
+```
+
+We see a mean of 0,3161 indicating, that the model has a drift.
+
+Thus we can make the following model, being an RW with a drift.
+
+```{r}
+fit <- Arima(y.ltn.train,order = c(0,1,0),include.drift = TRUE)
+summary(fit)
+```
+
+Now we are able to forecast
+
+##### Forecasting using ARIMA
+
+**Forecasting**
+
+```{r}
+forecast(object = fit,h = 10)
+forecast.test <- Arima(y = ts[,3] #The ltn
+                       ,model = fit) #We apply the model that was found above, hence 0,1,0 + drift
+knitr::kable(t(t(forecast.test$fitted[c(32:41)])),caption = "Fitted values test period")
+```
+
+Now we can calculate accuracy
+
+```{r}
+accuracy(object = forecast.test$fitted[c(32:41)],x = y.ltn.test)
+```
+
+We see that we get an RMSE of 1.15 and MPE of -7.7
+
+
+##### Forecasting with simple moving averages 1991 - 2000
+
+**Calculating simple moving average**
+
+We know that the data is not stationary, hence we must make differencing.
+
+```{r}
+y.ltn <- ts(ts[,3],start = 1960)
+dy.ltn <- diff(y.ltn)
+dy.ltn.test <- dy.ltn[31:40]
+ma.ltn <- ma(x = dy.ltn,order = 3)
+plot(ma.ltn) + grid(col = "lightgrey")
+```
+
+We see the MA's above.
+
+We see that the MA's are centered, that is not applicable for prediction purposes, as we want to predict using previous periods.
+
+
+**FORECASTING WITH MA**
+
+It is done with three different approaches:
+
+1. Using `ma()` not really good
+2. Using excel and importing, that is valid
+3. Using some loops, that is pretty cool
+
+
+###### 1. Using ma()
+
+**USING MA**
+
+This is not really applicable for forecasting.
+
+```{r,fig.cap="MA ltn data"}
+k <- 3 #specify the order of the moving average
+c <- rep (1/k,k) #remember that simple average is a weighted average with equal weights, 
+                #you need to specify weights for the filter command to work
+
+#Applying filter, to move the MA's to the end of the period
+yt3 <- stats::filter(x = dy.ltn #The time-series
+                     ,filter = c #The filter (the wheights)
+                     ,sides = 1)
+
+#Plotting
+ts.plot(yt3) + grid(col = "Lightgrey") #Plotting the MA's
+```
+
+
+Then one could make accuracy
+
+###### 2. Using excel
+
+**Doing it in excel and then importing**
+
+```{r}
+temp <- read_excel("Data/temp.xlsx")
+ma3.excel <- temp[,3]
+ma3.excel <- ts(ma3.excel)
+```
+
+accuracy
+
+```{r}
+ma.forecast.test <- yt3[c(32:41)]
+accuracy(object = ma3.excel,x = dy.ltn.test)
+```
+
+
+
+###### 3. Using a loop
+
+**Using a loop for this purpose**
+
+```{r}
+#Define the input data
+dy.ltn.train <- dy.ltn[1:30]
+dy.ltn.test <- dy.ltn[31:40]
+
+#Forecasting with a simple MA of order k
+k <- 3
+l <- length(dy.ltn.train) #number of available data points
+
+#adding extra rows, as many as periods ahead want to forecast
+h <-10
+y <- dy.ltn.train 
+
+#generating space to save the forecasts
+for (i in 1:h){
+  y <- c(y, 0)
+}
+t(t(y))
+```
+
+Now we see that we have extended the ts with 10 rows of 0. Corresponding with the period that we want to forecast.
+
+Now we can do the forecast
+
+```{r}
+#calculating the forecast values
+for (j in (l+1):(l+h)){
+  a<-j-k
+  b<-j-1
+  x <-y[a:b]
+  y[j] <- mean(x)
+}
+t(t(y))
+```
+
+```{r}
+accuracy(object = y[(length(y)-9):(length(y))],x = dy.ltn.test)
+```
+
+
+```{r,fig.cap="MA k=3 h=10"}
+plot(y,type = 'l',main = "MA, k = 3") + abline(v = l,col = "red") + grid(col = "lightgrey")
+```
+
+
+**Conclusion**
+
+ARIMA RMSE = 1.15
+MA3 RMSE = 0.800
+
+Hence MA appear to be the better approach.
+
+
+\
+
+\
+
+#### Forecasting 2001 - 2018
+
+**Forecasting 18 years**
+
+##### Using ma (loop method)
+
+```{r}
+#Define the input data
+dy.ltn <- dy.ltn
+
+#Forecasting with a simple MA of order k
+k <- 3
+l <- length(dy.ltn) #number of available data points
+
+#adding extra rows, as many as periods ahead want to forecast
+h <-18
+y <- dy.ltn
+
+#generating space to save the forecasts
+for (i in 1:h){
+  y <- c(y, 0)
+}
+t(t(y))
+```
+
+Now we see that we have extended the ts with 10 rows of 0. Corresponding with the period that we want to forecast.
+
+Now we can do the forecast
+
+```{r}
+#calculating the forecast values
+for (j in (l+1):(l+h)){
+  a<-j-k
+  b<-j-1
+  x <-y[a:b]
+  y[j] <- mean(x)
+}
+t(t(y))
+```
+
+```{r,fig.cap="MA k=3 h=18"}
+plot(y,type = 'l',main = "MA, k = 3") + abline(v = l,col = "red") + grid(col = "lightgrey")
+```
+
+
+##### Using ARIMA (RW + drift)
+
+As we have a random walk with a drift, we merely see that the forecast follow the drift, which consist of the mean of the train data set.
+
+```{r,fig.cap"Forecast with RW + drift"}
+forecast(object = forecast.test,h = 18) %>% plot()
+```
+
+
+### Q3
+
+**3. In a multiple regression framework, determine the relationship of LR with SR and MR. Study whether the residuals satisfy the OLS assumptions.**
+
+
+```{r}
+df1 <- read_excel("Data/Exams/Exam2018Case1.xlsx") #Case 1 material
+stn <- df1[,1] %>% ts(start = 1960)
+mtn <- df1[,2] %>% ts(start = 1960)
+ltn <- df1[,3] %>% ts(start = 1960)
+
+fit <- lm(ltn ~ mtn + stn)
+summary(fit)
+```
+
+We see that there is statistical evidence for relationship between the variables.
+
+Although we may have a concern for multicollinearity.
+
+```{r}
+vif(fit)
+```
+
+We see that the values far above 10, hence according to the rule of thumb, we have multicollinearity. Meaning that we should remove one of the variables, as they explain the same.
+
+#### Diagnostics
+
+##### Check for heteroskedasticity
+
+```{r,fig.cap="Residuals plot of the fit"}
+plot(residuals(fit)) + abline(h = 0) + grid(col = "grey")
+```
+
+It appears as if there can be heteroskedasticity in the residuals, meaning that there is information in the data, that is not explained by our model, hence the variance and the mean changes over time.
+
+Although it is a good idea to make a test for this. Here a Breusch-Pagan test:
+
+```{r}
+bptest(fit)
+```
+
+We see that there is in fact not enough evidence to reject the null, meaning it is fair to assume that the H0 is true, hence have homoskedasticity in the residuals.
+
+##### Check for independent residuals
+
+```{r}
+adf.test(resid(fit))
+```
+
+We reject H0, hence it is fair to assume that the residuals are non stationary, i.e. has unit root.
+
+One could also apply Durbin-Watson test, to check for independent residuals.
+
+
+##### Checking residuals for normality
+
+Therefore, we can also plot a histogram of the data to assess the normal
+
+We use a Jarque Bera test, where H0: Normal distribution
+
+```{r,fig.cap="Check for normality"}
+tseries::jarque.bera.test(resid(fit))
+hist(resid(fit))
+```
+
+Based on the JB test, it is in fact normal distribution in the residuals. This can be seen from the histogram as well, although there is some small skewness.
+
+
+##### Conclusion
+
+We do not meet the requirements, as we observe the following issues:
+
+1. Multicollinearity
+2. Autocorrelation
+
+
+### Q4
+
+**4. If residuals from the previous regression are satisfactory, interpret the estimation output from the previous step. Otherwise, make the necessary transformations so that you obtain valid estimates, and compare how the results change.**
+
+
+#### Test without integration
+
+We try to remove one variable to get rid of multicollinearity and then see how it affects the model.
+
+```{r}
+{
+  fit <- lm(ltn ~ stn)
+  bptest(fit) %>% print() #Check for independent residuals
+  adf.test(resid(fit)) %>% print() #Test for autocorrelation
+  dwtest(fit) %>% print() #Test for autocorrelation
+  jarque.bera.test(resid(fit))  %>% print() #Check for normality in the residuals
+} 
+```
+
+We see that the ADF show no non stationarity, hence autocorrelation, but the DW does show non stationarity (hence autocorrelation)
+
+We can check for cointegration, to see if they are in fact cointegrated, hence it is acceptable to have variables, that are not stationary. This can be check with the Phillips-Ouliaris test (2-step EG test).
+
+```{r}
+z <- ts(cbind(stn,ltn))
+po.test(z) #Note, this is the 2-step EG test
+```
+
+We see that the p-value is 5.7% hence there is not sufficient evidence to reject on the five percent level, hence it is questionable.
+
+**Sub conclusion**
+
+The variables are not cointegrated, hence one should make the data series' stationary by first order integration.
+
+
+#### Test with first order integration
+
+```{r}
+{
+  fit <- lm(diff(ltn) ~ diff(stn))
+  bptest(fit) %>% print() #Check for independent residuals
+  adf.test(resid(fit))  %>% print() #Test for autocorrelation
+  dwtest(fit)  %>% print() #Test for autocorrelation
+  jarque.bera.test(resid(fit))  %>% print() #Check for normality in the residuals
+} 
+```
+
+
+
+### Q5
+
+**5. Based on the valid regression you obtain in the previous step, produce an 18-year (2001-2018) forecast for LR, assuming the estimated coeficients remain the same for the 18-year duration. Compare your findings to the forecasts you obtained in step 2. Interpret what leads to the diference, if any, in the forecasts.**
+
+Skipped, hasnt done similar during the semester
+
+### Q6
+
+**6. Treat these three variables in a VAR setting, justifying the number of lags you use. Interpret the estimation output. Why are you getting these results? If possible, justify a Cholesky ordering, plot Impulse Responses and Forecast Error Variance Decompositions, and interpret them.**
+
+This was not really covered during lectures. we did VAR in bivariate setting
+
+#### Vector AutoRegressive Model (VAR)
+
+```{r}
+df1 <- read_excel("Data/Exams/Exam2018Case1.xlsx") #Case 1 material
+sr <- ts(df1$SR,start = 1960)
+mr <- ts(df1$MR,start = 1960)
+lr <- ts(df1$LR,start = 1960)
+```
+
+
+```{r}
+{
+  tsdisplay(sr)
+  tsdisplay(mr)
+  tsdisplay(lr)
+}
+```
+
+We see that the series' are not stationary. Hence, we must do first order differencing.
+
+```{r,fig.cap="Plotting time series"}
+dsr <- ts(df1$SR,start = 1960) %>% diff()
+dmr <- ts(df1$MR,start = 1960) %>% diff()
+dlr <- ts(df1$LR,start = 1960) %>% diff()
+
+par(mfrow = c(3,1))
+plot(dsr,main = "Diff. SR") + grid(col = "grey")
+plot(dmr,main = "Diff. MR") + grid(col = "grey")
+plot(dlr,main = "Diff. LR") + grid(col = "grey")
+```
+
+We see that the data now appear stationary, and we are able to work with the series'
+
+```{r,fig.cap="Correlogram of the series'"}
+{acf(dsr)
+acf(dmr)
+acf(dlr)}
+```
+
+##### 1. Determine order of lags to be included + model estimation
+
+```{r}
+dz <- ts(cbind(sr,mr,lr),start = 1960) #dz = differenced z, where z equal the dataframe
+dz <- diff(dz)
+VARselect(y = dz
+          ,lag.max = 5 #if = 10, then AIC becomes -Inf, then it will select that, although that is faulty
+          ,type = "const")
+```
+
+According to all IC, we should set p = 1, hence $VAR(p=1)$
+
+Now can estimate the model, using the lag order, that we just found.
+
+```{r}
+var1 <- VAR(y = dz
+            ,p = 1 #How many lags to be included in the models, e.g., if p = 3,
+                   # then three lags of each variable is included.
+            ,type = "const")
+summary(var1)
+```
+
+We see that the variables are not significant to each other and not even the dependent variables lag 1, is not significant, and not even close to.
+
+
+__Conclusion__
+
+
+##### 2. Model diagnostics
+
+
+Now we can make model diagnostics to check for autocorrelation (serial correlation).
+
+This executes a Portmanteau test for correlation in the errors (i.e., autocorrelation, i.e., serial correlation). The null hypothesis is that there are no autocorrelation
+
+```{r}
+serial.test(var1
+            ,lags.pt = 10 #It is chosen to be 10, could be anything else, perhaps one could plot it
+            ,type = "PT.asymptotic"
+            )
+```
+
+As the p-value is far above the significane level, 5%, we cannot reject the null hypothesis, hence it is fair to assume, that the residuals are not serial correlated.
+
+
+##### 3. Response to shocks in the variables
+
+
+With the following, we are able to deduce how the different variables react (respond) from shocks in the variables.
+
+The y-axis expres the changes where the x-axis express the n steps ahead. Hence in this example it is quarters ahead.
+
+```{r,fig.cap="Resonses from shocks"}
+plot(irf(var1,boot = TRUE, ci=0.95))
+```
+
+###### Exogenious vs. endogenious
+
+##### 4. Forecasting with ADL
+
+###### Step 1 - Data partition
+
+###### Step 2 - Select the order of VAR
+
+###### Step 3 - Fit the model + check residuals
+
+###### Step 4 - Make the forecast
+
+###### Step 5 - Assessing accuracy
+
+
+
+### Q7
+
+**7. Test for unit roots in each of the series, and determine whether you can obtain a cointegrating relationship. Interpret what your findings suggest.**
+
+
+This was addressed earlier, see the process Q4
+
+
+```{r}
+rm(list = ls())
+```
+
+
+## Case 2
+
+```{r}
+df2 <- read_excel("Data/Exams/Exam2018Case2.xlsx") #Case 2 material
+```
+
+
+### Q1
+
+**dynamic properties**
+
+```{r,fig.cap="Visual inspection"}
+y.badcalls <- ts(df2[,4],frequency = 24)
+tsdisplay(y.badcalls)
+```
+
+Based on the inspection, we may deduce the following:
+
++ It appears as if we have non stationarity - that can be tested with DW or ADF
++ It appears as if there is seasonality - that can be tested with decomposition
+
+Testing for stationarity:
+
+```{r}
+adf.test(y.badcalls)
+```
+
+We see that the data actually is stationary
+
+A test of decomposing is done in the following question.
+
+On the basis hereon, we are able to deduce that the composition is additive
+
+### Q2
+
+**an appropriate decomposition with explanations on each component**
+
+```{r,fig.cap="Decompisition of Bad Calls"}
+plot(decompose(y.badcalls))
+```
+
+We see that there is no trend in the data, but there is clearly seasons, depending on what hour it is.
+
+We also see no cycles.
+
+
+### Q3
+
+**linar regression bad calls on the other variables**
+
+Checking for stationarity in the explanatory variables
+
+```{r}
+x.pressure <- ts(df2[,2],frequency = 24)
+x.windspeed <- ts(df2[,3],frequency = 24)
+
+{print(tsdisplay(x.pressure,lag.max = 500))
+print(tsdisplay(x.windspeed,lag.max = 500))}
+
+{print(adf.test(x.pressure))
+print(adf.test(x.windspeed))}
+```
+
+Despite the visual interpretation showing characteristics that appear to be non stationary, the ADF test show overwhelming evidence to reject the null, hence it is fair to assume, that the data is stationer
+
+```{r}
+fit <- lm(y.badcalls ~ x.pressure + x.windspeed)
+summary(fit)
+```
+
+One could describe this then
+
+
+
+### Q4
+
+**a forecast obtained based on an appropriate smoothing method**
+
+```{r}
+HW <- HoltWinters(y.badcalls
+                  ,beta = FALSE #No trend
+                #  ,gamma = TRUE #We have seasons #We want it to calculate the optimal
+                  )
+HW
+```
+
+The model is created with seasonality but not trend hence, Holt Winters smoothing.
+
+The function optimize to the optimal parameters.
+
+```{r}
+forecast(HW,h = 24)
+```
+
+We see the above produce point forecasts + confidence intervals.
+
+The following plots the forecast
+
+```{r,fig.cap="HW forecast smoothing"}
+plot(forecast(HW,h = 24),xlim = c(75,87))
+```
+
+
+
+### Q5
+
+Using ARIMA
+
+```{r}
+arima.bc <- auto.arima(y.badcalls)
+forecast(arima.bc,h = 24)
+```
+
+```{r}
+plot(forecast(arima.bc,h = 24),xlim = c(75,87))
+```
+
+
+### Q6
+
+**a forecast combination of the two previously chosen methods and their evaluations**
+
+Let us use the HoltWinters smoothing and the arima from q4 and q5.
+
+First we must find out if it is fair to assume, that the models perform equally good. That can be done with Diebold-Mariano test. Where H0: is that the MSE's are not significantly far from each other.
+
+```{r}
+dm.test(e1 = resid(HW)
+        ,e2 = resid(arima.bc)[25:2016]
+        ,alternative = "two.sided" #Default, but shown for pedogical reasons. meaning that H1 is a two sided test
+        )
+```
+
+We are not able to reject the null hypothesis, hence the accuracies can be assumed to be the same, hence equally good models.
+
+#### Combined model
+
+Now we can make the combined model, this can be done with two approaches:
+
+1. Nelson
+2. Granger-Ramanathan
+
+```{r}
+comb.df <- as.data.frame(cbind(as.matrix(y.badcalls[25:2016])
+                               ,as.vector(HW$fitted[,1])
+                               ,as.vector(arima.bc$fitted[25:2016])))
+names(comb.df) <- c("y.badcalls","x.HW","x.arima")
+
+combfit <- lm(y.badcalls ~ x.HW + x.arima
+              ,data = comb.df)
+
+summary(combfit) #the coefficients in the regression will give you the weights
+combfcast <- ts(combfit$fitted.values, frequency = 24)
+plot(combfcast)
+accuracy(combfcast,x = comb.df$y.badcalls)
+```
+
+
+
+

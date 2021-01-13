@@ -1,0 +1,202 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+# Combining Forecast Result and Forecast Evaluation
+
+**Literature:**
+
+From the reading list:
+
++ HW: Judgmental Forecasting and Forecast Adjustments (Combining forecasts)
++ HW: Managing the Forecast Process
+
+From the slides:
+
++ Diebold-Mariano and other tests for equal forecast accuracy: http://www.phdeconomics.sssup.it/documents/Lesson19.pdf
+
+
+## Why, when and how to combine forecasts
+
+### Why do we combine forecasts?
+
+If you have different approaches and you know that they are both contribution with some valuable information, making discrete selection, hence one forecast method, will permanently exclude the information from the other model.
+
+Hence, by combining methods, we are able to collect more information in the model, that would not be captured with only using a single model.
+
+
+### When to combine forecasts?
+
+Combining models is usually applied with methods, that are not from the same group, e.g., ARIMA and ARIMA, but instead e.g., ARIMA and exponential smoothing, as it approaches data in two different ways.
+
+Also, you often want to include different models that contain different information, to capture different perspectives, e.g., in terms of data analysis or in terms of different variables.
+
+
+### How to combine forecasts?
+
+**How to combine forecasts?**
+	
++ You assign weights to the forecasts, hence:
+
+\begin{equation}
+F_{combined}=w_1F_1+w_2F_2
+(\#eq:CombinedForecast)
+\end{equation}
+
+**How to find the weights? The following are different methods;**
+	
++ Nelson combination method! Here there are restrictions on the weights (How much? I think to one.)
++ Granger-Ramanathan - it has shown to be better than Nelson combination method.
+	+ This has no restrictions, the weights must not sum to 1.
++ Time-varying weights: for each period of time, we are calculate the weight is each period of time.
+
+**Diebold-Mariano test**
+
+*Are MSE's of different forecasts equal?*
+
++ Says that, we are going to compare two forecasts and see if there is a difference in performance or not.
+  + Hence: H0: MSE1=MSE1
+    + This use Diebold-Mariano test statistic
+		+ If we are not able to reject H0, then there
++ Rule of thumb, if you have two different methods yielding the same result, then you can make a DM test to see if the MSEs are actually different, if not, then you should consider combining
+	+ But notice, if the models are the same approach, then you should probably just pick one
+
+
+## Exercises
+
+### Air passengers
+
+Loading the data
+
+```{r}
+df <- read_excel("Data/Week49/AirPassengers.xlsx")
+
+y <- ts(df[,2] #The passengers variable
+        ,start=1949
+        ,frequency = 12)
+tsdisplay(y)
+```
+
+We see that there is clearly an upwards trend and seasonality. Also the variance appear to be increasing, hence perhaps the composition is multiplicative.
+
+Also looking at the ACF, it become clearer with the seasonality and trend.
+
+To validate models, we are going to split the sample into two partitions, train and test data.
+
+```{r}
+# In-sample (75%) and out-of-sample (25%) split
+insamp <- ts(y[1:108] #75% of the data
+             ,frequency = 12)
+outsamp <- y[109:144] #The rest 25%. We dont care about frequency, as we just need the observation for comparison
+l<-length(outsamp) #generate a number called "l" equal to the length of the test set
+```
+
+
+#### Producing forecasts
+
+We are going to make two forecasts:
+
+1. ARIMA
+2. HoltWinters
+
+##### Forecast 1 - ARIMA
+
+Now we can do the first forecasts.
+
+```{r}
+###FORECAST 1###
+# # Generating the first forecast based on ARIMA models
+fit <- auto.arima(y = insamp
+                  ,seasonal = TRUE) #This is in fact redundant, but as we see seasons, we can just as well just tell R, that this is the case
+
+summary(fit) #model of choice is ARIMA(1,1,0)(0,1,0)[12]
+```
+
+We get a model 1,1,0 model, implying an AR and integretion.
+
+As the ACF tend towards 0 and the pacf drastically drops after the first lag, we expected the AR(1) to be applicable, and since the data is clearly not stationary, the first order differences are also expected.
+
+Also we see (0,1,0)[12], meaning that each period is repeated for each twelve months
+
+Now we can make the model diagnostics.
+
+```{r}
+tsdisplay(residuals(fit)
+          ,main = 'Model Residuals')
+```
+
+We see that the residuals appear to be stationary. The ACF only has two spikes
+
+##### - Continue here
+
+```{r}
+fcast <- forecast(fit, h=l)
+plot(fcast)
+lines(y)
+
+accuracy(fcast, outsamp)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+##### Forecast 2 - HoltWinters
+
+```{r}
+###FORECAST 2###
+# # Now let us get a second forecast. Holt-Winters method could be a good choice.
+fit2 <- HoltWinters(insamp)
+fcast2 <- forecast(fit2, h=l)
+plot(fcast2)
+lines(y)
+
+accuracy(fcast2, outsamp)
+
+##Compare and Combine forecast 1 and 2##
+# # We could also use a Diebold-Mariano test to see if these forecasts are significantly different from each other. 
+dm.test(residuals(fcast), residuals(fcast2), h=l) #the null hypothesis is that the two methods have the same forecast accuracy. 
+
+
+# # Finally let us check if combining these two forecasts will lead to an improvement in terms of RMSE. 
+#Nelson combination method
+combfitN <- lm(outsamp ~ fcast$mean + fcast2$mean)
+summary(combfitN)
+#the intercept is sgnificant => there is a bias, we need to correct the data for it
+outsampcor<-outsamp-combfitN$coefficients[1] #where combfitN$coefficients[1] picks out the intercept value from the estimated regression
+# Now want to run an OLS without an intercept on the corrected (debiased data)
+#with respect to a restriction on the weights:  w1 + w2 = 1
+fitW <- lm(outsampcor ~ 0+ offset(fcast$mean) + I(fcast2$mean-fcast$mean))
+coef_2 <- coef(fitW)
+beta_1 <- 1 - coef_2 #the weight is negative, would prefer a different combination method in this case
+beta_2 <- coef_2
+#beta_1 and beta_2 will give you the weigths. 
+# Now can use those weights to obtain a combination forecast
+combfcastN <-beta_1*fcast$mean+beta_2*fcast2$mean
+plot(combfcastN)
+accuracy(combfcastN, outsamp) #can see that in this case the forecast combination performes worse than the individual forecasts
+
+
+#Granger-Ramanathan combination method
+combfit <- lm(outsamp ~ fcast$mean + fcast2$mean)
+summary(combfit) #the coefficients in the regression will give you the weights
+combfcast <- ts(combfit$fitted.values, frequency = 12)
+plot(combfcast)
+accuracy(combfcast, outsamp)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
