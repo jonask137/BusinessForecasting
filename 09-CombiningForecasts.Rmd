@@ -36,6 +36,8 @@ Also, you often want to include different models that contain different informat
 
 ### How to combine forecasts?
 
+See an example in section \@ref(ex:AirPassengers)
+
 **How to combine forecasts?**
 	
 + You assign weights to the forecasts, hence:
@@ -66,7 +68,7 @@ F_{combined}=w_1F_1+w_2F_2
 
 ## Exercises
 
-### Air passengers
+### Air passengers {#ex:AirPassengers}
 
 Loading the data
 
@@ -94,27 +96,27 @@ l<-length(outsamp) #generate a number called "l" equal to the length of the test
 ```
 
 
-#### Producing forecasts
+#### Producing forecasts + combined forecast
 
 We are going to make two forecasts:
 
 1. ARIMA
 2. HoltWinters
 
-##### Forecast 1 - ARIMA
+##### 1. Constructing forecasts
+
+###### a. Forecast 1 - ARIMA
 
 Now we can do the first forecasts.
 
 ```{r}
-###FORECAST 1###
-# # Generating the first forecast based on ARIMA models
 fit <- auto.arima(y = insamp
                   ,seasonal = TRUE) #This is in fact redundant, but as we see seasons, we can just as well just tell R, that this is the case
 
 summary(fit) #model of choice is ARIMA(1,1,0)(0,1,0)[12]
 ```
 
-We get a model 1,1,0 model, implying an AR and integretion.
+We get a model 1,1,0 model, implying an AR and integration.
 
 As the ACF tend towards 0 and the pacf drastically drops after the first lag, we expected the AR(1) to be applicable, and since the data is clearly not stationary, the first order differences are also expected.
 
@@ -127,49 +129,84 @@ tsdisplay(residuals(fit)
           ,main = 'Model Residuals')
 ```
 
-We see that the residuals appear to be stationary. The ACF only has two spikes
+We see that the residuals appear to be stationary. The ACF only has two spikes that appear to be significant, but otherwise nothing crucial.
 
-##### - Continue here
+Now we can forecast with horizon l, corresponding with the length of the hold-out sample.
 
 ```{r}
-fcast <- forecast(fit, h=l)
-plot(fcast)
-lines(y)
-
-accuracy(fcast, outsamp)
+fcast <- forecast(fit,h = l)
+{plot(fcast) 
+lines(y)}
 ```
 
+Now we can assess the out of sample performance.
 
 ```{r}
+accuracy(object = fcast$mean,x = outsamp)
 ```
 
+We see that the RMSE being 22.13, hence MSE being $22.13^2 = 489.7369$
+
+Now we must make another model, that is candidate of the combined model.
+
+###### a. Forecast 2 - HoltWinters
 
 ```{r}
-```
-
-
-##### Forecast 2 - HoltWinters
-
-```{r}
-###FORECAST 2###
-# # Now let us get a second forecast. Holt-Winters method could be a good choice.
 fit2 <- HoltWinters(insamp)
 fcast2 <- forecast(fit2, h=l)
-plot(fcast2)
-lines(y)
+fit2
+```
 
-accuracy(fcast2, outsamp)
+We see that it suggests alpha of 24% and beta with 5%, that is expected, as we clearly see a trend.
 
-##Compare and Combine forecast 1 and 2##
-# # We could also use a Diebold-Mariano test to see if these forecasts are significantly different from each other. 
-dm.test(residuals(fcast), residuals(fcast2), h=l) #the null hypothesis is that the two methods have the same forecast accuracy. 
+We see that the last 12 observations are included for consideration.
+
+As we have trends and seasons, then it is Winters exponential smoothing.
+
+```{r}
+{plot(fcast2) 
+lines(y)}
+```
+
+Now we can assess the accuracy on the hold out sample.
+
+```{r}
+accuracy(fcast2$mean, outsamp)
+```
+
+We see that the RMSE = 28.81
 
 
-# # Finally let us check if combining these two forecasts will lead to an improvement in terms of RMSE. 
-#Nelson combination method
+##### 2. Diebold-Mariano test 
+
+The DM test assess the MSE of each model and make as statistical test to assess if they are significantly different from each other.
+
+Where H0: the forecasts have the same accuracy
+
+```{r}
+dm.test(residuals(fcast)
+        ,residuals(fcast2)
+        ,h = l)
+```
+
+We see that the p-value is 0.15, hence we are not able to reject on a 5% level. Hence it is fair to assume, that both models are equally good.
+
+##### 3. Combining the forecasts
+
+There are two approaches to this:
+
+a. Nelson
+b. Granger-Ramanathan: This is often better.
+
+###### a. Nelson Combination Method - her code is put here, but not further explained
+
+Just use GR.
+
+```{r}
 combfitN <- lm(outsamp ~ fcast$mean + fcast2$mean)
 summary(combfitN)
 #the intercept is sgnificant => there is a bias, we need to correct the data for it
+
 outsampcor<-outsamp-combfitN$coefficients[1] #where combfitN$coefficients[1] picks out the intercept value from the estimated regression
 # Now want to run an OLS without an intercept on the corrected (debiased data)
 #with respect to a restriction on the weights:  w1 + w2 = 1
@@ -182,21 +219,27 @@ beta_2 <- coef_2
 combfcastN <-beta_1*fcast$mean+beta_2*fcast2$mean
 plot(combfcastN)
 accuracy(combfcastN, outsamp) #can see that in this case the forecast combination performes worse than the individual forecasts
+```
 
 
-#Granger-Ramanathan combination method
-combfit <- lm(outsamp ~ fcast$mean + fcast2$mean)
+###### b. Granger-Ramanathan
+
+```{r}
+combfit <- lm(outsamp ~ fcast$mean + fcast2$mean) #Mean as we want point estimates
 summary(combfit) #the coefficients in the regression will give you the weights
+```
+
+We see that forecast 1 (ARIMA) has weight 0.6794 where forecast 2 (HW) has a weight of 0.5734
+
+```{r}
 combfcast <- ts(combfit$fitted.values, frequency = 12)
 plot(combfcast)
+```
+
+The combined forecast is plotted. It looks as expected, and appear to be replicating the trend and the seasonality. Let us see what accuracy it gets.
+
+```{r}
 accuracy(combfcast, outsamp)
 ```
 
-
-```{r}
-```
-
-
-```{r}
-```
-
+We see that the RMSE is 14.50

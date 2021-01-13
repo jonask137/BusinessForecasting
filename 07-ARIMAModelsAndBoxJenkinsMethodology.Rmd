@@ -289,6 +289,44 @@ See an example in section \@ref(VarExercise)
 
 One may use AIC, BIC or make out of sample assessment to select the best model, hence identifying what lags to be included in the model.
 
+### Analyzing response to shocks in other variables - Cholesky Ordering
+
+*You want to order the variables so the most exogenious variable as first, then less exogenious until you have the last, which is the most endogenious*
+
+If one is only having two variables (including IDV and DV), then the ordering is not that important
+
+First, let us clarify the following terms
+
+**Exogenious vs. endogenious**
+
+Terms:
+
+- Exogenious: if a variable is extremely exogenious, it is not explain or determined by other variables
+- Endogenious: if a variable is extremely endogenoius, it is explianed or determined by one or more variables.
+
+This can be used to rank variables based on how much they are affected by other variables, with the most exogenious variable first (**This is called Cholesky ordering**), hence we rank based on the following principle:
+
+*lets say, that we have four variables, we want to order according to Cholesky ordering*
+
+1. Most exogenious
+2. Less exogenious than 1 more than 3. Hence, more endogenious than 1. but less than 3.
+3. Less exogenious than 2 more than 4. Hence, more endogenious than 2. but less than 4.
+4. Most endogenious
+
+**Importance!**
+
+This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.
+
+
+**How is this corrected????**
+
+1. Make the df, with the, see example when loading data in \@ref(ExerciseADL)
+2. Call the df 'z'
+3. Order the variables in accordance with the Cholesky ordering.
+
+
+
+
 
 
 ## Exercises - ARIMA
@@ -641,9 +679,9 @@ rm(list = ls())
 
 ### Short- and long-term interest rates, exchange rates
 
-#### Loading data, combining time series and assessment of stationarity
+#### Loading data, combining time series and assessment of stationarity {#ExerciseADL}
 
-First the data is loaded, we are interested in the following>
+First the data is loaded, we are interested in the following:
 
 1. Short term interest rates
 2. Long term interest rates
@@ -791,6 +829,7 @@ This can be used to rank variables based on how much they are affected by other 
 
 This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.
 
+This is done by ordering according the df 'z' according to this.
 
 ##### 4. Forecasting with ADL
 

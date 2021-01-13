@@ -306,7 +306,7 @@ cor.test(Y,X)
 
 
 
-#### Detrending thorugh regression: CO2
+#### Detrending thorugh regression: CO2 {#ex:DetrendingWithRegression}
 
 
 ```{r,fig.cap="CO2 data"}

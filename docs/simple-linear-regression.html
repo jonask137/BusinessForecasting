@@ -187,7 +187,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="5.1.3.2" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#problem-11-p.-212-hw"><i class="fa fa-check"></i><b>5.1.3.2</b> Problem 11 p. 212 HW</a></li>
 <li class="chapter" data-level="5.1.3.3" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#cases-2-hw"><i class="fa fa-check"></i><b>5.1.3.3</b> Cases 2 HW</a></li>
 <li class="chapter" data-level="5.1.3.4" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#case-3-from-hw"><i class="fa fa-check"></i><b>5.1.3.4</b> Case 3 from HW</a></li>
-<li class="chapter" data-level="5.1.3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#detrending-thorugh-regression-co2"><i class="fa fa-check"></i><b>5.1.3.5</b> Detrending thorugh regression: CO2</a></li>
+<li class="chapter" data-level="5.1.3.5" data-path="simple-linear-regression.html"><a href="simple-linear-regression.html#ex:DetrendingWithRegression"><i class="fa fa-check"></i><b>5.1.3.5</b> Detrending thorugh regression: CO2</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="multiple-linear-regression.html"><a href="multiple-linear-regression.html"><i class="fa fa-check"></i><b>5.2</b> Multiple Linear Regression</a>
@@ -221,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="6.5" data-path="exercises-2.html"><a href="exercises-2.html"><i class="fa fa-check"></i><b>6.5</b> Exercises</a>
 <ul>
-<li class="chapter" data-level="6.5.1" data-path="exercises-2.html"><a href="exercises-2.html#decomposition-forecast-exercise"><i class="fa fa-check"></i><b>6.5.1</b> Decomposition + Forecast Exercise</a>
+<li class="chapter" data-level="6.5.1" data-path="exercises-2.html"><a href="exercises-2.html#ex:DecompositionTrendSeasonality"><i class="fa fa-check"></i><b>6.5.1</b> Decomposition + Forecast Exercise</a>
 <ul>
 <li class="chapter" data-level="6.5.1.1" data-path="exercises-2.html"><a href="exercises-2.html#a.-decomposing-the-time-series"><i class="fa fa-check"></i><b>6.5.1.1</b> a. Decomposing the time series</a></li>
 <li class="chapter" data-level="6.5.1.2" data-path="exercises-2.html"><a href="exercises-2.html#b.-retrieving-components"><i class="fa fa-check"></i><b>6.5.1.2</b> b. Retrieving components</a></li>
@@ -232,7 +232,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.1.4.2" data-path="exercises-2.html"><a href="exercises-2.html#forecasting-using-the-composition"><i class="fa fa-check"></i><b>6.5.1.4.2</b> Forecasting using the composition</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="6.5.2" data-path="exercises-2.html"><a href="exercises-2.html#decomposition-with-cycles-forecasting"><i class="fa fa-check"></i><b>6.5.2</b> Decomposition with cycles + Forecasting</a>
+<li class="chapter" data-level="6.5.2" data-path="exercises-2.html"><a href="exercises-2.html#ex:DecompositionCycles"><i class="fa fa-check"></i><b>6.5.2</b> Decomposition with cycles + Forecasting</a>
 <ul>
 <li class="chapter" data-level="6.5.2.1" data-path="exercises-2.html"><a href="exercises-2.html#finding-cma-deseasonalizing"><i class="fa fa-check"></i><b>6.5.2.1</b> 1. Finding CMA (deseasonalizing)</a></li>
 <li class="chapter" data-level="6.5.2.2" data-path="exercises-2.html"><a href="exercises-2.html#finding-sf"><i class="fa fa-check"></i><b>6.5.2.2</b> 2. Finding SF</a></li>
@@ -247,6 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.5.4.2" data-path="exercises-2.html"><a href="exercises-2.html#p.348-case-7-alomega-food-stores"><i class="fa fa-check"></i><b>6.5.4.2</b> P.348 Case 7 (Alomega Food Stores)</a></li>
 </ul></li>
 <li class="chapter" data-level="6.5.5" data-path="exercises-2.html"><a href="exercises-2.html#ex:MonthlySalesData"><i class="fa fa-check"></i><b>6.5.5</b> Monthly Sales Data</a></li>
+<li class="chapter" data-level="6.5.6" data-path="exercises-2.html"><a href="exercises-2.html#own-test---monthly-sales-data-decomposition-forecast"><i class="fa fa-check"></i><b>6.5.6</b> Own test - Monthly Sales Data decomposition + forecast</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="7" data-path="ARIMA.html"><a href="ARIMA.html"><i class="fa fa-check"></i><b>7</b> ARIMA Models + ADL and Box-Jenkins Methodology</a>
@@ -336,13 +337,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="9.2" data-path="exercises-4.html"><a href="exercises-4.html"><i class="fa fa-check"></i><b>9.2</b> Exercises</a>
 <ul>
-<li class="chapter" data-level="9.2.1" data-path="exercises-4.html"><a href="exercises-4.html#air-passengers"><i class="fa fa-check"></i><b>9.2.1</b> Air passengers</a>
+<li class="chapter" data-level="9.2.1" data-path="exercises-4.html"><a href="exercises-4.html#ex:AirPassengers"><i class="fa fa-check"></i><b>9.2.1</b> Air passengers</a>
 <ul>
-<li class="chapter" data-level="9.2.1.1" data-path="exercises-4.html"><a href="exercises-4.html#producing-forecasts"><i class="fa fa-check"></i><b>9.2.1.1</b> Producing forecasts</a>
+<li class="chapter" data-level="9.2.1.1" data-path="exercises-4.html"><a href="exercises-4.html#producing-forecasts-combined-forecast"><i class="fa fa-check"></i><b>9.2.1.1</b> Producing forecasts + combined forecast</a>
 <ul>
-<li class="chapter" data-level="9.2.1.1.1" data-path="exercises-4.html"><a href="exercises-4.html#forecast-1---arima"><i class="fa fa-check"></i><b>9.2.1.1.1</b> Forecast 1 - ARIMA</a></li>
-<li class="chapter" data-level="9.2.1.1.2" data-path="exercises-4.html"><a href="exercises-4.html#continue-here"><i class="fa fa-check"></i><b>9.2.1.1.2</b> - Continue here</a></li>
-<li class="chapter" data-level="9.2.1.1.3" data-path="exercises-4.html"><a href="exercises-4.html#forecast-2---holtwinters"><i class="fa fa-check"></i><b>9.2.1.1.3</b> Forecast 2 - HoltWinters</a></li>
+<li class="chapter" data-level="9.2.1.1.1" data-path="exercises-4.html"><a href="exercises-4.html#constructing-forecasts"><i class="fa fa-check"></i><b>9.2.1.1.1</b> 1. Constructing forecasts</a>
+<ul>
+<li class="chapter" data-level="9.2.1.1.1.1" data-path="exercises-4.html"><a href="exercises-4.html#a.-forecast-1---arima"><i class="fa fa-check"></i><b>9.2.1.1.1.1</b> a. Forecast 1 - ARIMA</a></li>
+<li class="chapter" data-level="9.2.1.1.1.2" data-path="exercises-4.html"><a href="exercises-4.html#a.-forecast-2---holtwinters"><i class="fa fa-check"></i><b>9.2.1.1.1.2</b> a. Forecast 2 - HoltWinters</a></li>
+</ul></li>
+<li class="chapter" data-level="9.2.1.1.2" data-path="exercises-4.html"><a href="exercises-4.html#diebold-mariano-test"><i class="fa fa-check"></i><b>9.2.1.1.2</b> 2. Diebold-Mariano test</a></li>
+<li class="chapter" data-level="9.2.1.1.3" data-path="exercises-4.html"><a href="exercises-4.html#combining-the-forecasts"><i class="fa fa-check"></i><b>9.2.1.1.3</b> 3. Combining the forecasts</a>
+<ul>
+<li class="chapter" data-level="9.2.1.1.3.1" data-path="exercises-4.html"><a href="exercises-4.html#a.-nelson-combination-method---her-code-is-put-here-but-not-further-explained"><i class="fa fa-check"></i><b>9.2.1.1.3.1</b> a. Nelson Combination Method - her code is put here, but not further explained</a></li>
+<li class="chapter" data-level="9.2.1.1.3.2" data-path="exercises-4.html"><a href="exercises-4.html#b.-granger-ramanathan"><i class="fa fa-check"></i><b>9.2.1.1.3.2</b> b. Granger-Ramanathan</a></li>
+</ul></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -418,6 +427,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="10.1.7.6.1" data-path="exam-2018.html"><a href="exam-2018.html#combined-model"><i class="fa fa-check"></i><b>10.1.7.6.1</b> Combined model</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="10.1.8" data-path="exam-2018.html"><a href="exam-2018.html#nordpool-case"><i class="fa fa-check"></i><b>10.1.8</b> Nordpool Case</a>
+<ul>
+<li class="chapter" data-level="10.1.8.1" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-key-variable-of-interest-and-which-ones-are-the-variables-that-are-of-secondary-interest"><i class="fa fa-check"></i><b>10.1.8.1</b> 1.What is the key variable of interest and which ones are the variables that are of secondary interest?</a></li>
+<li class="chapter" data-level="10.1.8.2" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-relationship-between-system-price-and-buysell-sides"><i class="fa fa-check"></i><b>10.1.8.2</b> 2 What is the relationship between system price and buy/sell sides?</a></li>
+<li class="chapter" data-level="10.1.8.3" data-path="exam-2018.html"><a href="exam-2018.html#what-models-should-we-use-to-build-an-optimal-forecast-for-system-price"><i class="fa fa-check"></i><b>10.1.8.3</b> 3 What models should we use to build an optimal forecast for system price?</a></li>
+<li class="chapter" data-level="10.1.8.4" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-expected-behavior-of-system-price-in-the-next-25-periods"><i class="fa fa-check"></i><b>10.1.8.4</b> 4 What is the expected behavior of system price in the next 25 periods?</a></li>
+<li class="chapter" data-level="10.1.8.5" data-path="exam-2018.html"><a href="exam-2018.html#how-does-the-future-relationship-of-system-price-with-the-other-variables-evolve"><i class="fa fa-check"></i><b>10.1.8.5</b> 5 How does the future relationship of system price with the other variables evolve?</a></li>
+<li class="chapter" data-level="10.1.8.6" data-path="exam-2018.html"><a href="exam-2018.html#what-can-we-infer-from-this-relationship-and-how-can-we-give-investment-recommendation-based-on-that"><i class="fa fa-check"></i><b>10.1.8.6</b> 6 What can we infer from this relationship, and how can we give investment recommendation based on that?</a></li>
 </ul></li>
 </ul></li>
 </ul></li>
@@ -750,7 +768,7 @@ Figure 5.5: Correlogram
 ##        cor 
 ## -0.8010968</code></pre>
 </div>
-<div id="detrending-thorugh-regression-co2" class="section level4" number="5.1.3.5">
+<div id="ex:DetrendingWithRegression" class="section level4" number="5.1.3.5">
 <h4><span class="header-section-number">5.1.3.5</span> Detrending thorugh regression: CO2</h4>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="simple-linear-regression.html#cb48-1" aria-hidden="true" tabindex="-1"></a>CO2levels <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week46/CO2levels(1).xlsx&quot;</span>)</span>
 <span id="cb48-2"><a href="simple-linear-regression.html#cb48-2" aria-hidden="true" tabindex="-1"></a></span>

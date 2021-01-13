@@ -239,7 +239,9 @@ z <- ts(cbind(x,y))
 po.test(z) #Note, this is the 2-step EG test
 ```
 
-We have H0: no cointegration. We are able to reject the null, hence it is fair to assume that there is cointegration between the two variables.
+We have H0: no cointegration. 
+
+We are able to reject the null, hence it is fair to assume that there is cointegration between the two variables.
 
 **Option 2 - Manual process**
 

@@ -98,15 +98,20 @@ There are three approaches to decomposing (probably more).
 
 1. Decomposing, with the following approach:
     a. Deseasonalizing using seasonal dummies
-    b. Detrending using a trend variable
+    b. Detrending using a trend variable, see example in \@ref(ex:DetrendingWithRegression)
 
-2. Decomposing with the following:
+2. Decomposing with the following (see example \@ref(ex:MonthlySalesData) and then look under option 2):
     a. Deseasonalizing using MA (moving averages not ARMA). Where you apply the season, e.g., quarterly, then 4 periods
-    b.Detrending using a trend variable
+    b.Detrending using a trend variable, see example in \@ref(ex:DetrendingWithRegression)
     
 3. Using `decompose()`
     *a. Note: this use moving averages, see the documentation*
 
+
+See some good examples in the following:
+
++ Using decomposition, with trend and seasonality \@ref(ex:DecompositionTrendSeasonality)
++ Using CMA + CMAT to identify cycles \@ref(ex:DecompositionCycles)
 
 
 ## Regression with time series data
@@ -270,7 +275,7 @@ The section contain several exercises covering:
 
 
 
-### Decomposition + Forecast Exercise
+### Decomposition + Forecast Exercise {#ex:DecompositionTrendSeasonality}
 
 We use the Alomega Foodstore sales data to show the following:
 
@@ -316,7 +321,7 @@ plot(y.decom.add)
 
 Recall that we have the following components:
 
-1. Trend (T), Tr in this example, as t is the transpose function
+1. Trend (T), Tr in this example, as T is used for TRUE statement
 2. Seasons(S)
 3. Irregular(I) - **NOTICE: We don't want to use this for forecasting, as it is random, hence it can be left out from the assembly yhat**
 
@@ -353,9 +358,7 @@ We see that we area able to plot the following:
 
 ```{r}
 yhat<-Tr+S #Notice, that I is left out, as it is a random component
-plot(y, type="l")
-lines(Tr,col="green")
-lines(yhat,col="red")
+plot(y, type="l") + lines(Tr,col="green") + lines(yhat,col="red")
 ```
 
 We can assess the accuracy of the composition of the trend and seasons.
@@ -402,13 +405,16 @@ rm(list = ls())
 
 
 
-### Decomposition with cycles + Forecasting
+### Decomposition with cycles + Forecasting {#ex:DecompositionCycles}
 
 Process:
 
-1. 
-2. 
-3. 
+1. Finding CMA (deseasonalizing)
+2. Finding SF
+3. Identifying Trend
+4. Finding detrended and deseasonalized data
+5. Cycle identifying factor
+
 
 ```{r}
 y <- read_excel("Data/Week47/Alomegafoodstores.xlsx")
@@ -568,6 +574,9 @@ H0: No autocorrelation
 We cannot reject on the five percent level
 
 
+```{r}
+rm(list = ls())
+```
 
 
 
@@ -828,6 +837,66 @@ Now we see the whether we are above or below the trend in the respective periods
 
 
 
+### Own test - Monthly Sales Data decomposition + forecast
+
+```{r}
+df <- read_excel("Data/Week47/Salesdataseasonal.xlsx")
+
+y <- df$Sales
+y <- ts(data = y
+        ,frequency = 12 #Monthly data
+        ,start = c(1979,1))
+
+ts.plot(y)
+```
+
+We see that the data clearly has a trend and season and the composition appear 
+to be multiplicative as the variance is increasing
+
+Process ----
+
+- How to make a decomposition of a time series, using decompose()
+- How to use decompose() to retrieve the different components and store these
+- How to inteprete the components
+- How to forecast using the components
+
+Decomposing ----
+
+```{r}
+y.decom.mult <- decompose(x = y #The ts
+                         ,type = "multiplicative") #The composition
+
+plot(y.decom.mult)
+
+Tr <- y.decom.mult$trend
+S <- y.decom.mult$seasonal
+I <- y.decom.mult$random
+```
+
+Forecasting ----
+
+```{r}
+yhat <- Tr*S #Note I is not used as it is random component
+
+{plot(y, type="l")
+lines(Tr,col="green")
+lines(yhat,col="red")
+grid(col = "grey")}
+```
+
+
+One sees that the seasons and trend is reconstructed without the  -->
+irregular component -->
+
+```{r}
+forecast.decom.mult <- forecast(object = yhat,h = 60)
+
+plot(forecast.decom.mult)
+```
+
+```{r}
+rm(list = ls())
+```
 
 
 
