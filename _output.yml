@@ -9,3 +9,4 @@ bookdown::gitbook:
   split_by: section
   download: ["pdf", "epub"]
   df_print: kable
+  toc_depth: 6

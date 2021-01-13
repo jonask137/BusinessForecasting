@@ -105,7 +105,7 @@ There are three approaches to decomposing (probably more).
     b.Detrending using a trend variable
     
 3. Using `decompose()`
-    *a. Note: this use moverages, see the documentation*
+    *a. Note: this use moving averages, see the documentation*
 
 
 
