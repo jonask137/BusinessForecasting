@@ -192,6 +192,8 @@ advantages-and-disadvantages-for-arima-models
 adl
 vector-autoregressive-var
 selection-criteria-1
+process
+Cholesky
 exercises---arima
 ibm-stock-problem-12-p-405
 demand-data-problem-7-p-403
@@ -203,7 +205,7 @@ in-class-assignment
 exercises---adl
 gdp-and-co2-levels
 short--and-long-term-interest-rates-exchange-rates
-loading-data-combining-time-series-and-assessment-of-stationarity
+ExerciseADL
 VarExercise
 determine-order-of-lags-to-be-included-model-estimation
 model-diagnostics

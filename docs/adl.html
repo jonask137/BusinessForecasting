@@ -265,7 +265,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="adl.html"><a href="adl.html#vector-autoregressive-var"><i class="fa fa-check"></i><b>7.4.1</b> Vector autoregressive (VAR)</a>
 <ul>
 <li class="chapter" data-level="7.4.1.1" data-path="adl.html"><a href="adl.html#selection-criteria-1"><i class="fa fa-check"></i><b>7.4.1.1</b> Selection criteria</a></li>
+<li class="chapter" data-level="7.4.1.2" data-path="adl.html"><a href="adl.html#process"><i class="fa fa-check"></i><b>7.4.1.2</b> Process</a></li>
 </ul></li>
+<li class="chapter" data-level="7.4.2" data-path="adl.html"><a href="adl.html#Cholesky"><i class="fa fa-check"></i><b>7.4.2</b> Analyzing response to shocks in other variables - Cholesky Ordering</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="exercises-arima.html"><a href="exercises-arima.html"><i class="fa fa-check"></i><b>7.5</b> Exercises - ARIMA</a>
 <ul>
@@ -282,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.1" data-path="exercises-adl.html"><a href="exercises-adl.html#gdp-and-co2-levels"><i class="fa fa-check"></i><b>7.6.1</b> GDP and CO2 levels</a></li>
 <li class="chapter" data-level="7.6.2" data-path="exercises-adl.html"><a href="exercises-adl.html#short--and-long-term-interest-rates-exchange-rates"><i class="fa fa-check"></i><b>7.6.2</b> Short- and long-term interest rates, exchange rates</a>
 <ul>
-<li class="chapter" data-level="7.6.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#loading-data-combining-time-series-and-assessment-of-stationarity"><i class="fa fa-check"></i><b>7.6.2.1</b> Loading data, combining time series and assessment of stationarity</a></li>
+<li class="chapter" data-level="7.6.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#ExerciseADL"><i class="fa fa-check"></i><b>7.6.2.1</b> Loading data, combining time series and assessment of stationarity</a></li>
 <li class="chapter" data-level="7.6.2.2" data-path="exercises-adl.html"><a href="exercises-adl.html#VarExercise"><i class="fa fa-check"></i><b>7.6.2.2</b> Vector AutoRegressive Model (VAR)</a>
 <ul>
 <li class="chapter" data-level="7.6.2.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#determine-order-of-lags-to-be-included-model-estimation"><i class="fa fa-check"></i><b>7.6.2.2.1</b> 1. Determine order of lags to be included + model estimation</a></li>
@@ -496,12 +498,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As the model is based on AR models, we must have stationarity in the data, just as in normal AR models.</p>
 <p>Hence we have the following equation:</p>
 <p><span class="math display" id="eq:ADLpq">\[\begin{equation}
-ADL_{(p,q)}
+ADL_{\left(p,q\right)}
 \tag{7.6}
 \end{equation}\]</span></p>
 <p>Where</p>
 <ul>
-<li><p>p = the order of AR</p></li>
+<li><p>p = the order of AR (lags of the y variable)</p></li>
 <li><p>q = the number of lags for the added variable</p></li>
 </ul>
 <p>Procedure:</p>
@@ -519,6 +521,14 @@ ADL_{(p,q)}
 <span id="cb118-6"><a href="adl.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                      ,start = c(1962, 1), end = c(2012, 4))</span></span></code></pre></div>
 <p><em>L() = lag(), if number of lags are not </em></p>
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="adl.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TB3MS &lt;- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)[&quot;1960::2012&quot;]</span></span></code></pre></div>
+<p><strong>Automatic process</strong></p>
+<p>Notice that this can be done with the following procedure</p>
+<ol style="list-style-type: decimal">
+<li>Run <code>auto_ardl()</code>, where you apply the stationary Y and data = table ordered according to cholesky ordering(<a href="adl.html#Cholesky">7.4.2</a>). Set <code>max_order</code> = to something relevant.</li>
+<li>Run <code>adl &lt;- model$best_model</code></li>
+<li>Retrieve the p and q with <code>adl$order</code></li>
+<li>One can run the summary to see the model. But the most interesting part is the assessment of how many lagged periods from both variables to include.</li>
+</ol>
 <div id="vector-autoregressive-var" class="section level3" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Vector autoregressive (VAR)</h3>
 <p>In the approach in ADL we only work with one other variable. Although with VAR models, we are able to include multiple independent variables. This can be written as:</p>
@@ -535,6 +545,48 @@ VAR(p)
 <h4><span class="header-section-number">7.4.1.1</span> Selection criteria</h4>
 <p>One may use AIC, BIC or make out of sample assessment to select the best model, hence identifying what lags to be included in the model.</p>
 </div>
+<div id="process" class="section level4" number="7.4.1.2">
+<h4><span class="header-section-number">7.4.1.2</span> Process</h4>
+<p><em>Note, it is only within our curriculum with one variable.</em></p>
+<ol style="list-style-type: decimal">
+<li><code>cbind</code> a table consisting of stationary y series and the x variables (Cholesky applies, but is not very important when having two variables, see more in section <a href="adl.html#Cholesky">7.4.2</a>). Store it as an <code>ts()</code> object.</li>
+<li>Run <code>VARselect(z,lag.max = 14,type="const")[["selection"]]</code></li>
+<li>Note, <code>selection</code> is just retrieving an object that is encapsuled</li>
+<li>Run <code>VAR(z,p=&lt;insert&gt;,type="const")</code> Apply p with the value that was found in step 2</li>
+<li>One can do the <code>summary()</code></li>
+<li>Check residuals for serial correlation<code>serial.test(var1,lags.pt=14,type="PT.asymptotic")</code>.</li>
+<li>Obtain impulse response function, using <code>plot(irf(var1,boot = TRUE, ci=0.95))</code></li>
+<li>Notice, that it is calculated based on the Cholesky ordering</li>
+</ol>
+</div>
+</div>
+<div id="Cholesky" class="section level3" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Analyzing response to shocks in other variables - Cholesky Ordering</h3>
+<p><em>You want to order the variables so the most exogenious variable as first, then less exogenious until you have the last, which is the most endogenious</em></p>
+<p>If one is only having two variables (including IDV and DV), then the ordering is not that important</p>
+<p>First, let us clarify the following terms</p>
+<p><strong>Exogenious vs. endogenious</strong></p>
+<p>Terms:</p>
+<ul>
+<li>Exogenious: if a variable is extremely exogenious, it is not explain or determined by other variables</li>
+<li>Endogenious: if a variable is extremely endogenoius, it is explianed or determined by one or more variables.</li>
+</ul>
+<p>This can be used to rank variables based on how much they are affected by other variables, with the most exogenious variable first (<strong>This is called Cholesky ordering</strong>), hence we rank based on the following principle:</p>
+<p><em>lets say, that we have four variables, we want to order according to Cholesky ordering</em></p>
+<ol style="list-style-type: decimal">
+<li>Most exogenious</li>
+<li>Less exogenious than 1 more than 3. Hence, more endogenious than 1. but less than 3.</li>
+<li>Less exogenious than 2 more than 4. Hence, more endogenious than 2. but less than 4.</li>
+<li>Most endogenious</li>
+</ol>
+<p><strong>Importance!</strong></p>
+<p>This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.</p>
+<p><strong>How is this corrected????</strong></p>
+<ol style="list-style-type: decimal">
+<li>Make the df, with the, see example when loading data in <a href="exercises-adl.html#ExerciseADL">7.6.2.1</a></li>
+<li>Call the df ‘z’</li>
+<li>Order the variables in accordance with the Cholesky ordering.</li>
+</ol>
 </div>
 </div>
             </section>

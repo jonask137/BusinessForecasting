@@ -265,7 +265,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.4.1" data-path="adl.html"><a href="adl.html#vector-autoregressive-var"><i class="fa fa-check"></i><b>7.4.1</b> Vector autoregressive (VAR)</a>
 <ul>
 <li class="chapter" data-level="7.4.1.1" data-path="adl.html"><a href="adl.html#selection-criteria-1"><i class="fa fa-check"></i><b>7.4.1.1</b> Selection criteria</a></li>
+<li class="chapter" data-level="7.4.1.2" data-path="adl.html"><a href="adl.html#process"><i class="fa fa-check"></i><b>7.4.1.2</b> Process</a></li>
 </ul></li>
+<li class="chapter" data-level="7.4.2" data-path="adl.html"><a href="adl.html#Cholesky"><i class="fa fa-check"></i><b>7.4.2</b> Analyzing response to shocks in other variables - Cholesky Ordering</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="exercises-arima.html"><a href="exercises-arima.html"><i class="fa fa-check"></i><b>7.5</b> Exercises - ARIMA</a>
 <ul>
@@ -282,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="7.6.1" data-path="exercises-adl.html"><a href="exercises-adl.html#gdp-and-co2-levels"><i class="fa fa-check"></i><b>7.6.1</b> GDP and CO2 levels</a></li>
 <li class="chapter" data-level="7.6.2" data-path="exercises-adl.html"><a href="exercises-adl.html#short--and-long-term-interest-rates-exchange-rates"><i class="fa fa-check"></i><b>7.6.2</b> Short- and long-term interest rates, exchange rates</a>
 <ul>
-<li class="chapter" data-level="7.6.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#loading-data-combining-time-series-and-assessment-of-stationarity"><i class="fa fa-check"></i><b>7.6.2.1</b> Loading data, combining time series and assessment of stationarity</a></li>
+<li class="chapter" data-level="7.6.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#ExerciseADL"><i class="fa fa-check"></i><b>7.6.2.1</b> Loading data, combining time series and assessment of stationarity</a></li>
 <li class="chapter" data-level="7.6.2.2" data-path="exercises-adl.html"><a href="exercises-adl.html#VarExercise"><i class="fa fa-check"></i><b>7.6.2.2</b> Vector AutoRegressive Model (VAR)</a>
 <ul>
 <li class="chapter" data-level="7.6.2.2.1" data-path="exercises-adl.html"><a href="exercises-adl.html#determine-order-of-lags-to-be-included-model-estimation"><i class="fa fa-check"></i><b>7.6.2.2.1</b> 1. Determine order of lags to be included + model estimation</a></li>
@@ -548,9 +550,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="short--and-long-term-interest-rates-exchange-rates" class="section level3" number="7.6.2">
 <h3><span class="header-section-number">7.6.2</span> Short- and long-term interest rates, exchange rates</h3>
-<div id="loading-data-combining-time-series-and-assessment-of-stationarity" class="section level4" number="7.6.2.1">
+<div id="ExerciseADL" class="section level4" number="7.6.2.1">
 <h4><span class="header-section-number">7.6.2.1</span> Loading data, combining time series and assessment of stationarity</h4>
-<p>First the data is loaded, we are interested in the following&gt;</p>
+<p>First the data is loaded, we are interested in the following:</p>
 <ol style="list-style-type: decimal">
 <li>Short term interest rates</li>
 <li>Long term interest rates</li>
@@ -775,6 +777,7 @@ Figure 7.18: Resonses from shocks
 </ol>
 <p><strong>Importance!</strong></p>
 <p>This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.</p>
+<p>This is done by ordering according the df ‘z’ according to this.</p>
 </div>
 </div>
 <div id="forecasting-with-adl" class="section level5" number="7.6.2.2.4">

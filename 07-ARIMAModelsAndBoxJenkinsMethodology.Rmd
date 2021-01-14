@@ -232,14 +232,14 @@ As the model is based on AR models, we must have stationarity in the data, just 
 Hence we have the following equation:
 
 \begin{equation}
-ADL_{(p,q)}
+ADL_{\left(p,q\right)}
 (\#eq:ADLpq)
 \end{equation}
 
 
 Where
 
-+ p = the order of AR
++ p = the order of AR (lags of the y variable)
 
 + q = the number of lags for the added variable
 
@@ -269,6 +269,15 @@ Example of how it may look:
 #TB3MS <- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)["1960::2012"]
 ```
 
+**Automatic process**
+
+Notice that this can be done with the following procedure
+
+1. Run `auto_ardl()`, where you apply the stationary Y and data = table ordered according to cholesky ordering(\@ref(Cholesky)). Set `max_order` = to something relevant.
+2. Run `adl <- model$best_model`
+3. Retrieve the p and q with `adl$order`
+4. One can run the summary to see the model. But the most interesting part is the assessment of how many lagged periods from both variables to include.
+
 
 ### Vector autoregressive (VAR)
 
@@ -289,7 +298,22 @@ See an example in section \@ref(VarExercise)
 
 One may use AIC, BIC or make out of sample assessment to select the best model, hence identifying what lags to be included in the model.
 
-### Analyzing response to shocks in other variables - Cholesky Ordering
+
+#### Process
+
+*Note, it is only within our curriculum with one variable.*
+
+1. `cbind` a table consisting of stationary y series and the x variables (Cholesky applies, but is not very important when having two variables, see more in section \@ref(Cholesky)). Store it as an `ts()` object.
+2. Run `VARselect(z,lag.max = 14,type="const")[["selection"]]`
+  1. Note, `selection` is just retrieving an object that is encapsuled
+3. Run `VAR(z,p=<insert>,type="const")` Apply p with the value that was found in step 2
+4. One can do the `summary()`
+5. Check residuals for serial correlation`serial.test(var1,lags.pt=14,type="PT.asymptotic")`.
+6. Obtain impulse response function, using `plot(irf(var1,boot = TRUE, ci=0.95))`
+  1. Notice, that it is calculated based on the Cholesky ordering
+
+
+### Analyzing response to shocks in other variables - Cholesky Ordering {#Cholesky}
 
 *You want to order the variables so the most exogenious variable as first, then less exogenious until you have the last, which is the most endogenious*
 
