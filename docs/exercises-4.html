@@ -497,21 +497,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="ex:AirPassengers" class="section level3" number="9.2.1">
 <h3><span class="header-section-number">9.2.1</span> Air passengers</h3>
 <p>Loading the data</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb207-1"><a href="exercises-4.html#cb207-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week49/AirPassengers.xlsx&quot;</span>)</span>
-<span id="cb207-2"><a href="exercises-4.html#cb207-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb207-3"><a href="exercises-4.html#cb207-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(df[,<span class="dv">2</span>] <span class="co">#The passengers variable</span></span>
-<span id="cb207-4"><a href="exercises-4.html#cb207-4" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">start=</span><span class="dv">1949</span></span>
-<span id="cb207-5"><a href="exercises-4.html#cb207-5" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb207-6"><a href="exercises-4.html#cb207-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(y)</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-153-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb228"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb228-1"><a href="exercises-4.html#cb228-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week49/AirPassengers.xlsx&quot;</span>)</span>
+<span id="cb228-2"><a href="exercises-4.html#cb228-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb228-3"><a href="exercises-4.html#cb228-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(df[,<span class="dv">2</span>] <span class="co">#The passengers variable</span></span>
+<span id="cb228-4"><a href="exercises-4.html#cb228-4" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">start=</span><span class="dv">1949</span></span>
+<span id="cb228-5"><a href="exercises-4.html#cb228-5" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb228-6"><a href="exercises-4.html#cb228-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(y)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-167-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>We see that there is clearly an upwards trend and seasonality. Also the variance appear to be increasing, hence perhaps the composition is multiplicative.</p>
 <p>Also looking at the ACF, it become clearer with the seasonality and trend.</p>
 <p>To validate models, we are going to split the sample into two partitions, train and test data.</p>
-<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb208-1"><a href="exercises-4.html#cb208-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-sample (75%) and out-of-sample (25%) split</span></span>
-<span id="cb208-2"><a href="exercises-4.html#cb208-2" aria-hidden="true" tabindex="-1"></a>insamp <span class="ot">&lt;-</span> <span class="fu">ts</span>(y[<span class="dv">1</span><span class="sc">:</span><span class="dv">108</span>] <span class="co">#75% of the data</span></span>
-<span id="cb208-3"><a href="exercises-4.html#cb208-3" aria-hidden="true" tabindex="-1"></a>             ,<span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb208-4"><a href="exercises-4.html#cb208-4" aria-hidden="true" tabindex="-1"></a>outsamp <span class="ot">&lt;-</span> y[<span class="dv">109</span><span class="sc">:</span><span class="dv">144</span>] <span class="co">#The rest 25%. We dont care about frequency, as we just need the observation for comparison</span></span>
-<span id="cb208-5"><a href="exercises-4.html#cb208-5" aria-hidden="true" tabindex="-1"></a>l<span class="ot">&lt;-</span><span class="fu">length</span>(outsamp) <span class="co">#generate a number called &quot;l&quot; equal to the length of the test set</span></span></code></pre></div>
+<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="exercises-4.html#cb229-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In-sample (75%) and out-of-sample (25%) split</span></span>
+<span id="cb229-2"><a href="exercises-4.html#cb229-2" aria-hidden="true" tabindex="-1"></a>insamp <span class="ot">&lt;-</span> <span class="fu">ts</span>(y[<span class="dv">1</span><span class="sc">:</span><span class="dv">108</span>] <span class="co">#75% of the data</span></span>
+<span id="cb229-3"><a href="exercises-4.html#cb229-3" aria-hidden="true" tabindex="-1"></a>             ,<span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb229-4"><a href="exercises-4.html#cb229-4" aria-hidden="true" tabindex="-1"></a>outsamp <span class="ot">&lt;-</span> y[<span class="dv">109</span><span class="sc">:</span><span class="dv">144</span>] <span class="co">#The rest 25%. We dont care about frequency, as we just need the observation for comparison</span></span>
+<span id="cb229-5"><a href="exercises-4.html#cb229-5" aria-hidden="true" tabindex="-1"></a>l<span class="ot">&lt;-</span><span class="fu">length</span>(outsamp) <span class="co">#generate a number called &quot;l&quot; equal to the length of the test set</span></span></code></pre></div>
 <div id="producing-forecasts-combined-forecast" class="section level4" number="9.2.1.1">
 <h4><span class="header-section-number">9.2.1.1</span> Producing forecasts + combined forecast</h4>
 <p>We are going to make two forecasts:</p>
@@ -524,10 +524,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a.-forecast-1---arima" class="section level6" number="9.2.1.1.1.1">
 <h6><span class="header-section-number">9.2.1.1.1.1</span> a. Forecast 1 - ARIMA</h6>
 <p>Now we can do the first forecasts.</p>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb209-1"><a href="exercises-4.html#cb209-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(<span class="at">y =</span> insamp</span>
-<span id="cb209-2"><a href="exercises-4.html#cb209-2" aria-hidden="true" tabindex="-1"></a>                  ,<span class="at">seasonal =</span> <span class="cn">TRUE</span>) <span class="co">#This is in fact redundant, but as we see seasons, we can just as well just tell R, that this is the case</span></span>
-<span id="cb209-3"><a href="exercises-4.html#cb209-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb209-4"><a href="exercises-4.html#cb209-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit) <span class="co">#model of choice is ARIMA(1,1,0)(0,1,0)[12]</span></span></code></pre></div>
+<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="exercises-4.html#cb230-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(<span class="at">y =</span> insamp</span>
+<span id="cb230-2"><a href="exercises-4.html#cb230-2" aria-hidden="true" tabindex="-1"></a>                  ,<span class="at">seasonal =</span> <span class="cn">TRUE</span>) <span class="co">#This is in fact redundant, but as we see seasons, we can just as well just tell R, that this is the case</span></span>
+<span id="cb230-3"><a href="exercises-4.html#cb230-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb230-4"><a href="exercises-4.html#cb230-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit) <span class="co">#model of choice is ARIMA(1,1,0)(0,1,0)[12]</span></span></code></pre></div>
 <pre><code>## Series: insamp 
 ## ARIMA(1,1,0)(0,1,0)[12] 
 ## 
@@ -548,17 +548,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>As the ACF tend towards 0 and the pacf drastically drops after the first lag, we expected the AR(1) to be applicable, and since the data is clearly not stationary, the first order differences are also expected.</p>
 <p>Also we see (0,1,0)[12], meaning that each period is repeated for each twelve months</p>
 <p>Now we can make the model diagnostics.</p>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb211-1"><a href="exercises-4.html#cb211-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(<span class="fu">residuals</span>(fit)</span>
-<span id="cb211-2"><a href="exercises-4.html#cb211-2" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">main =</span> <span class="st">&#39;Model Residuals&#39;</span>)</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-156-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="exercises-4.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(<span class="fu">residuals</span>(fit)</span>
+<span id="cb232-2"><a href="exercises-4.html#cb232-2" aria-hidden="true" tabindex="-1"></a>          ,<span class="at">main =</span> <span class="st">&#39;Model Residuals&#39;</span>)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-170-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>We see that the residuals appear to be stationary. The ACF only has two spikes that appear to be significant, but otherwise nothing crucial.</p>
 <p>Now we can forecast with horizon l, corresponding with the length of the hold-out sample.</p>
-<div class="sourceCode" id="cb212"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb212-1"><a href="exercises-4.html#cb212-1" aria-hidden="true" tabindex="-1"></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit,<span class="at">h =</span> l)</span>
-<span id="cb212-2"><a href="exercises-4.html#cb212-2" aria-hidden="true" tabindex="-1"></a>{<span class="fu">plot</span>(fcast) </span>
-<span id="cb212-3"><a href="exercises-4.html#cb212-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y)}</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-157-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb233-1"><a href="exercises-4.html#cb233-1" aria-hidden="true" tabindex="-1"></a>fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit,<span class="at">h =</span> l)</span>
+<span id="cb233-2"><a href="exercises-4.html#cb233-2" aria-hidden="true" tabindex="-1"></a>{<span class="fu">plot</span>(fcast) </span>
+<span id="cb233-3"><a href="exercises-4.html#cb233-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y)}</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-171-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Now we can assess the out of sample performance.</p>
-<div class="sourceCode" id="cb213"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb213-1"><a href="exercises-4.html#cb213-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast<span class="sc">$</span>mean,<span class="at">x =</span> outsamp)</span></code></pre></div>
+<div class="sourceCode" id="cb234"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb234-1"><a href="exercises-4.html#cb234-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast<span class="sc">$</span>mean,<span class="at">x =</span> outsamp)</span></code></pre></div>
 <pre><code>##                ME     RMSE      MAE       MPE     MAPE
 ## Test set -1.48349 22.13223 17.80781 -1.080043 4.148973</code></pre>
 <p>We see that the RMSE being 22.13, hence MSE being <span class="math inline">\(22.13^2 = 489.7369\)</span></p>
@@ -566,9 +566,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="a.-forecast-2---holtwinters" class="section level6" number="9.2.1.1.1.2">
 <h6><span class="header-section-number">9.2.1.1.1.2</span> a. Forecast 2 - HoltWinters</h6>
-<div class="sourceCode" id="cb215"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb215-1"><a href="exercises-4.html#cb215-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(insamp)</span>
-<span id="cb215-2"><a href="exercises-4.html#cb215-2" aria-hidden="true" tabindex="-1"></a>fcast2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h=</span>l)</span>
-<span id="cb215-3"><a href="exercises-4.html#cb215-3" aria-hidden="true" tabindex="-1"></a>fit2</span></code></pre></div>
+<div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb236-1"><a href="exercises-4.html#cb236-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">HoltWinters</span>(insamp)</span>
+<span id="cb236-2"><a href="exercises-4.html#cb236-2" aria-hidden="true" tabindex="-1"></a>fcast2 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit2, <span class="at">h=</span>l)</span>
+<span id="cb236-3"><a href="exercises-4.html#cb236-3" aria-hidden="true" tabindex="-1"></a>fit2</span></code></pre></div>
 <pre><code>## Holt-Winters exponential smoothing with trend and additive seasonal component.
 ## 
 ## Call:
@@ -598,11 +598,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We see that it suggests alpha of 24% and beta with 5%, that is expected, as we clearly see a trend.</p>
 <p>We see that the last 12 observations are included for consideration.</p>
 <p>As we have trends and seasons, then it is Winters exponential smoothing.</p>
-<div class="sourceCode" id="cb217"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb217-1"><a href="exercises-4.html#cb217-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">plot</span>(fcast2) </span>
-<span id="cb217-2"><a href="exercises-4.html#cb217-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y)}</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-160-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb238-1"><a href="exercises-4.html#cb238-1" aria-hidden="true" tabindex="-1"></a>{<span class="fu">plot</span>(fcast2) </span>
+<span id="cb238-2"><a href="exercises-4.html#cb238-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(y)}</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-174-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>Now we can assess the accuracy on the hold out sample.</p>
-<div class="sourceCode" id="cb218"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb218-1"><a href="exercises-4.html#cb218-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fcast2<span class="sc">$</span>mean, outsamp)</span></code></pre></div>
+<div class="sourceCode" id="cb239"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb239-1"><a href="exercises-4.html#cb239-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fcast2<span class="sc">$</span>mean, outsamp)</span></code></pre></div>
 <pre><code>##                 ME     RMSE    MAE       MPE     MAPE
 ## Test set -19.47142 28.81229 25.032 -5.340185 6.288076</code></pre>
 <p>We see that the RMSE = 28.81</p>
@@ -612,9 +612,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h5><span class="header-section-number">9.2.1.1.2</span> 2. Diebold-Mariano test</h5>
 <p>The DM test assess the MSE of each model and make as statistical test to assess if they are significantly different from each other.</p>
 <p>Where H0: the forecasts have the same accuracy</p>
-<div class="sourceCode" id="cb220"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb220-1"><a href="exercises-4.html#cb220-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dm.test</span>(<span class="fu">residuals</span>(fcast)</span>
-<span id="cb220-2"><a href="exercises-4.html#cb220-2" aria-hidden="true" tabindex="-1"></a>        ,<span class="fu">residuals</span>(fcast2)</span>
-<span id="cb220-3"><a href="exercises-4.html#cb220-3" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">h =</span> l)</span></code></pre></div>
+<div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb241-1"><a href="exercises-4.html#cb241-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dm.test</span>(<span class="fu">residuals</span>(fcast)</span>
+<span id="cb241-2"><a href="exercises-4.html#cb241-2" aria-hidden="true" tabindex="-1"></a>        ,<span class="fu">residuals</span>(fcast2)</span>
+<span id="cb241-3"><a href="exercises-4.html#cb241-3" aria-hidden="true" tabindex="-1"></a>        ,<span class="at">h =</span> l)</span></code></pre></div>
 <pre><code>## 
 ##  Diebold-Mariano Test
 ## 
@@ -634,8 +634,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="a.-nelson-combination-method---her-code-is-put-here-but-not-further-explained" class="section level6" number="9.2.1.1.3.1">
 <h6><span class="header-section-number">9.2.1.1.3.1</span> a. Nelson Combination Method - her code is put here, but not further explained</h6>
 <p>Just use GR.</p>
-<div class="sourceCode" id="cb222"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb222-1"><a href="exercises-4.html#cb222-1" aria-hidden="true" tabindex="-1"></a>combfitN <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsamp <span class="sc">~</span> fcast<span class="sc">$</span>mean <span class="sc">+</span> fcast2<span class="sc">$</span>mean)</span>
-<span id="cb222-2"><a href="exercises-4.html#cb222-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combfitN)</span></code></pre></div>
+<div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb243-1"><a href="exercises-4.html#cb243-1" aria-hidden="true" tabindex="-1"></a>combfitN <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsamp <span class="sc">~</span> fcast<span class="sc">$</span>mean <span class="sc">+</span> fcast2<span class="sc">$</span>mean)</span>
+<span id="cb243-2"><a href="exercises-4.html#cb243-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combfitN)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = outsamp ~ fcast$mean + fcast2$mean)
@@ -655,28 +655,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Residual standard error: 15.15 on 33 degrees of freedom
 ## Multiple R-squared:  0.9656, Adjusted R-squared:  0.9635 
 ## F-statistic: 463.4 on 2 and 33 DF,  p-value: &lt; 0.00000000000000022</code></pre>
-<div class="sourceCode" id="cb224"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb224-1"><a href="exercises-4.html#cb224-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the intercept is sgnificant =&gt; there is a bias, we need to correct the data for it</span></span>
-<span id="cb224-2"><a href="exercises-4.html#cb224-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb224-3"><a href="exercises-4.html#cb224-3" aria-hidden="true" tabindex="-1"></a>outsampcor<span class="ot">&lt;-</span>outsamp<span class="sc">-</span>combfitN<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="co">#where combfitN$coefficients[1] picks out the intercept value from the estimated regression</span></span>
-<span id="cb224-4"><a href="exercises-4.html#cb224-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now want to run an OLS without an intercept on the corrected (debiased data)</span></span>
-<span id="cb224-5"><a href="exercises-4.html#cb224-5" aria-hidden="true" tabindex="-1"></a><span class="co">#with respect to a restriction on the weights:  w1 + w2 = 1</span></span>
-<span id="cb224-6"><a href="exercises-4.html#cb224-6" aria-hidden="true" tabindex="-1"></a>fitW <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsampcor <span class="sc">~</span> <span class="dv">0</span><span class="sc">+</span> <span class="fu">offset</span>(fcast<span class="sc">$</span>mean) <span class="sc">+</span> <span class="fu">I</span>(fcast2<span class="sc">$</span>mean<span class="sc">-</span>fcast<span class="sc">$</span>mean))</span>
-<span id="cb224-7"><a href="exercises-4.html#cb224-7" aria-hidden="true" tabindex="-1"></a>coef_2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(fitW)</span>
-<span id="cb224-8"><a href="exercises-4.html#cb224-8" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> coef_2 <span class="co">#the weight is negative, would prefer a different combination method in this case</span></span>
-<span id="cb224-9"><a href="exercises-4.html#cb224-9" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> coef_2</span>
-<span id="cb224-10"><a href="exercises-4.html#cb224-10" aria-hidden="true" tabindex="-1"></a><span class="co">#beta_1 and beta_2 will give you the weigths. </span></span>
-<span id="cb224-11"><a href="exercises-4.html#cb224-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now can use those weights to obtain a combination forecast</span></span>
-<span id="cb224-12"><a href="exercises-4.html#cb224-12" aria-hidden="true" tabindex="-1"></a>combfcastN <span class="ot">&lt;-</span>beta_1<span class="sc">*</span>fcast<span class="sc">$</span>mean<span class="sc">+</span>beta_2<span class="sc">*</span>fcast2<span class="sc">$</span>mean</span>
-<span id="cb224-13"><a href="exercises-4.html#cb224-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combfcastN)</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-163-1.png" width="480" style="display: block; margin: auto;" /></p>
-<div class="sourceCode" id="cb225"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb225-1"><a href="exercises-4.html#cb225-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(combfcastN, outsamp) <span class="co">#can see that in this case the forecast combination performes worse than the individual forecasts</span></span></code></pre></div>
+<div class="sourceCode" id="cb245"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb245-1"><a href="exercises-4.html#cb245-1" aria-hidden="true" tabindex="-1"></a><span class="co">#the intercept is sgnificant =&gt; there is a bias, we need to correct the data for it</span></span>
+<span id="cb245-2"><a href="exercises-4.html#cb245-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb245-3"><a href="exercises-4.html#cb245-3" aria-hidden="true" tabindex="-1"></a>outsampcor<span class="ot">&lt;-</span>outsamp<span class="sc">-</span>combfitN<span class="sc">$</span>coefficients[<span class="dv">1</span>] <span class="co">#where combfitN$coefficients[1] picks out the intercept value from the estimated regression</span></span>
+<span id="cb245-4"><a href="exercises-4.html#cb245-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Now want to run an OLS without an intercept on the corrected (debiased data)</span></span>
+<span id="cb245-5"><a href="exercises-4.html#cb245-5" aria-hidden="true" tabindex="-1"></a><span class="co">#with respect to a restriction on the weights:  w1 + w2 = 1</span></span>
+<span id="cb245-6"><a href="exercises-4.html#cb245-6" aria-hidden="true" tabindex="-1"></a>fitW <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsampcor <span class="sc">~</span> <span class="dv">0</span><span class="sc">+</span> <span class="fu">offset</span>(fcast<span class="sc">$</span>mean) <span class="sc">+</span> <span class="fu">I</span>(fcast2<span class="sc">$</span>mean<span class="sc">-</span>fcast<span class="sc">$</span>mean))</span>
+<span id="cb245-7"><a href="exercises-4.html#cb245-7" aria-hidden="true" tabindex="-1"></a>coef_2 <span class="ot">&lt;-</span> <span class="fu">coef</span>(fitW)</span>
+<span id="cb245-8"><a href="exercises-4.html#cb245-8" aria-hidden="true" tabindex="-1"></a>beta_1 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> coef_2 <span class="co">#the weight is negative, would prefer a different combination method in this case</span></span>
+<span id="cb245-9"><a href="exercises-4.html#cb245-9" aria-hidden="true" tabindex="-1"></a>beta_2 <span class="ot">&lt;-</span> coef_2</span>
+<span id="cb245-10"><a href="exercises-4.html#cb245-10" aria-hidden="true" tabindex="-1"></a><span class="co">#beta_1 and beta_2 will give you the weigths. </span></span>
+<span id="cb245-11"><a href="exercises-4.html#cb245-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Now can use those weights to obtain a combination forecast</span></span>
+<span id="cb245-12"><a href="exercises-4.html#cb245-12" aria-hidden="true" tabindex="-1"></a>combfcastN <span class="ot">&lt;-</span>beta_1<span class="sc">*</span>fcast<span class="sc">$</span>mean<span class="sc">+</span>beta_2<span class="sc">*</span>fcast2<span class="sc">$</span>mean</span>
+<span id="cb245-13"><a href="exercises-4.html#cb245-13" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combfcastN)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-177-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb246"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb246-1"><a href="exercises-4.html#cb246-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(combfcastN, outsamp) <span class="co">#can see that in this case the forecast combination performes worse than the individual forecasts</span></span></code></pre></div>
 <pre><code>##                ME     RMSE     MAE       MPE     MAPE
 ## Test set -99.4267 110.0852 99.4267 -24.27626 24.27626</code></pre>
 </div>
 <div id="b.-granger-ramanathan" class="section level6" number="9.2.1.1.3.2">
 <h6><span class="header-section-number">9.2.1.1.3.2</span> b. Granger-Ramanathan</h6>
-<div class="sourceCode" id="cb227"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb227-1"><a href="exercises-4.html#cb227-1" aria-hidden="true" tabindex="-1"></a>combfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsamp <span class="sc">~</span> fcast<span class="sc">$</span>mean <span class="sc">+</span> fcast2<span class="sc">$</span>mean) <span class="co">#Mean as we want point estimates</span></span>
-<span id="cb227-2"><a href="exercises-4.html#cb227-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combfit) <span class="co">#the coefficients in the regression will give you the weights</span></span></code></pre></div>
+<div class="sourceCode" id="cb248"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb248-1"><a href="exercises-4.html#cb248-1" aria-hidden="true" tabindex="-1"></a>combfit <span class="ot">&lt;-</span> <span class="fu">lm</span>(outsamp <span class="sc">~</span> fcast<span class="sc">$</span>mean <span class="sc">+</span> fcast2<span class="sc">$</span>mean) <span class="co">#Mean as we want point estimates</span></span>
+<span id="cb248-2"><a href="exercises-4.html#cb248-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(combfit) <span class="co">#the coefficients in the regression will give you the weights</span></span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = outsamp ~ fcast$mean + fcast2$mean)
@@ -697,22 +697,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Multiple R-squared:  0.9656, Adjusted R-squared:  0.9635 
 ## F-statistic: 463.4 on 2 and 33 DF,  p-value: &lt; 0.00000000000000022</code></pre>
 <p>We see that forecast 1 (ARIMA) has weight 0.6794 where forecast 2 (HW) has a weight of 0.5734</p>
-<div class="sourceCode" id="cb229"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb229-1"><a href="exercises-4.html#cb229-1" aria-hidden="true" tabindex="-1"></a>combfcast <span class="ot">&lt;-</span> <span class="fu">ts</span>(combfit<span class="sc">$</span>fitted.values, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb229-2"><a href="exercises-4.html#cb229-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combfcast)</span></code></pre></div>
-<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-165-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb250"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb250-1"><a href="exercises-4.html#cb250-1" aria-hidden="true" tabindex="-1"></a>combfcast <span class="ot">&lt;-</span> <span class="fu">ts</span>(combfit<span class="sc">$</span>fitted.values, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb250-2"><a href="exercises-4.html#cb250-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(combfcast)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-179-1.png" width="480" style="display: block; margin: auto;" /></p>
 <p>The combined forecast is plotted. It looks as expected, and appear to be replicating the trend and the seasonality. Let us see what accuracy it gets.</p>
-<div class="sourceCode" id="cb230"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb230-1"><a href="exercises-4.html#cb230-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(combfcast, outsamp)</span></code></pre></div>
+<div class="sourceCode" id="cb251"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb251-1"><a href="exercises-4.html#cb251-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(combfcast, outsamp)</span></code></pre></div>
 <pre><code>##                                ME     RMSE      MAE         MPE     MAPE
 ## Test set -0.000000000000003158498 14.50372 11.62376 -0.06542481 2.758189</code></pre>
 <p>We see that the RMSE is 14.50</p>
 
-<div class="sourceCode" id="cb232"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb232-1"><a href="exercises-4.html#cb232-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb232-2"><a href="exercises-4.html#cb232-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb232-3"><a href="exercises-4.html#cb232-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
-<span id="cb232-4"><a href="exercises-4.html#cb232-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb232-5"><a href="exercises-4.html#cb232-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb232-6"><a href="exercises-4.html#cb232-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
-<span id="cb232-7"><a href="exercises-4.html#cb232-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
+<div class="sourceCode" id="cb253"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb253-1"><a href="exercises-4.html#cb253-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb253-2"><a href="exercises-4.html#cb253-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb253-3"><a href="exercises-4.html#cb253-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forecast)</span>
+<span id="cb253-4"><a href="exercises-4.html#cb253-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb253-5"><a href="exercises-4.html#cb253-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb253-6"><a href="exercises-4.html#cb253-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stats)</span>
+<span id="cb253-7"><a href="exercises-4.html#cb253-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div>
 </div>
 </div>
 </div>

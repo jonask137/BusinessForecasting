@@ -550,13 +550,17 @@ VAR(p)
 <p><em>Note, it is only within our curriculum with one variable.</em></p>
 <ol style="list-style-type: decimal">
 <li><code>cbind</code> a table consisting of stationary y series and the x variables (Cholesky applies, but is not very important when having two variables, see more in section <a href="adl.html#Cholesky">7.4.2</a>). Store it as an <code>ts()</code> object.</li>
-<li>Run <code>VARselect(z,lag.max = 14,type="const")[["selection"]]</code></li>
+<li>Run <code>VARselect(z,lag.max = 14,type="const")[["selection"]]</code>
+<ul>
 <li>Note, <code>selection</code> is just retrieving an object that is encapsuled</li>
+</ul></li>
 <li>Run <code>VAR(z,p=&lt;insert&gt;,type="const")</code> Apply p with the value that was found in step 2</li>
 <li>One can do the <code>summary()</code></li>
 <li>Check residuals for serial correlation<code>serial.test(var1,lags.pt=14,type="PT.asymptotic")</code>.</li>
-<li>Obtain impulse response function, using <code>plot(irf(var1,boot = TRUE, ci=0.95))</code></li>
+<li>Obtain impulse response function, using <code>plot(irf(var1,boot = TRUE, ci=0.95))</code>
+<ul>
 <li>Notice, that it is calculated based on the Cholesky ordering</li>
+</ul></li>
 </ol>
 </div>
 </div>

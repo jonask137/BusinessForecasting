@@ -810,7 +810,127 @@ Figure 7.10: Forecast Stock Quotations
 </div>
 <div id="hw-case-1-page-413-414-q1-3" class="section level3" number="7.5.4">
 <h3><span class="header-section-number">7.5.4</span> HW: Case 1 page 413-414 (q1-3)</h3>
-<p>Not done</p>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="exercises-arima.html#cb153-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;Data/Week47/Case1p413-414.xls&quot;</span>)</span>
+<span id="cb153-2"><a href="exercises-arima.html#cb153-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Sales(old data)</span><span class="st">`</span></span>
+<span id="cb153-3"><a href="exercises-arima.html#cb153-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">na.exclude</span>(y)</span>
+<span id="cb153-4"><a href="exercises-arima.html#cb153-4" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">ts</span>(y,<span class="at">frequency =</span> <span class="dv">54</span>,<span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1981</span>,<span class="dv">1</span>))</span></code></pre></div>
+<p><strong>1. What is the appropriate Box-Jenkins model to use on the original data?</strong></p>
+<p>First we will assess this manually.</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb154-1"><a href="exercises-arima.html#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(y)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-118-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>We see that the data look somewhat stationary, but lets test that:</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb155-1"><a href="exercises-arima.html#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(y)</span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  y
+## Dickey-Fuller = -3.3134, Lag order = 4, p-value = 0.0727
+## alternative hypothesis: stationary</code></pre>
+<p>We are not able to reject the null, hence it is not stationary.</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="exercises-arima.html#cb157-1" aria-hidden="true" tabindex="-1"></a>dy <span class="ot">&lt;-</span> <span class="fu">diff</span>(y)</span>
+<span id="cb157-2"><a href="exercises-arima.html#cb157-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(dy)</span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  dy
+## Dickey-Fuller = -5.6042, Lag order = 4, p-value = 0.01
+## alternative hypothesis: stationary</code></pre>
+<p>We see that the data is normally distributed now.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="exercises-arima.html#cb159-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsdisplay</span>(dy)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-121-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Looking at the acf and pacf, the appear to initially tend towards 0, hence it could be applicable with an ARMA(1,1) model. Or perhaps shifting a bit from negative to positive, also indicating ARMA(1,1).</p>
+<p>As the data is difference, we must remember to add the order of integration, hence we are operating with an ARIMA model of order (1,1,1).</p>
+<p>Regarding seasonality, it is not clear whether there is seasonality. To assess this, one could make a decomposition of the time series:</p>
+<p><strong><em>Summary:</em></strong></p>
+<ul>
+<li>We expect I = 1 or 0, as it is close to being stationary</li>
+<li>We expect AR = 1</li>
+<li>We expect MA = 1</li>
+<li>We do not expect corrections for seasonality</li>
+<li>We don’t see an overall trend and do not expect a drift</li>
+</ul>
+<p>Let us apply auto.arima to optimize against AIC, hence low risk, thus prediction.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="exercises-arima.html#cb160-1" aria-hidden="true" tabindex="-1"></a>m.arima <span class="ot">&lt;-</span> <span class="fu">auto.arima</span>(<span class="at">y =</span> y,<span class="at">ic =</span> <span class="st">&quot;aic&quot;</span>)</span>
+<span id="cb160-2"><a href="exercises-arima.html#cb160-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m.arima)</span></code></pre></div>
+<pre><code>## Series: y 
+## ARIMA(1,0,0) with non-zero mean 
+## 
+## Coefficients:
+##          ar1       mean
+##       0.5931  4802.4356
+## s.e.  0.0847   243.9703
+## 
+## sigma^2 estimated as 1060812:  log likelihood=-868.25
+## AIC=1742.51   AICc=1742.75   BIC=1750.44
+## 
+## Training set error measures:
+##                    ME     RMSE      MAE       MPE     MAPE      MASE       ACF1
+## Training set 23.78403 1020.006 750.8478 -5.885515 18.94088 0.7344547 0.02222022</code></pre>
+<p>According to the automation process. We see that the model only suggest an AR(1) model. We saw that the ADF test was close to the 5% level and that we could reject on a 10% level, hence it is not strange, that the model is specified with d = 0.</p>
+<p><strong>2. What are your forecasts for the first four weeks of January 1983?</strong></p>
+<p>Is the forecast reliable?</p>
+<p>This will be checked with</p>
+<ol style="list-style-type: decimal">
+<li>Residuals to be random, no autocorelation left in them. Can be checked with Jarque-Bera test. Where H0: Normality</li>
+</ol>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="exercises-arima.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">jarque.bera.test</span>(m.arima<span class="sc">$</span>residuals) <span class="co">#Jarque-Bera test the null of normality</span></span></code></pre></div>
+<pre><code>## 
+##  Jarque Bera Test
+## 
+## data:  m.arima$residuals
+## X-squared = 14.854, df = 2, p-value = 0.0005949</code></pre>
+<p>We are able to reject the null hypothesis, hence the residuals are not normally distributed, hence it appears as if we excluded data.</p>
+<p>We could visually inspect the residuals also:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="exercises-arima.html#cb164-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m.arima<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-124-1.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="exercises-arima.html#cb165-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="at">y =</span> <span class="fu">as.vector</span>(m.arima<span class="sc">$</span>residuals),<span class="fu">as.vector</span>(m.arima<span class="sc">$</span>fitted))</span>
+<span id="cb165-2"><a href="exercises-arima.html#cb165-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span>
+<span id="cb165-3"><a href="exercises-arima.html#cb165-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-124-2.png" width="480" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="exercises-arima.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(m.arima<span class="sc">$</span>residuals)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-125-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>Even though they do appear somewhat normal</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="exercises-arima.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Box.test</span>(<span class="at">x =</span> m.arima<span class="sc">$</span>residuals,<span class="at">type =</span> <span class="st">&quot;Ljung-Box&quot;</span>)</span></code></pre></div>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  m.arima$residuals
+## X-squared = 0.052844, df = 1, p-value = 0.8182</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Check for heteroskedasticity</li>
+</ol>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="exercises-arima.html#cb169-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">as.vector</span>(<span class="fu">resid</span>(m.arima)))</span>
+<span id="cb169-2"><a href="exercises-arima.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">col=</span><span class="st">&quot;grey&quot;</span>)</span>
+<span id="cb169-3"><a href="exercises-arima.html#cb169-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>,<span class="at">col=</span><span class="st">&quot;red&quot;</span>)</span></code></pre></div>
+<p><img src="Business-Forecasting-Notebook_files/figure-html/unnamed-chunk-127-1.png" width="480" style="display: block; margin: auto;" /></p>
+<p>It appears as if we have homoskedasticity</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Checking for independent residuals</li>
+</ol>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="exercises-arima.html#cb170-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(<span class="fu">resid</span>(m.arima))</span></code></pre></div>
+<pre><code>## 
+##  Augmented Dickey-Fuller Test
+## 
+## data:  resid(m.arima)
+## Dickey-Fuller = -4.0766, Lag order = 4, p-value = 0.01
+## alternative hypothesis: stationary</code></pre>
+<p>The data appears to be stationary</p>
+<p>One could also test the other variables</p>
+<p><strong>3. How do these forecasts compare with actual sales?</strong></p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="exercises-arima.html#cb172-1" aria-hidden="true" tabindex="-1"></a>y.test <span class="ot">&lt;-</span> df<span class="sc">$</span><span class="st">`</span><span class="at">Sales (all data)</span><span class="st">`</span></span>
+<span id="cb172-2"><a href="exercises-arima.html#cb172-2" aria-hidden="true" tabindex="-1"></a>y.test <span class="ot">&lt;-</span> y.test[<span class="dv">105</span><span class="sc">:</span><span class="dv">148</span>]</span>
+<span id="cb172-3"><a href="exercises-arima.html#cb172-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">=</span> <span class="fu">length</span>(y.test)</span>
+<span id="cb172-4"><a href="exercises-arima.html#cb172-4" aria-hidden="true" tabindex="-1"></a>fcast.arima <span class="ot">&lt;-</span> <span class="fu">forecast</span>(<span class="at">object =</span> m.arima,<span class="at">h =</span> h)</span>
+<span id="cb172-5"><a href="exercises-arima.html#cb172-5" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="at">object =</span> fcast.arima,<span class="at">x =</span> y.test)</span></code></pre></div>
+<pre><code>##                     ME     RMSE       MAE       MPE     MAPE      MASE
+## Training set  23.78403 1020.006  750.8478 -5.885515 18.94088 0.9759884
+## Test set     719.86985 1803.770 1424.5523  4.638826 25.18692 1.8517023
+##                    ACF1
+## Training set 0.02222022
+## Test set             NA</code></pre>
+<p>We see an accuracy of 1800 measured with RMSE.</p>
+<p><br />
+</p>
 </div>
 <div id="hw-case-4-page-417-419" class="section level3" number="7.5.5">
 <h3><span class="header-section-number">7.5.5</span> HW: Case 4 page 417-419</h3>
@@ -819,7 +939,7 @@ Figure 7.10: Forecast Stock Quotations
 <div id="sales-data-seasonal" class="section level3" number="7.5.6">
 <h3><span class="header-section-number">7.5.6</span> Sales data seasonal</h3>
 <p>Not done</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb153-1"><a href="exercises-arima.html#cb153-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Arima(y = y,model = #&lt;insert fitted arima model here, to preserve coefficients&gt;#)</span></span></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="exercises-arima.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Arima(y = y,model = #&lt;insert fitted arima model here, to preserve coefficients&gt;#)</span></span></code></pre></div>
 </div>
 <div id="in-class-assignment" class="section level3" number="7.5.7">
 <h3><span class="header-section-number">7.5.7</span> In class assignment</h3>

@@ -509,9 +509,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: lower-roman">
 <li>Make model diagnostics:
 <ol style="list-style-type: lower-alpha">
-<li>Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats</li>
-<li>No heteroskedasticity</li>
-<li>No spike in the ACF, must be within <span class="math inline">\(±2/\sqrt{n}\)</span> confidence interval from 0.</li>
+<li>Residuals no autocorelation left in them (hence no serial correlation). Can be checked with Ljung-Box Q stats, visual inspection, or apply DW test to the fitted model.
+i: No spike in the ACF, must be within <span class="math inline">\(±2/\sqrt{n}\)</span> confidence interval from 0. Just apply the <code>acf()</code></li>
+<li>Residuals to be independent: <code>adf.test(resid(fit))</code> where H0: Non stationarity</li>
+<li>Residuals to be normally distributed: <code>tseries::jarque.bera.test(resid(fit))</code>, where H0: Normal distribution</li>
+<li>No heteroskedasticity - <code>plot(resid(fit))</code> and apply the Bresuch-Pagan test</li>
 </ol></li>
 <li>If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
 <ol style="list-style-type: lower-alpha">

@@ -198,9 +198,11 @@ The Box-Jenkins model-building strategy. It has th following steps
   
 3. Model Checking
     i. Make model diagnostics:
-        a. Residuals to be random, no autocorelation left in them. Can also be checked with Ljung-Box Q stats
-        b. No heteroskedasticity
-        c. No spike in the ACF, must be within $±2/\sqrt{n}$ confidence interval from 0.
+        a. Residuals no autocorelation left in them (hence no serial correlation). Can be checked with Ljung-Box Q stats, visual inspection, or apply DW test to the fitted model.
+            i: No spike in the ACF, must be within $±2/\sqrt{n}$ confidence  interval from 0. Just apply the `acf()`
+        b. Residuals to be independent: `adf.test(resid(fit))` where H0: Non stationarity
+        c. Residuals to be normally distributed: `tseries::jarque.bera.test(resid(fit))`, where H0: Normal distribution
+        d. No heteroskedasticity - `plot(resid(fit))` and apply the Bresuch-Pagan test
     ii. If several model. Choose the one with the lowest AIC or BIC, depending on the goal.
         a. if that concludes indecisive result, then choose the simplest model (principle of parsimony)
     
@@ -305,12 +307,12 @@ One may use AIC, BIC or make out of sample assessment to select the best model, 
 
 1. `cbind` a table consisting of stationary y series and the x variables (Cholesky applies, but is not very important when having two variables, see more in section \@ref(Cholesky)). Store it as an `ts()` object.
 2. Run `VARselect(z,lag.max = 14,type="const")[["selection"]]`
-  1. Note, `selection` is just retrieving an object that is encapsuled
+    + Note, `selection` is just retrieving an object that is encapsuled
 3. Run `VAR(z,p=<insert>,type="const")` Apply p with the value that was found in step 2
 4. One can do the `summary()`
 5. Check residuals for serial correlation`serial.test(var1,lags.pt=14,type="PT.asymptotic")`.
 6. Obtain impulse response function, using `plot(irf(var1,boot = TRUE, ci=0.95))`
-  1. Notice, that it is calculated based on the Cholesky ordering
+    + Notice, that it is calculated based on the Cholesky ordering
 
 
 ### Analyzing response to shocks in other variables - Cholesky Ordering {#Cholesky}
@@ -639,7 +641,135 @@ rm(list = ls())
 
 ### HW: Case 1 page 413-414 (q1-3)
 
-Not done
+```{r}
+df <- read_excel("Data/Week47/Case1p413-414.xls")
+y <- df$`Sales(old data)`
+y <- na.exclude(y)
+y <- ts(y,frequency = 54,start = c(1981,1))
+```
+
+
+**1. What is the appropriate Box-Jenkins model to use on the original data?**
+
+First we will assess this manually.
+
+```{r}
+tsdisplay(y)
+```
+
+We see that the data look somewhat stationary, but lets test that:
+
+```{r}
+adf.test(y)
+```
+
+We are not able to reject the null, hence it is not stationary.
+
+```{r}
+dy <- diff(y)
+adf.test(dy)
+```
+
+We see that the data is normally distributed now.
+
+```{r}
+tsdisplay(dy)
+```
+
+Looking at the acf and pacf, the appear to initially tend towards 0, hence it could be applicable with an ARMA(1,1) model. Or perhaps shifting a bit from negative to positive, also indicating ARMA(1,1).
+
+As the data is difference, we must remember to add the order of integration, hence we are operating with an ARIMA model of order (1,1,1).
+
+Regarding seasonality, it is not clear whether there is seasonality. To assess this, one could make a decomposition of the time series:
+
+
+***Summary:***
+
++ We expect I = 1 or 0, as it is close to being stationary
++ We expect AR = 1
++ We expect MA = 1
++ We do not expect corrections for seasonality
++ We don't see an overall trend and do not expect a drift
+
+Let us apply auto.arima to optimize against AIC, hence low risk, thus prediction.
+
+```{r}
+m.arima <- auto.arima(y = y,ic = "aic")
+summary(m.arima)
+```
+
+According to the automation process. We see that the model only suggest an AR(1) model. We saw that the ADF test was close to the 5% level and that we could reject on a 10% level, hence it is not strange, that the model is specified with d = 0.
+
+**2. What are your forecasts for the first four weeks of January 1983?**
+
+Is the forecast reliable?
+
+This will be checked with
+
+1. Residuals to be random, no autocorelation left in them. Can be checked with Jarque-Bera test. Where H0: Normality
+
+```{r}
+jarque.bera.test(m.arima$residuals) #Jarque-Bera test the null of normality
+```
+
+We are able to reject the null hypothesis, hence the residuals are not normally distributed, hence it appears as if we excluded data.
+
+We could visually inspect the residuals also:
+
+```{r}
+plot(m.arima$residuals)
+plot(y = as.vector(m.arima$residuals),as.vector(m.arima$fitted))
+abline(h=0,col="red")
+grid(col="grey")
+```
+
+```{r}
+hist(m.arima$residuals)
+```
+
+Even though they do appear somewhat normal
+
+```{r}
+Box.test(x = m.arima$residuals,type = "Ljung-Box")
+```
+
+2. Check for heteroskedasticity
+
+```{r}
+plot(as.vector(resid(m.arima)))
+grid(col="grey")
+abline(h=0,col="red")
+```
+
+It appears as if we have homoskedasticity
+
+
+
+3. Checking for independent residuals
+
+```{r}
+adf.test(resid(m.arima))
+```
+
+The data appears to be stationary
+
+
+One could also test the other variables
+
+**3. How do these forecasts compare with actual sales?**
+
+```{r}
+y.test <- df$`Sales (all data)`
+y.test <- y.test[105:148]
+h = length(y.test)
+fcast.arima <- forecast(object = m.arima,h = h)
+accuracy(object = fcast.arima,x = y.test)
+```
+
+We see an accuracy of 1800 measured with RMSE.
+
+
+\
 
 ### HW: Case 4 page 417-419
 
@@ -651,6 +781,11 @@ Not done
 
 ```{r}
 #Arima(y = y,model = #<insert fitted arima model here, to preserve coefficients>#)
+```
+
+
+
+```{r}
 ```
 
 
