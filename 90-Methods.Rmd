@@ -209,10 +209,36 @@ if $\beta = \gamma = 0$ the model is merely simple exponential smoothing.
 
 *Decomposition of the time series*
 
-+ AR:
-+ MA:
-+ ARMA:
-+ ARIMA:
++ AR: Autoregressive, giving coefficients to lagged values
++ MA: Giving residuals to previous residuals
++ ARMA: Combination of AR and MA in a stationary setting
++ ARIMA: Combination of AR and MA in a nonstationary setting
+
+
+### Dynamic forecasting
+
+That is when variables are assumed to be affecting each other, hence combination of autoregression (using y series lags) and 1 or more other variables in the regression setting.
+
+We have ADL and VAR.
+
+#### ADL
+
+This is an autoregressive model (AR) with lags of another variable, this yields
+
+\begin{equation}
+ALD_{\left(p,q\right)}
+(\#eq:ADL)
+\end{equation}
+
+#### VAR
+
+One is able to construct different linear models, and see how they influence each other. Therefore, it is a good approach to assessing exogeniourity and endogeniourity.
+
+
+### Decompisition
+
+This is decomposing the data into its composing and the assembling $\hat{y}$ as a composition of e.g., trend and seasonality. Notice that one must be aware of whether y is the product or the sum of the components.
+
 
 \
 
@@ -279,6 +305,72 @@ Thus, we see that Rsquare is obtained from regression each IDV against the remai
 + VIF > 10, indicates multicollinearity
 
 If one gets an indication of multicollinearity, then one should drop one of the correlated variables.
+
+
+## Statistical tests
+
+The following are tests that we have done throughout the semester. Notice, that code examples are random, so the input may vary, e.g., not the fitted values but residuals can be put in.
+
+**Bresuch-Pagan test (BP)**
+
++ This is a test for heteroskedasticity
+  + H0: Homoskedasticity
+  + `bptest(fit)`
+
+**Jarque-Beta test**
+
++ This is an assessment of normality
+  + H0: The data is normally distributed
+  + `jarque.bera.test(m.arima$residuals)`
+  
+**Durbin-Watson test (DW)**
+
++ This is a test for serial correlation (autocorrelation).
+  + H0: No autocorrelation
+  + `dwtest(fit)`
+
+**Ljung-Box test**
+
++ Test for absence or serial correlation, i.e., autocorrelation, accounting for p and q lags.
+  + H0: No autocorrelation
+  + `Box.test(ARIMAmod$residuals,type = "Ljung-Box",fitdf = p+q)`, must define p and q
+
+**ACF correlogram**
+
++ Test for autocorrelation. Visual inspection, see if there are spikes over the confidence level
+  + `acf()`, `tsdisplay()` will also show it
+
+**Augmented Dickey-Fuller test (ADF)**
+
++ Test for stationarity
+  + H0: Non-stationary series
+  + `adf.test(y)`
+
+**Portmanteau test (symptotic)**
+
++ The Portmanteau statistic for testing the absence of up to the order h serially correlated disturbances in a stable VAR(p).
+  + H0: No autocorrelation
+  + `serial.test(fit, lags.pt=10, type="PT.asymptotic")`
+  + *This was applied with VAR(p) only*
+
+**Phillips-Ouliaris test (PO)**
+
++ Test for cointegration (follows theh 2 tep EG test)
+  + H0: No cointegration
+  + `serial.test(var1,lags.pt = 10,type = "PT.asymptotic")`, notice, that the lags.pt. may be adjusted, e.g., take one or two seasonal cycles.
+
+**Diebold-Mariano test (DM)**
+
++ The tests whether two tests have the same accuracy
+  + H0: Forecast a and b have the same accuracy
+  + `dm.test(e1 = resid(HW)e2 = resid(arima.bc)[25:2016],alternative = "two.sided")`
+
+
+**Variance Inflation Factor (VIF)**
+
++ Test for multicollinearity
+  + If larger than 9, then assume multicollinearity
+  + `vif(fit)`
 
 
 ## Formulas

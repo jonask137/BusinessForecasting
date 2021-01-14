@@ -102,6 +102,7 @@ eq:LevelEstimateWinters
 eq:TrendEstimateWinters
 eq:SeasonEstimateWinters
 eq:ForecastPPeriodsWinters
+eq:ADL
 eq:ME
 eq:MAD
 eq:MPE
@@ -189,6 +190,7 @@ elaborating-on-ma-models
 elaborating-on-integration-models
 model-building-process
 advantages-and-disadvantages-for-arima-models
+dynamic-forecasting
 adl
 vector-autoregressive-var
 selection-criteria-1
@@ -310,9 +312,14 @@ holts-exponential-smoothing
 winters-exponential-smoothing
 moving-averages-see-section-refma
 arima
+dynamic-forecasting-1
+adl-1
+var
+decompisition
 PerformanceMeasurements
 error-terms
 multicollinearity-1
+statistical-tests
 formulas
 loops
 holtwinters-smoothing---finding-optimal-frequency

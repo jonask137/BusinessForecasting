@@ -224,8 +224,9 @@ Disadvantages:
 + Construction is based on trial and error
 
 
+## Dynamic Forecasting
 
-## ADL 
+### ADL 
 
 Basically ADL is doing and Autoregressive (AR) model and then we add another variable (this could be anything) which is lagged. Notice that we can model with the order of lagged variables to be included in the model.
 
@@ -315,7 +316,7 @@ One may use AIC, BIC or make out of sample assessment to select the best model, 
     + Notice, that it is calculated based on the Cholesky ordering
 
 
-### Analyzing response to shocks in other variables - Cholesky Ordering {#Cholesky}
+#### Analyzing response to shocks in other variables - Cholesky Ordering {#Cholesky}
 
 *You want to order the variables so the most exogenious variable as first, then less exogenious until you have the last, which is the most endogenious*
 
@@ -768,6 +769,10 @@ accuracy(object = fcast.arima,x = y.test)
 
 We see an accuracy of 1800 measured with RMSE.
 
+```{r}
+rm(list = ls())
+```
+
 
 \
 
@@ -780,12 +785,8 @@ Not done
 Not done
 
 ```{r}
+#df <- read_excel("Data/Week47/Salesdataseasonal.xlsx")
 #Arima(y = y,model = #<insert fitted arima model here, to preserve coefficients>#)
-```
-
-
-
-```{r}
 ```
 
 

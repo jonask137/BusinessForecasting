@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="model-building-process.html"/>
-<link rel="next" href="adl.html"/>
+<link rel="next" href="dynamic-forecasting.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -260,14 +260,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="7.2" data-path="model-building-process.html"><a href="model-building-process.html"><i class="fa fa-check"></i><b>7.2</b> Model Building Process</a></li>
 <li class="chapter" data-level="7.3" data-path="advantages-and-disadvantages-for-arima-models.html"><a href="advantages-and-disadvantages-for-arima-models.html"><i class="fa fa-check"></i><b>7.3</b> Advantages and disadvantages for ARIMA models</a></li>
-<li class="chapter" data-level="7.4" data-path="adl.html"><a href="adl.html"><i class="fa fa-check"></i><b>7.4</b> ADL</a>
+<li class="chapter" data-level="7.4" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html"><i class="fa fa-check"></i><b>7.4</b> Dynamic Forecasting</a>
 <ul>
-<li class="chapter" data-level="7.4.1" data-path="adl.html"><a href="adl.html#vector-autoregressive-var"><i class="fa fa-check"></i><b>7.4.1</b> Vector autoregressive (VAR)</a>
+<li class="chapter" data-level="7.4.1" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html#adl"><i class="fa fa-check"></i><b>7.4.1</b> ADL</a></li>
+<li class="chapter" data-level="7.4.2" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html#vector-autoregressive-var"><i class="fa fa-check"></i><b>7.4.2</b> Vector autoregressive (VAR)</a>
 <ul>
-<li class="chapter" data-level="7.4.1.1" data-path="adl.html"><a href="adl.html#selection-criteria-1"><i class="fa fa-check"></i><b>7.4.1.1</b> Selection criteria</a></li>
-<li class="chapter" data-level="7.4.1.2" data-path="adl.html"><a href="adl.html#process"><i class="fa fa-check"></i><b>7.4.1.2</b> Process</a></li>
+<li class="chapter" data-level="7.4.2.1" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html#selection-criteria-1"><i class="fa fa-check"></i><b>7.4.2.1</b> Selection criteria</a></li>
+<li class="chapter" data-level="7.4.2.2" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html#process"><i class="fa fa-check"></i><b>7.4.2.2</b> Process</a></li>
+<li class="chapter" data-level="7.4.2.3" data-path="dynamic-forecasting.html"><a href="dynamic-forecasting.html#Cholesky"><i class="fa fa-check"></i><b>7.4.2.3</b> Analyzing response to shocks in other variables - Cholesky Ordering</a></li>
 </ul></li>
-<li class="chapter" data-level="7.4.2" data-path="adl.html"><a href="adl.html#Cholesky"><i class="fa fa-check"></i><b>7.4.2</b> Analyzing response to shocks in other variables - Cholesky Ordering</a></li>
 </ul></li>
 <li class="chapter" data-level="7.5" data-path="exercises-arima.html"><a href="exercises-arima.html"><i class="fa fa-check"></i><b>7.5</b> Exercises - ARIMA</a>
 <ul>
@@ -430,15 +431,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="10.1.7.6.1" data-path="exam-2018.html"><a href="exam-2018.html#combined-model"><i class="fa fa-check"></i><b>10.1.7.6.1</b> Combined model</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="10.1.8" data-path="exam-2018.html"><a href="exam-2018.html#nordpool-case"><i class="fa fa-check"></i><b>10.1.8</b> Nordpool Case</a>
-<ul>
-<li class="chapter" data-level="10.1.8.1" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-key-variable-of-interest-and-which-ones-are-the-variables-that-are-of-secondary-interest"><i class="fa fa-check"></i><b>10.1.8.1</b> 1.What is the key variable of interest and which ones are the variables that are of secondary interest?</a></li>
-<li class="chapter" data-level="10.1.8.2" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-relationship-between-system-price-and-buysell-sides"><i class="fa fa-check"></i><b>10.1.8.2</b> 2 What is the relationship between system price and buy/sell sides?</a></li>
-<li class="chapter" data-level="10.1.8.3" data-path="exam-2018.html"><a href="exam-2018.html#what-models-should-we-use-to-build-an-optimal-forecast-for-system-price"><i class="fa fa-check"></i><b>10.1.8.3</b> 3 What models should we use to build an optimal forecast for system price?</a></li>
-<li class="chapter" data-level="10.1.8.4" data-path="exam-2018.html"><a href="exam-2018.html#what-is-the-expected-behavior-of-system-price-in-the-next-25-periods"><i class="fa fa-check"></i><b>10.1.8.4</b> 4 What is the expected behavior of system price in the next 25 periods?</a></li>
-<li class="chapter" data-level="10.1.8.5" data-path="exam-2018.html"><a href="exam-2018.html#how-does-the-future-relationship-of-system-price-with-the-other-variables-evolve"><i class="fa fa-check"></i><b>10.1.8.5</b> 5 How does the future relationship of system price with the other variables evolve?</a></li>
-<li class="chapter" data-level="10.1.8.6" data-path="exam-2018.html"><a href="exam-2018.html#what-can-we-infer-from-this-relationship-and-how-can-we-give-investment-recommendation-based-on-that"><i class="fa fa-check"></i><b>10.1.8.6</b> 6 What can we infer from this relationship, and how can we give investment recommendation based on that?</a></li>
 </ul></li>
+<li class="chapter" data-level="10.2" data-path="nordpool-case.html"><a href="nordpool-case.html"><i class="fa fa-check"></i><b>10.2</b> Nordpool Case</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="nordpool-case.html"><a href="nordpool-case.html#what-is-the-key-variable-of-interest-and-which-ones-are-the-variables-that-are-of-secondary-interest"><i class="fa fa-check"></i><b>10.2.1</b> 1.What is the key variable of interest and which ones are the variables that are of secondary interest?</a></li>
+<li class="chapter" data-level="10.2.2" data-path="nordpool-case.html"><a href="nordpool-case.html#what-is-the-relationship-between-system-price-and-buysell-sides"><i class="fa fa-check"></i><b>10.2.2</b> 2 What is the relationship between system price and buy/sell sides?</a></li>
+<li class="chapter" data-level="10.2.3" data-path="nordpool-case.html"><a href="nordpool-case.html#what-models-should-we-use-to-build-an-optimal-forecast-for-system-price"><i class="fa fa-check"></i><b>10.2.3</b> 3 What models should we use to build an optimal forecast for system price?</a></li>
+<li class="chapter" data-level="10.2.4" data-path="nordpool-case.html"><a href="nordpool-case.html#what-is-the-expected-behavior-of-system-price-in-the-next-25-periods"><i class="fa fa-check"></i><b>10.2.4</b> 4 What is the expected behavior of system price in the next 25 periods?</a></li>
+<li class="chapter" data-level="10.2.5" data-path="nordpool-case.html"><a href="nordpool-case.html#how-does-the-future-relationship-of-system-price-with-the-other-variables-evolve"><i class="fa fa-check"></i><b>10.2.5</b> 5 How does the future relationship of system price with the other variables evolve?</a></li>
+<li class="chapter" data-level="10.2.6" data-path="nordpool-case.html"><a href="nordpool-case.html#what-can-we-infer-from-this-relationship-and-how-can-we-give-investment-recommendation-based-on-that"><i class="fa fa-check"></i><b>10.2.6</b> 6 What can we infer from this relationship, and how can we give investment recommendation based on that?</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="11" data-path="communicating-technical-findings.html"><a href="communicating-technical-findings.html"><i class="fa fa-check"></i><b>11</b> Communicating Technical Findings</a></li>
@@ -462,17 +463,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="12.1.4.4" data-path="ForecastMethods.html"><a href="ForecastMethods.html#moving-averages-see-section-refma"><i class="fa fa-check"></i><b>12.1.4.4</b> Moving Averages, see section @ref(MA)</a></li>
 </ul></li>
 <li class="chapter" data-level="12.1.5" data-path="ForecastMethods.html"><a href="ForecastMethods.html#arima"><i class="fa fa-check"></i><b>12.1.5</b> ARIMA</a></li>
+<li class="chapter" data-level="12.1.6" data-path="ForecastMethods.html"><a href="ForecastMethods.html#dynamic-forecasting-1"><i class="fa fa-check"></i><b>12.1.6</b> Dynamic forecasting</a>
+<ul>
+<li class="chapter" data-level="12.1.6.1" data-path="ForecastMethods.html"><a href="ForecastMethods.html#adl-1"><i class="fa fa-check"></i><b>12.1.6.1</b> ADL</a></li>
+<li class="chapter" data-level="12.1.6.2" data-path="ForecastMethods.html"><a href="ForecastMethods.html#var"><i class="fa fa-check"></i><b>12.1.6.2</b> VAR</a></li>
+</ul></li>
+<li class="chapter" data-level="12.1.7" data-path="ForecastMethods.html"><a href="ForecastMethods.html#decompisition"><i class="fa fa-check"></i><b>12.1.7</b> Decompisition</a></li>
 </ul></li>
 <li class="chapter" data-level="12.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html"><i class="fa fa-check"></i><b>12.2</b> Performance Measurements</a>
 <ul>
 <li class="chapter" data-level="12.2.1" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#error-terms"><i class="fa fa-check"></i><b>12.2.1</b> Error terms</a></li>
 <li class="chapter" data-level="12.2.2" data-path="PerformanceMeasurements.html"><a href="PerformanceMeasurements.html#multicollinearity-1"><i class="fa fa-check"></i><b>12.2.2</b> Multicollinearity</a></li>
 </ul></li>
-<li class="chapter" data-level="12.3" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>12.3</b> Formulas</a></li>
-<li class="chapter" data-level="12.4" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>12.4</b> Loops!!!!</a>
+<li class="chapter" data-level="12.3" data-path="statistical-tests.html"><a href="statistical-tests.html"><i class="fa fa-check"></i><b>12.3</b> Statistical tests</a></li>
+<li class="chapter" data-level="12.4" data-path="formulas.html"><a href="formulas.html"><i class="fa fa-check"></i><b>12.4</b> Formulas</a></li>
+<li class="chapter" data-level="12.5" data-path="loops.html"><a href="loops.html"><i class="fa fa-check"></i><b>12.5</b> Loops!!!!</a>
 <ul>
-<li class="chapter" data-level="12.4.1" data-path="loops.html"><a href="loops.html#holtwinters-smoothing---finding-optimal-frequency"><i class="fa fa-check"></i><b>12.4.1</b> HoltWinters Smoothing - finding optimal frequency</a></li>
-<li class="chapter" data-level="12.4.2" data-path="loops.html"><a href="loops.html#arima---it-is-not-really-that-useful-does-not-have-all-combinations"><i class="fa fa-check"></i><b>12.4.2</b> ARIMA - it is not really that useful, does not have all combinations</a></li>
+<li class="chapter" data-level="12.5.1" data-path="loops.html"><a href="loops.html#holtwinters-smoothing---finding-optimal-frequency"><i class="fa fa-check"></i><b>12.5.1</b> HoltWinters Smoothing - finding optimal frequency</a></li>
+<li class="chapter" data-level="12.5.2" data-path="loops.html"><a href="loops.html#arima---it-is-not-really-that-useful-does-not-have-all-combinations"><i class="fa fa-check"></i><b>12.5.2</b> ARIMA - it is not really that useful, does not have all combinations</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -513,7 +521,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="model-building-process.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="adl.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dynamic-forecasting.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

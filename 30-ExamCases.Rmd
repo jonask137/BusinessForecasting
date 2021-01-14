@@ -716,7 +716,9 @@ accuracy(combfcast,x = comb.df$y.badcalls)
 ```
 
 
-### Nordpool Case
+## Nordpool Case
+
+**Answered in separate file**
 
 Your client, an investor who has a technical background but no time, hires you to analyze daily NordPool electricity system price and corresponding transaction volumes in one of the regions of Denmark. NordPool is a power market in which prices are determined by auctions for the next day, which is why foreseeing the behavior of prices and transaction volumes is key for investment purposes. Based on the data for 2020 that is uploaded on Blackboard, write an executive summary and a technical report to your client showing him how system price and transaction volumes as well as the relationship between them will evolve over the next 25 days. 
 
@@ -730,22 +732,22 @@ df <- read_excel("Data/OtherDataFiles/NordPoolCase.xlsx")
 
 
 
-#### 1.What is the key variable of interest and which ones are the variables that are of secondary interest?
+### 1.What is the key variable of interest and which ones are the variables that are of secondary interest?
 
 
 
-#### 2 What is the relationship between system price and buy/sell sides?
+### 2 What is the relationship between system price and buy/sell sides?
 
 
-#### 3 What models should we use to build an optimal forecast for system price?
+### 3 What models should we use to build an optimal forecast for system price?
 
 
-#### 4 What is the expected behavior of system price in the next 25 periods?
+### 4 What is the expected behavior of system price in the next 25 periods?
 
 
-#### 5 How does the future relationship of system price with the other variables evolve?
+### 5 How does the future relationship of system price with the other variables evolve?
 
 
-#### 6 What can we infer from this relationship, and how can we give investment recommendation based on that?
+### 6 What can we infer from this relationship, and how can we give investment recommendation based on that?
 
 

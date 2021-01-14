@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 Data Patterns and terminology | Business Forecasting</title>
-  <meta name="description" content="4.2 Data Patterns and terminology | Business Forecasting" />
+  <title>7.4 Dynamic Forecasting | Business Forecasting</title>
+  <meta name="description" content="7.4 Dynamic Forecasting | Business Forecasting" />
   <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 Data Patterns and terminology | Business Forecasting" />
+  <meta property="og:title" content="7.4 Dynamic Forecasting | Business Forecasting" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 Data Patterns and terminology | Business Forecasting" />
+  <meta name="twitter:title" content="7.4 Dynamic Forecasting | Business Forecasting" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="the-forecasting-process.html"/>
-<link rel="next" href="DataPatternsAndModelSelection.html"/>
+<link rel="prev" href="advantages-and-disadvantages-for-arima-models.html"/>
+<link rel="next" href="exercises-arima.html"/>
 <script src="libs/header-attrs-2.5/header-attrs.js"></script>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -500,99 +500,107 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-patterns-and-terminology" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> Data Patterns and terminology</h2>
-<p><em>Basically the data is assumed to consist of up to four components, that is:</em></p>
+<div id="dynamic-forecasting" class="section level2" number="7.4">
+<h2><span class="header-section-number">7.4</span> Dynamic Forecasting</h2>
+<div id="adl" class="section level3" number="7.4.1">
+<h3><span class="header-section-number">7.4.1</span> ADL</h3>
+<p>Basically ADL is doing and Autoregressive (AR) model and then we add another variable (this could be anything) which is lagged. Notice that we can model with the order of lagged variables to be included in the model.</p>
+<p>As the model is based on AR models, we must have stationarity in the data, just as in normal AR models.</p>
+<p>Hence we have the following equation:</p>
+<p><span class="math display" id="eq:ADLpq">\[\begin{equation}
+ADL_{\left(p,q\right)}
+\tag{7.6}
+\end{equation}\]</span></p>
+<p>Where</p>
+<ul>
+<li><p>p = the order of AR (lags of the y variable)</p></li>
+<li><p>q = the number of lags for the added variable</p></li>
+</ul>
+<p>Procedure:</p>
 <ol style="list-style-type: decimal">
-<li>Trend
+<li><p>Create the AR model</p></li>
+<li><p>Find the other relevant variable. Transform it to a timeseries using, <code>ts()</code></p></li>
+<li><p>Include the lags in the model using <code>lag(&lt;ts.object&gt;,&lt;number of lags&gt;)</code></p></li>
+</ol>
+<p>Example of how it may look:</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-forecasting.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDPGR_ADL22 &lt;- dynlm(GDPGrowth_ts ~ #The dependant variable</span></span>
+<span id="cb118-2"><a href="dynamic-forecasting.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                        L(GDPGrowth_ts) #The AR(1),The dependant variable lagged</span></span>
+<span id="cb118-3"><a href="dynamic-forecasting.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(GDPGrowth_ts, 2)  #The AR(2),The dependant variable lagged</span></span>
+<span id="cb118-4"><a href="dynamic-forecasting.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts)  #Another TS lagged</span></span>
+<span id="cb118-5"><a href="dynamic-forecasting.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts, 2) #Another TS lagged two periods</span></span>
+<span id="cb118-6"><a href="dynamic-forecasting.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                      ,start = c(1962, 1), end = c(2012, 4))</span></span></code></pre></div>
+<p><em>L() = lag(), if number of lags are not </em></p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="dynamic-forecasting.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TB3MS &lt;- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)[&quot;1960::2012&quot;]</span></span></code></pre></div>
+<p><strong>Automatic process</strong></p>
+<p>Notice that this can be done with the following procedure</p>
+<ol style="list-style-type: decimal">
+<li>Run <code>auto_ardl()</code>, where you apply the stationary Y and data = table ordered according to cholesky ordering(<a href="dynamic-forecasting.html#Cholesky">7.4.2.3</a>). Set <code>max_order</code> = to something relevant.</li>
+<li>Run <code>adl &lt;- model$best_model</code></li>
+<li>Retrieve the p and q with <code>adl$order</code></li>
+<li>One can run the summary to see the model. But the most interesting part is the assessment of how many lagged periods from both variables to include.</li>
+</ol>
+</div>
+<div id="vector-autoregressive-var" class="section level3" number="7.4.2">
+<h3><span class="header-section-number">7.4.2</span> Vector autoregressive (VAR)</h3>
+<p>In the approach in ADL we only work with one other variable. Although with VAR models, we are able to include multiple independent variables. This can be written as:</p>
+<p><span class="math display" id="eq:VARp">\[\begin{equation}
+VAR(p)
+\tag{7.7}
+\end{equation}\]</span></p>
+<p>Where:</p>
 <ul>
-<li>Long-term change in the level of data</li>
-<li>Positive vs. negative trends</li>
-<li>Stationary series <em>have no trend</em></li>
-<li><em>Example: Increasing technology leading to increase in productivity</em></li>
+<li>p = p lags of the variable, one can apply <code>VARselection()</code>, this will yield p lags, notice, that it will be the same for all variables.</li>
+</ul>
+<p>See an example in section <a href="exercises-adl.html#VarExercise">7.6.2.2</a></p>
+<div id="selection-criteria-1" class="section level4" number="7.4.2.1">
+<h4><span class="header-section-number">7.4.2.1</span> Selection criteria</h4>
+<p>One may use AIC, BIC or make out of sample assessment to select the best model, hence identifying what lags to be included in the model.</p>
+</div>
+<div id="process" class="section level4" number="7.4.2.2">
+<h4><span class="header-section-number">7.4.2.2</span> Process</h4>
+<p><em>Note, it is only within our curriculum with one variable.</em></p>
+<ol style="list-style-type: decimal">
+<li><code>cbind</code> a table consisting of stationary y series and the x variables (Cholesky applies, but is not very important when having two variables, see more in section <a href="dynamic-forecasting.html#Cholesky">7.4.2.3</a>). Store it as an <code>ts()</code> object.</li>
+<li>Run <code>VARselect(z,lag.max = 14,type="const")[["selection"]]</code>
+<ul>
+<li>Note, <code>selection</code> is just retrieving an object that is encapsuled</li>
 </ul></li>
-<li>Seasonal
+<li>Run <code>VAR(z,p=&lt;insert&gt;,type="const")</code> Apply p with the value that was found in step 2</li>
+<li>One can do the <code>summary()</code></li>
+<li>Check residuals for serial correlation<code>serial.test(var1,lags.pt=14,type="PT.asymptotic")</code>.</li>
+<li>Obtain impulse response function, using <code>plot(irf(var1,boot = TRUE, ci=0.95))</code>
 <ul>
-<li>Repeated regular variation the level of data</li>
-<li><em>Example: Number of tourists in Mallorca</em></li>
-</ul></li>
-<li>Cyclical
-<ul>
-<li>Wavelike upward and downward movements around the long-term trend</li>
-<li>Longer duration than seasonal fluctuations</li>
-<li><em>Example: Business cycles</em></li>
-<li><em>Note, this is very often to identify</em></li>
-</ul></li>
-<li>Irregular
-<ul>
-<li>Random fluctuations</li>
-<li>Possibly carrying more dynamics than just deterministic ones</li>
-<li>Hardest to capture in a forecasting model</li>
+<li>Notice, that it is calculated based on the Cholesky ordering</li>
 </ul></li>
 </ol>
-<p>The four components may look similar to this:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-8"></span>
-<img src="Images/04/Components.png" alt="Components in a timeseries" width="330" />
-<p class="caption">
-Figure 4.2: Components in a timeseries
-</p>
 </div>
-<div id="terminology" class="section level3" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Terminology</h3>
-<p><span class="math inline">\(Y_t\)</span>: Denotes a time series variable</p>
-<p><span class="math inline">\(\hat{Y_t}\)</span>: Denotes the foretasted value of <span class="math inline">\(Y_t\)</span></p>
-<p><span class="math inline">\(e_t=Y_t-\hat{Y_t}\)</span>: Denotes the residual or the forecast error.</p>
-<p><span class="math inline">\(Y_{t-k}\)</span>: Denotes a time series variable lagged by <em>k</em> periods.</p>
-<div id="autocorrelation" class="section level4" number="4.2.1.1">
-<h4><span class="header-section-number">4.2.1.1</span> Autocorrelation</h4>
-<p><strong>Autocorrelation</strong>: is the correlation between a time series and its past (lagged) observations. To identify this, one can merely compare the lagged values as a series for itself, hence comparing actual time series against the lagged time series. This can be written as:</p>
-<p><span class="math display">\[r_k=\frac{\sum_{t=k+1}^n\left(Y_{t\ }-\hat{Y}\right)}{\sum_{t=1}^n\left(Y_t-\hat{Y}\right)^{^2}}\]</span></p>
-<p>Where <span class="math inline">\(k = 0,1,2,...\)</span>, hence take on numbers, typically whole numbers, as the result must be measurable.</p>
-<p>We assess autocorrelation to identify if the data have a trend, seasons, cycles or it is random? If we have seasons, trends or cycles, we must make the model account for this, otherwise one is prone to have a model where it is just implicitly correlated, but that is merely due to the autocorrelation, as it says in the word, it is automatically correlated, but that also implies, that it is not necessarily caused by the data, but rather other factors, often we see macro factors, that have an influence, e.g. an economic book.</p>
-<p>Autocorrelation can be plotted using an autocorrelation function (ACF) or merely by using a correlogram, which is a k-period plot of the autocorelation, that looks like the following:</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-9"></span>
-<img src="Images/04/CorrelogramExample.png" alt="Correlogram Example" width="164" />
-<p class="caption">
-Figure 4.3: Correlogram Example
-</p>
-</div>
-<p>Where one wants to be within the upper and lower level.</p>
-<p><strong>Manually testing for autocorrelation</strong></p>
-<p>One must:</p>
-<ol style="list-style-type: decimal">
-<li>Calculate <span class="math inline">\(r_k\)</span></li>
-<li>Calculate <span class="math inline">\(SE(r_k)\)</span></li>
-<li>Hypothesis: <span class="math inline">\(H0 : \rho=0\)</span>, <span class="math inline">\(H0 : \rho≠0\)</span>
+<div id="Cholesky" class="section level4" number="7.4.2.3">
+<h4><span class="header-section-number">7.4.2.3</span> Analyzing response to shocks in other variables - Cholesky Ordering</h4>
+<p><em>You want to order the variables so the most exogenious variable as first, then less exogenious until you have the last, which is the most endogenious</em></p>
+<p>If one is only having two variables (including IDV and DV), then the ordering is not that important</p>
+<p>First, let us clarify the following terms</p>
+<p><strong>Exogenious vs. endogenious</strong></p>
+<p>Terms:</p>
 <ul>
-<li>We apply t-test</li>
-</ul></li>
+<li>Exogenious: if a variable is extremely exogenious, it is not explain or determined by other variables</li>
+<li>Endogenious: if a variable is extremely endogenoius, it is explianed or determined by one or more variables.</li>
+</ul>
+<p>This can be used to rank variables based on how much they are affected by other variables, with the most exogenious variable first (<strong>This is called Cholesky ordering</strong>), hence we rank based on the following principle:</p>
+<p><em>lets say, that we have four variables, we want to order according to Cholesky ordering</em></p>
+<ol style="list-style-type: decimal">
+<li>Most exogenious</li>
+<li>Less exogenious than 1 more than 3. Hence, more endogenious than 1. but less than 3.</li>
+<li>Less exogenious than 2 more than 4. Hence, more endogenious than 2. but less than 4.</li>
+<li>Most endogenious</li>
 </ol>
-<p>Where:
-<span class="math display">\[SE\left(r_k\right)=\sqrt{\left\{\frac{1+2\sum_{i=1}^{k-1}r_i^2}{n}\right\}}\]</span>
-Although, with normal approximation
-<span class="math display">\[SE\left(r_k\right)=\frac{1}{\sqrt{n-k}}\]</span></p>
-<p>and test statistic equal
-<span class="math display">\[t=\frac{r_k}{SE(r_k)}\]</span></p>
-<p>Thence one merely must look up the cut off values and assess if there is statistical evidance for autocorrelation or not.</p>
-<p><strong>Alternative: Ljung-Box Q statistic</strong></p>
-<p><em>The Ljung Box Q is to identify if at least one of the components explains the Y. Thence H0 = p1 = p2 = p3 = pm, thence we want to reject this one. If not, then none of the predictors explain the Y, thus they are irregular components.</em></p>
-<p><span class="math display">\[Q\ =\ n\left(n+2\right)\sum_{k=1}^m\frac{r_k^2}{n-k}\]</span></p>
-<p>Where <em>m</em> is the number of lags to be tested.</p>
-<p>The Q statistic is commonly used for testing correlation in the residuals of a forecast model and the comparison is mate to <span class="math inline">\(X^2_{m-q}\)</span>, where q is the number of parameters in the model.</p>
-</div>
-<div id="random-vs.-correlated-data" class="section level4" number="4.2.1.2">
-<h4><span class="header-section-number">4.2.1.2</span> Random vs. correlated data</h4>
-<p>Randomness is important for forecast model residuals. One can write simple random model, <strong>but we dont want complete randomness</strong>. Hence we don’t want patterns in our error, where the previous error can explain the next error. E.g. if the data contain trend or seasons, that we have not accounted for, then the errors will be able to predict the coming errors (can be tested by testing errors (residuals) against the lagged errors (residuals)).</p>
-<p><span class="math display">\[Y_t=c+\epsilon_t\]</span></p>
-<p>Where c is the component and <span class="math inline">\(\epsilon_t\)</span> is the random error component. That is assumed to be uncorrelated period to period.</p>
-</div>
-<div id="stationary-vs.-non-stationary-data" class="section level4" number="4.2.1.3">
-<h4><span class="header-section-number">4.2.1.3</span> Stationary vs. non stationary data</h4>
-<p><strong>Stationary series</strong> is not trending, where is <strong>non stationary series</strong> is trending, can both be linear or exponential.</p>
-<p><strong>The how is it solved?</strong></p>
-<p>One can merely apply differencing of order k. That is equal to:</p>
-<p><span class="math display">\[\Delta Y_t=Y_t-Y_{t-1}\]</span></p>
-<p>One could also apply growth rates are log differencing instead.</p>
+<p><strong>Importance!</strong></p>
+<p>This is important, as it matters in the end how the forecast is done. see slides from lecture 10 page 12.</p>
+<p><strong>How is this corrected????</strong></p>
+<ol style="list-style-type: decimal">
+<li>Make the df, with the, see example when loading data in <a href="exercises-adl.html#ExerciseADL">7.6.2.1</a></li>
+<li>Call the df ‘z’</li>
+<li>Order the variables in accordance with the Cholesky ordering.</li>
+</ol>
 </div>
 </div>
 </div>
@@ -601,8 +609,8 @@ Although, with normal approximation
           </div>
         </div>
       </div>
-<a href="the-forecasting-process.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="DataPatternsAndModelSelection.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="advantages-and-disadvantages-for-arima-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="exercises-arima.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
