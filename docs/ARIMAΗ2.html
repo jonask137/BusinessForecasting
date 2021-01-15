@@ -524,7 +524,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>Drift: that is a constant that can be added to the equation. It will make the model tend upwards or downwards. Imagine having an ARIMA 0,1,0 with a drift. Then you will only have the most recent <span class="math inline">\(y_{t-1}\)</span> and then you will have the constant, which will force the forecast upwards if positive and vise verca.</p></li>
 </ul>
 <p>The notations for ARIMA are:</p>
-<p><span class="math display" id="eq:MAq" id="eq:ARIMApdq">\[\begin{equation}
+<p><span class="math display" id="eq:ARIMApdq">\[\begin{equation}
 ARIMA_{(p,d,q)}
 \tag{7.1}
 \end{equation}\]</span></p>
@@ -570,9 +570,10 @@ ARIMA_{(p,d,q)}
 <p>MA = Moving average</p>
 <p><strong><em>IMPORTANT NOTE: this has nothing to do with regular Moving Average, as with using past periods</em></strong></p>
 <p>This approach applies use residuals (between actual values and fitted values/or forecasted values) multiplied with a coefficient to forecast the coming period. As with AR, we are able to include x amount of previous periods. Thus, we are able to describe MA with:</p>
-<p>Y_t=+_t-<em>1</em>{t-1}-<em>2</em>{t-2}-…-<em>q</em>{t-q}
+<p><span class="math display" id="eq:MAq">\[\begin{equation}
+Y_t=\mu + \epsilon_t - \omega_1 \epsilon_{t-1} - \omega_2 \epsilon_{t-2} -...- \omega_q \epsilon_{t-q}
 \tag{7.2}
-\end{equation}</p>
+\end{equation}\]</span></p>
 <p>where:</p>
 <ul>
 <li><span class="math inline">\(Y_t\)</span> = the forecast for time period t.</li>
