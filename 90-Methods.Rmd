@@ -53,6 +53,8 @@ This is appropriate if the data has shown historical stability, thus without sea
 
 *this may be applied to remove seasonal effect, either by k=4 or 12 if the data is respectively quarterly or monthly*
 
+See an example in section \@ref(MALoop), where a loop is used to forecast. See just an in sample fit in section \@ref(RegularMA) (but notice, that the data should be stationary, the data used in this example is not stationary, so there should have been differenced or detrended.)
+
 #### Double Moving Average
 
 *This is simply doing moving averages twice, hence it is an extension of equation \@ref(eq:MA)*

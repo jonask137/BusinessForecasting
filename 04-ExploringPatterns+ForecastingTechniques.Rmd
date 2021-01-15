@@ -270,6 +270,13 @@ Although one may apply long term predictions to construct an idea of how it may 
 
 #### Moving Averages
 
+Yana has shown a loop for doing MA, that will be tested, hence this section contain two subsections:
+
+1. Regular MA, as it was done during lectures
+2. MA with loop.
+
+##### Regular MA {#RegularMA}
+
 ```{r}
 df <- read_excel("Data/Week45/prob8p92HW.xlsx")
 yt <- ts(df) #Rename and define as time series
@@ -306,6 +313,50 @@ yt5 #The updated vector of MA's
 This we see, that scores are moved to the end, so even though it is the center of the MA, it is now presented as recent values.
 
 For simple moving averages, one may do it in excel, it may be easier and quicker.
+
+
+
+##### MA using loop {#MALoop}
+
+```{r}
+#Define the input data
+#dy.ltn <- dy.ltn
+
+#Forecasting with a simple MA of order k
+k <- 5
+l <- length(yt) #number of available data points
+
+#adding extra rows, as many as periods ahead want to forecast
+h <-18
+y <- yt
+
+#generating space to save the forecasts
+for (i in 1:h){
+  y <- c(y, 0)
+}
+
+#t(t(y)) #One could show the result
+
+#calculating the forecast values
+for (j in (l+1):(l+h)){ #Notice,
+  print(j)
+  a<-j-k
+  b<-j-1
+  x <-y[a:b]
+  y[j] <- mean(x)
+}
+
+result1 <- t(t(y)) #One could show the result
+
+
+#Plotting
+plot(y,type = 'l',main = "MA, k = 5")
+abline(v = l,col = "red")
+grid(col = "lightgrey")
+```
+
+
+
 
 #### Exponential moving averages + Holts and Winters
 
@@ -386,9 +437,17 @@ accuracy(forecast(fit4))} # experiment with seasonality frequency to see if you 
 
 We see that the RMSE is even lower (3.97), hence Winters Exponential Smoothing appear to be the best model for prediction.
 
+
+
+
+
 ```{r cleaning environment problem 8 p92,include=FALSE}
 rm(list = ls())
 ```
+
+
+
+
 
 
 ### p. 93 HW Problem 9-10

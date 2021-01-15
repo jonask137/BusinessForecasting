@@ -163,7 +163,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="4.4.1" data-path="exercises.html"><a href="exercises.html#p.-92-hw-problem-8"><i class="fa fa-check"></i><b>4.4.1</b> p. 92 HW Problem 8</a>
 <ul>
-<li class="chapter" data-level="4.4.1.1" data-path="exercises.html"><a href="exercises.html#moving-averages"><i class="fa fa-check"></i><b>4.4.1.1</b> Moving Averages</a></li>
+<li class="chapter" data-level="4.4.1.1" data-path="exercises.html"><a href="exercises.html#moving-averages"><i class="fa fa-check"></i><b>4.4.1.1</b> Moving Averages</a>
+<ul>
+<li class="chapter" data-level="4.4.1.1.1" data-path="exercises.html"><a href="exercises.html#RegularMA"><i class="fa fa-check"></i><b>4.4.1.1.1</b> Regular MA</a></li>
+<li class="chapter" data-level="4.4.1.1.2" data-path="exercises.html"><a href="exercises.html#MALoop"><i class="fa fa-check"></i><b>4.4.1.1.2</b> MA using loop</a></li>
+</ul></li>
 <li class="chapter" data-level="4.4.1.2" data-path="exercises.html"><a href="exercises.html#exponential-moving-averages-holts-and-winters"><i class="fa fa-check"></i><b>4.4.1.2</b> Exponential moving averages + Holts and Winters</a></li>
 </ul></li>
 <li class="chapter" data-level="4.4.2" data-path="exercises.html"><a href="exercises.html#p.-93-hw-problem-9-10"><i class="fa fa-check"></i><b>4.4.2</b> p. 93 HW Problem 9-10</a></li>
@@ -523,14 +527,14 @@ ADL_{\left(p,q\right)}
 <li><p>Include the lags in the model using <code>lag(&lt;ts.object&gt;,&lt;number of lags&gt;)</code></p></li>
 </ol>
 <p>Example of how it may look:</p>
-<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="dynamic-forecasting.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDPGR_ADL22 &lt;- dynlm(GDPGrowth_ts ~ #The dependant variable</span></span>
-<span id="cb118-2"><a href="dynamic-forecasting.html#cb118-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                        L(GDPGrowth_ts) #The AR(1),The dependant variable lagged</span></span>
-<span id="cb118-3"><a href="dynamic-forecasting.html#cb118-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(GDPGrowth_ts, 2)  #The AR(2),The dependant variable lagged</span></span>
-<span id="cb118-4"><a href="dynamic-forecasting.html#cb118-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts)  #Another TS lagged</span></span>
-<span id="cb118-5"><a href="dynamic-forecasting.html#cb118-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts, 2) #Another TS lagged two periods</span></span>
-<span id="cb118-6"><a href="dynamic-forecasting.html#cb118-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                      ,start = c(1962, 1), end = c(2012, 4))</span></span></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="dynamic-forecasting.html#cb121-1" aria-hidden="true" tabindex="-1"></a><span class="co"># GDPGR_ADL22 &lt;- dynlm(GDPGrowth_ts ~ #The dependant variable</span></span>
+<span id="cb121-2"><a href="dynamic-forecasting.html#cb121-2" aria-hidden="true" tabindex="-1"></a><span class="co">#                        L(GDPGrowth_ts) #The AR(1),The dependant variable lagged</span></span>
+<span id="cb121-3"><a href="dynamic-forecasting.html#cb121-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(GDPGrowth_ts, 2)  #The AR(2),The dependant variable lagged</span></span>
+<span id="cb121-4"><a href="dynamic-forecasting.html#cb121-4" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts)  #Another TS lagged</span></span>
+<span id="cb121-5"><a href="dynamic-forecasting.html#cb121-5" aria-hidden="true" tabindex="-1"></a><span class="co">#                      + L(TSpread_ts, 2) #Another TS lagged two periods</span></span>
+<span id="cb121-6"><a href="dynamic-forecasting.html#cb121-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                      ,start = c(1962, 1), end = c(2012, 4))</span></span></code></pre></div>
 <p><em>L() = lag(), if number of lags are not </em></p>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="dynamic-forecasting.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TB3MS &lt;- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)[&quot;1960::2012&quot;]</span></span></code></pre></div>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="dynamic-forecasting.html#cb122-1" aria-hidden="true" tabindex="-1"></a><span class="co">#TB3MS &lt;- xts(USMacroSWQ$TB3MS, USMacroSWQ$Date)[&quot;1960::2012&quot;]</span></span></code></pre></div>
 <p><strong>Automatic process</strong></p>
 <p>Notice that this can be done with the following procedure</p>
 <ol style="list-style-type: decimal">
